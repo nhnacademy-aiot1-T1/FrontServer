@@ -12,8 +12,8 @@ class ServerApplicationTests {
 	}
 
 	@Test
-	void successTest(){
-		int actual = 2;
+	void failTest(){
+		int actual = 1;
 		Assertions.assertEquals(2,actual);
 	}
 
