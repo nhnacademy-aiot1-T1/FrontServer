@@ -7,6 +7,9 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 on:
   push:
     branches: [develop,main]
+  pull_request:
+    branches: [main,develop]
+    types: [opened, synchronize, reopened]
 
 
 jobs:
