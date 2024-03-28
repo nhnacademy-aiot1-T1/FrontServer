@@ -6,7 +6,7 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 # 2 워크플로우가 시작됭 조건 지정
 on:
   push:
-    branches: [develop,main]
+    branches: [master]
   pull_request:
     branches: [main,develop]
     types: [opened, synchronize, reopened]
