@@ -1,0 +1,28 @@
+# 워크플로우에 이름 지정
+name: toDevelopMerge
+
+# 현재 워크플로우를 사용한 유저의 이름을 출력
+run-name: ${{ github.actor }} is learning GitHub Actions
+# 2 워크플로우가 시작됭 조건 지정
+on:
+  push:
+    branches: [develop,main]
+
+
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          
+      - name: permission for maven
+        run: chmod +x mvnw
+
+      - name: Build maven  
+        run: ./mvnw clean install
