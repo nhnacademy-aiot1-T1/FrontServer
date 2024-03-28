@@ -22,7 +22,7 @@ jobs:
           java-version: '11'
           
       - name: permission for maven
-        run: chmod +x mvnw
+        run: chmod +x mvw
 
       - name: Build maven  
-        run: ./mvnw clean install
+        run: ./mvw clean install
