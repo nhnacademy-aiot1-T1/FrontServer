@@ -7,7 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class UserLoginResponseDto {
+public class JwtToken {
     private String accessToken;
-    private String tokenType;
 }
