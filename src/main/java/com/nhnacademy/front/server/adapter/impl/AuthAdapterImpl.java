@@ -2,23 +2,66 @@ package com.nhnacademy.front.server.adapter.impl;
 
 import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.domain.JwtToken;
+import com.nhnacademy.front.server.domain.UserLoginRequestDto;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-@RequiredArgsConstructor
 public class AuthAdapterImpl implements AuthAdapter {
+
+  private static final String TOKENTYPE = "Bearer";
 
   private final RestTemplate restTemplate;
 
+  public AuthAdapterImpl(RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
+  }
+
   @Override
   public JwtToken userLogin(String email, String password) {
-    return null;
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+    UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(email,password);
+
+    HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto,headers);
+
+    ResponseEntity<JwtToken> exchange = restTemplate.exchange(
+        //Todo gateway의 url이나 eureka 설정에 따른 추가
+        "http://localhost:8081/api/account/login",//  <-- 임시임
+        HttpMethod.POST,
+        requestEntity,
+        JwtToken.class
+    );
+    return exchange.getBody();
   }
 
   @Override
   public void logout(String accessToken) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("authorization",TOKENTYPE+" "+accessToken);
+
+    HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+    ResponseEntity<Void> exchange = restTemplate.exchange(
+        //Todo gateway의 url이나 eureka 설정에 따른 추가
+        "http://localhost:8081/api/account/logout",// <-- 임시임
+        HttpMethod.POST,
+        requestEntity,
+        Void.class
+    );
+    if(exchange.getStatusCode() != HttpStatus.OK){
+      throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+    }
 
   }
 }

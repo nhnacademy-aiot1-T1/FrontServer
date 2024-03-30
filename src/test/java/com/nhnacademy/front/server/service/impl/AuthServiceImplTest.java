@@ -29,14 +29,14 @@ class AuthServiceImplTest {
     String email = "test@stest.com";
     String password = "1234";
     given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(new JwtToken("testToken"));
-    assertTrue(authService.getLoginToken(new UserLoginRequestDto(email,password)).isPresent());
+    assertTrue(authService.getLoginToken(email,password).isPresent());
   }
   @Test
   void getLoginTokenFailed() {
     String email = "test@stest.com";
     String password = "1234";
     given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(null);
-    assertTrue(authService.getLoginToken(new UserLoginRequestDto(email,password)).isEmpty());
+    assertTrue(authService.getLoginToken(email,password).isEmpty());
   }
 
   @Test

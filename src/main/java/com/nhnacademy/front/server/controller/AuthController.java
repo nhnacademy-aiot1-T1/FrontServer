@@ -34,8 +34,7 @@ public class AuthController {
                           @RequestParam("password")String password,
                             HttpServletResponse res,
                             RedirectAttributes redirectAttributes){
-        UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(email,password);
-        JwtToken token = authService.getLoginToken(userLoginRequestDto).orElse(null);
+        JwtToken token = authService.getLoginToken(email,password).orElse(null);
         if(token==null){
             //redirect 해도 1번은 정보가 넘어가는 session 오류정보를 전달함.
             redirectAttributes.addFlashAttribute("error","do not match Id or Password.");

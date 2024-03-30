@@ -6,7 +6,7 @@ import com.nhnacademy.front.server.domain.UserLoginRequestDto;
 import java.util.Optional;
 
 public interface AuthService {
-    Optional<JwtToken> getLoginToken(UserLoginRequestDto userLoginRequestDto);
+    Optional<JwtToken> getLoginToken(String email, String password);
 
     void tokenLogout(String token);
 
