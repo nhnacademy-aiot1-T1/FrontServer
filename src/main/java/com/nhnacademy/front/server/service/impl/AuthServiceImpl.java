@@ -19,10 +19,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Optional<JwtToken> getLoginToken(UserLoginRequestDto userLoginRequestDto) {
-        JwtToken userLoginResponseDto = new JwtToken();
-
-        //Todo adapter에서 responseEntity 나 토큰값을 가지고 오기!
-        return null;
+        JwtToken token;
+        token = authAdapter.userLogin(userLoginRequestDto.getEmail(),userLoginRequestDto.getPassword());
+        return Optional.ofNullable(token);
     }
 
     @Override
