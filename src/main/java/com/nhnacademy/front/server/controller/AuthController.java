@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping()
@@ -23,19 +25,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthController {
 
     private final AuthService authService;
-    @GetMapping("/loginpage")
+    @GetMapping("/login")
     public String showLoginForm(){return "pages/auth/login";}
 
     //Id -> email 상황따라 변경
     @PostMapping("/login")
     public String doLogin(@RequestParam("email")String email,
                           @RequestParam("password")String password,
-                            HttpServletResponse res, Model model){
+                            HttpServletResponse res,
+                            RedirectAttributes redirectAttributes){
         UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(email,password);
         JwtToken token = authService.getLoginToken(userLoginRequestDto).orElse(null);
         if(token==null){
-            //Todo 일단 실패시 상황을 전달 할 수 있는가?
-            return "redirect:pages/auth/login";
+            //redirect 해도 1번은 정보가 넘어가는 session 오류정보를 전달함.
+            redirectAttributes.addFlashAttribute("error","do not match Id or Password.");
+            return "redirect:/pages/auth/login";
         }
         String accessToken = token.getAccessToken();
         Cookie cookie = new Cookie("authorization",accessToken);
@@ -45,7 +49,7 @@ public class AuthController {
         return "pages/main/index";
     }
     @PostMapping("/logout")
-    public String doLogout(HttpServletRequest req){
+    public String doLogout(HttpServletRequest req,Model model,RedirectAttributes redirectAttributes){
         Cookie[] cookies = req.getCookies();
         if(cookies != null){
             String token = Arrays.stream(cookies)
@@ -54,15 +58,14 @@ public class AuthController {
                     .map(Cookie::getValue)
                     .orElse(null);
             if(token == null){
-                //Todo 비정상적인 접근
-                return "pages/error/403";
+                throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
             }else{
-                //Todo sendToken의 return 타입의 관해... 그리고 값에 따른 처리
+                redirectAttributes.addFlashAttribute("state","success");
                 authService.tokenLogout(token);
             }
 
         }
-      return "redirect:pages/auth/login";
+      return "redirect:/pages/auth/login";
     }
 
 }
