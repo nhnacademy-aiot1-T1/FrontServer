@@ -18,12 +18,13 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class AuthAdapterImpl implements AuthAdapter {
 
-  private static final String TOKENTYPE = "Bearer";
+  private static final String TOKEN_TYPE = "Bearer";
 
   private final RestTemplate restTemplate;
 
   public AuthAdapterImpl(RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
+
   }
 
   @Override
@@ -38,7 +39,7 @@ public class AuthAdapterImpl implements AuthAdapter {
 
     ResponseEntity<JwtToken> exchange = restTemplate.exchange(
         //Todo gateway의 url이나 eureka 설정에 따른 추가
-        "http://localhost:8081/api/account/login",//  <-- 임시임
+        "/test",//  <-- 임시임
         HttpMethod.POST,
         requestEntity,
         JwtToken.class
@@ -49,7 +50,7 @@ public class AuthAdapterImpl implements AuthAdapter {
   @Override
   public void logout(String accessToken) {
     HttpHeaders headers = new HttpHeaders();
-    headers.set("authorization",TOKENTYPE+" "+accessToken);
+    headers.set("authorization",TOKEN_TYPE+" "+accessToken);
 
     HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
     ResponseEntity<Void> exchange = restTemplate.exchange(
