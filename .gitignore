@@ -32,3 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 /src/main/resources/templates/AdminLTE-3.2.0
+/src/main/resources/templates/
+/src/main/resources/static
