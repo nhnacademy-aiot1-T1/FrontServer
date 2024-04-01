@@ -4,7 +4,6 @@ import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.domain.JwtToken;
 import com.nhnacademy.front.server.domain.UserLoginRequestDto;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
