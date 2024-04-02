@@ -41,7 +41,7 @@ class AuthControllerTest {
         Optional.of(new JwtToken("test")));
 
     mockMvc.perform(post("/login")
-            .param("email", "test@test.com")
+            .param("id", "test")
             .param("password", "1234"))
         .andExpect(status().isOk())
         .andExpect(cookie().exists("authorization"))
@@ -54,7 +54,7 @@ class AuthControllerTest {
     given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(
         Optional.empty());
     mockMvc.perform(post("/login")
-            .param("email", "test@test.com")
+            .param("id", "test")
             .param("password", "1234"))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("/pages/auth/login"))
