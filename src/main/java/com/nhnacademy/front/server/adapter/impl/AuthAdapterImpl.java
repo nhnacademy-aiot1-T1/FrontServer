@@ -35,7 +35,7 @@ public class AuthAdapterImpl implements AuthAdapter {
     HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto,headers);
 
     ResponseEntity<JwtToken> exchange = restTemplate.exchange(
-        "/192.168.0.27:8080/login",
+        "http://192.168.0.27:8080/login",
         HttpMethod.POST,
         requestEntity,
         JwtToken.class

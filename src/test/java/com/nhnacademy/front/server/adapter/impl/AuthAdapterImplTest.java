@@ -34,7 +34,7 @@ class AuthAdapterImplTest {
 
   @Test
   void userLogin() {
-    mockServer.expect(MockRestRequestMatchers.requestTo("/test"))
+    mockServer.expect(MockRestRequestMatchers.requestTo("http://192.168.0.27:8080/login"))
         .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
         .andRespond(MockRestResponseCreators.withSuccess("{ \"access_token\": \"fakeToken\"}", MediaType.APPLICATION_JSON));
 
@@ -47,7 +47,7 @@ class AuthAdapterImplTest {
 
   @Test
   void logout() {
-    mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8081/api/account/logout"))
+    mockServer.expect(MockRestRequestMatchers.requestTo("http://192.168.0.27:8080/logout"))
         .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
         .andRespond(MockRestResponseCreators.withUnauthorizedRequest());
 
