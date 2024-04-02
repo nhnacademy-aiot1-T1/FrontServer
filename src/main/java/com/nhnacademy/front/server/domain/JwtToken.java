@@ -9,10 +9,9 @@ import lombok.*;
  * @author AoiTuNa
  * @version 1.0
  */
+
 @Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class JwtToken {
     @JsonProperty("access_token")
     private String accessToken;

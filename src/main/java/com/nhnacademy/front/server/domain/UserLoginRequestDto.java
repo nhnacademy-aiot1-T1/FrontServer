@@ -8,8 +8,6 @@ import lombok.*;
  * @version 1.0
  */
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class UserLoginRequestDto {
     private String email;

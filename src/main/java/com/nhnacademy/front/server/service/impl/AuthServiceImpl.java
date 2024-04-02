@@ -2,10 +2,8 @@ package com.nhnacademy.front.server.service.impl;
 
 import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.domain.JwtToken;
-import com.nhnacademy.front.server.domain.UserLoginRequestDto;
 import com.nhnacademy.front.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
