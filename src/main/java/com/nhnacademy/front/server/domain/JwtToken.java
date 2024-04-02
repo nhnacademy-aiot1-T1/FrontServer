@@ -12,6 +12,7 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class JwtToken {
     @JsonProperty("access_token")
     private String accessToken;

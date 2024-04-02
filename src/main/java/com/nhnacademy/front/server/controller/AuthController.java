@@ -84,7 +84,12 @@ public class AuthController {
                 throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
             }
                 redirectAttributes.addFlashAttribute("state","success");
+            try{
                 authService.tokenLogout(token);
+            }catch (HttpClientErrorException exception){
+                throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+            }
+
 
       return "redirect:/pages/auth/login";
     }

@@ -7,11 +7,9 @@ import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -52,16 +50,12 @@ public class AuthAdapterImpl implements AuthAdapter {
     headers.set("authorization",TOKEN_TYPE+" "+accessToken);
 
     HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-    ResponseEntity<Void> exchange = restTemplate.exchange(
+    restTemplate.exchange(
         //Todo gateway의 url이나 eureka 설정에 따른 추가
         "http://localhost:8081/api/account/logout",// <-- 임시임
         HttpMethod.POST,
         requestEntity,
         Void.class
     );
-    if(exchange.getStatusCode() != HttpStatus.OK){
-      throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
-    }
-
   }
 }
