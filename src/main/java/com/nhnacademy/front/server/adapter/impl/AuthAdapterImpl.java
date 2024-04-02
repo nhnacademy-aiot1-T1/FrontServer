@@ -35,8 +35,7 @@ public class AuthAdapterImpl implements AuthAdapter {
     HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto,headers);
 
     ResponseEntity<JwtToken> exchange = restTemplate.exchange(
-        //Todo gateway의 url이나 eureka 설정에 따른 추가
-        "/test",//  <-- 임시임
+        "/192.168.0.27:8080/login",
         HttpMethod.POST,
         requestEntity,
         JwtToken.class
@@ -51,8 +50,7 @@ public class AuthAdapterImpl implements AuthAdapter {
 
     HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
     restTemplate.exchange(
-        //Todo gateway의 url이나 eureka 설정에 따른 추가
-        "http://localhost:8081/api/account/logout",// <-- 임시임
+        "http://192.168.0.27:8080/logout",
         HttpMethod.POST,
         requestEntity,
         Void.class
