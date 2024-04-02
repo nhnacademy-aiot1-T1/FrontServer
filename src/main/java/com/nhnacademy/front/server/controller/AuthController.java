@@ -82,10 +82,10 @@ public class AuthController {
     public String doLogout(@CookieValue("authorization")String token,RedirectAttributes redirectAttributes){
             if(token == null){
                 throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
-            }else{
+            }
                 redirectAttributes.addFlashAttribute("state","success");
                 authService.tokenLogout(token);
-            }
+
       return "redirect:/pages/auth/login";
     }
 
