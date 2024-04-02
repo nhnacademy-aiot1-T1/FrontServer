@@ -5,14 +5,13 @@ import com.nhnacademy.front.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @version 1.0
  * @see #showLoginForm()
  * @see #doLogin(String, String, HttpServletResponse, RedirectAttributes)
- * @see #doLogout(HttpServletRequest, RedirectAttributes)
+ * @see #doLogout(String, RedirectAttributes)
  */
 @Controller
 @RequestMapping()
@@ -75,27 +74,18 @@ public class AuthController {
 
     /**
      * 유저가 로그아웃 버튼을 눌렀을 때 호출되는 controller입니다!
-     * @param req 유저의 Cookie에서 authorization 쿠키를 찾기위해 사용합니다!
+     * @param token 유저의 Cookie에서 authorization 쿠키를 가져옵니다!
      * @param redirectAttributes 에러 발생시 flash 로 정보를 넘겨주기 위한 attribute입니다!
      * @return 현재 둘 다 로그인 화면을 반환하지만 실패시 에러에 대한 정보를 flash 로 담아줍니다!
      */
     @PostMapping("/logout")
-    public String doLogout(HttpServletRequest req,RedirectAttributes redirectAttributes){
-        Cookie[] cookies = req.getCookies();
-        if(cookies != null){
-            String token = Arrays.stream(cookies)
-                    .filter(cookie -> "authorization".equals(cookie.getName()))
-                    .findFirst()
-                    .map(Cookie::getValue)
-                    .orElse(null);
+    public String doLogout(@CookieValue("authorization")String token,RedirectAttributes redirectAttributes){
             if(token == null){
-                throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+                throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
             }else{
                 redirectAttributes.addFlashAttribute("state","success");
                 authService.tokenLogout(token);
             }
-
-        }
       return "redirect:/pages/auth/login";
     }
 
