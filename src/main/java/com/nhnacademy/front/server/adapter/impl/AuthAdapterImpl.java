@@ -25,12 +25,12 @@ public class AuthAdapterImpl implements AuthAdapter {
   }
 
   @Override
-  public JwtToken userLogin(String email, String password) {
+  public JwtToken userLogin(String id, String password) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-    UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(email,password);
+    UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(id,password);
 
     HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto,headers);
 

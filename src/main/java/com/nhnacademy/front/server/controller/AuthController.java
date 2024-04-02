@@ -44,18 +44,18 @@ public class AuthController {
 
     /**
      * 로그인 인증 로직입니다 성공하면 메인으로 실패시 다시 로그인 화면을 redirect합니다!
-     * @param email 유저가 입력한 이메일 정보 입니다!
+     * @param id 유저가 입력한 이메일 정보 입니다!
      * @param password 유저가 입력한 비밀번호 정보 입니다!
      * @param res 쿠키에 발급받은 토큰을 저장하기 위한 response입니다!
      * @param redirectAttributes 에러 발생시 flash 로 정보를 넘겨주기 위한 attribute입니다!
      * @return 성고하면 메인페이지로 실패하면 로그인 페이지로 반환합니다!
      */
     @PostMapping("/login")
-    public String doLogin(@RequestParam("email")String email,
+    public String doLogin(@RequestParam("id")String id,
                           @RequestParam("password")String password,
                             HttpServletResponse res,
                             RedirectAttributes redirectAttributes){
-        JwtToken token = authService.getLoginToken(email,password).orElse(null);
+        JwtToken token = authService.getLoginToken(id,password).orElse(null);
         if(token==null){
             //redirect 해도 1번은 정보가 넘어가는 session 오류정보를 전달함.
             redirectAttributes.addFlashAttribute("error","do not match Id or Password.");

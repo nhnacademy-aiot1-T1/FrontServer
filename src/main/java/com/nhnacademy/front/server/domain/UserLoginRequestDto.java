@@ -10,6 +10,6 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 public class UserLoginRequestDto {
-    private String email;
+    private String id;
     private String password;
 }

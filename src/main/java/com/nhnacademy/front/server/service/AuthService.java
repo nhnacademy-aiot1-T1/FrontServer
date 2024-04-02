@@ -14,11 +14,11 @@ public interface AuthService {
 
     /**
      * 로그인 토큰을 얻어오기 위한 서비스 메서드입니다!
-     * @param email 유저가 입력한 emial값입니다!
+     * @param id 유저가 입력한 emial값입니다!
      * @param password 유저가 입력한 password 값 입니다!
      * @return 인증된 유저의 accessToken을 JwtToken으로 래핑해서 리턴합니다. 만약 없다면 null을 반환합니다!
      */
-    Optional<JwtToken> getLoginToken(String email, String password);
+    Optional<JwtToken> getLoginToken(String id, String password);
 
     /**
      * 로그아웃을 위한 메서드 입니다!

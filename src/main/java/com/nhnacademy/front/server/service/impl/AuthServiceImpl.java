@@ -18,9 +18,9 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public Optional<JwtToken> getLoginToken(String email, String password) {
+    public Optional<JwtToken> getLoginToken(String id, String password) {
         JwtToken token;
-        token = authAdapter.userLogin(email,password);
+        token = authAdapter.userLogin(id,password);
         return Optional.ofNullable(token);
     }
 
