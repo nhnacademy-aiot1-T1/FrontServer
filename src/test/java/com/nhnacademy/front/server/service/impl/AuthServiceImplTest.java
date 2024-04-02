@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 @SpringBootTest
@@ -42,7 +43,9 @@ class AuthServiceImplTest {
   @Test
   void tokenLogoutFailed() {
     doThrow(HttpClientErrorException.class).when(authAdapter).logout(any(String.class));
-    authService.tokenLogout("notToken");
-    verify(authAdapter).logout(anyString());
+    assertThrows(HttpClientErrorException.class,()->{
+      authService.tokenLogout("notToken");
+    })
+    ;
   }
 }

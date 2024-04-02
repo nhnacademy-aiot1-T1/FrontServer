@@ -3,12 +3,12 @@ package com.nhnacademy.front.server.controller;
 import com.nhnacademy.front.server.domain.JwtToken;
 import com.nhnacademy.front.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @see #doLogout(String, RedirectAttributes)
  */
 @Controller
-@RequestMapping()
+@Slf4j
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -79,18 +79,13 @@ public class AuthController {
      * @return 현재 둘 다 로그인 화면을 반환하지만 실패시 에러에 대한 정보를 flash 로 담아줍니다!
      */
     @PostMapping("/logout")
-    public String doLogout(@CookieValue("authorization")String token,RedirectAttributes redirectAttributes){
-            if(token == null){
-                throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
-            }
-                redirectAttributes.addFlashAttribute("state","success");
-            try{
-                authService.tokenLogout(token);
-            }catch (HttpClientErrorException exception){
-                throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
-            }
-
-
+    public String doLogout(@CookieValue(value = "authorization",required = false)String token,RedirectAttributes redirectAttributes){
+        if(token == null || token.isEmpty()){
+            log.info("토큰이 없거나 비어있음 ");
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+        }
+        authService.tokenLogout(token);
+        redirectAttributes.addFlashAttribute("state","success");
       return "redirect:/pages/auth/login";
     }
 

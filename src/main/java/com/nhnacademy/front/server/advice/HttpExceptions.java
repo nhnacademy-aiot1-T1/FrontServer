@@ -27,15 +27,16 @@ public class HttpExceptions {
    * @return 403 요청이 들어오면 인증되지 않은 코인이라는 메시지를 flash로 보내 login 화면으로 redirect 합니다!
    */
   @ExceptionHandler(value = {HttpClientErrorException.class})
-  public String clientErrorState(@CookieValue("authorization")String token, HttpClientErrorException exception, RedirectAttributes redirectAttributes){
+  public String clientErrorState(@CookieValue(value = "authorization",required = false)String token, HttpClientErrorException exception, RedirectAttributes redirectAttributes){
     if(exception.getStatusCode() == HttpStatus.UNAUTHORIZED){
-      if(token== null){
+      if(token == null){
         redirectAttributes.addFlashAttribute("error","비 정상적인 사용이 감지되었습니다!");
         return "redirect:/pages/auth/login";
       }
       redirectAttributes.addFlashAttribute("error","로그인에 실패했습니다! Id,Pw를 확인하세요!");
       return "redirect:/pages/auth/login";
     }
+    //추가
     return "/pages/error/403";
   }
 

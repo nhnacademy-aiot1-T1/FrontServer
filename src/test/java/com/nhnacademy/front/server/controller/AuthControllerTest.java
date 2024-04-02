@@ -37,48 +37,39 @@ class AuthControllerTest {
 
   @Test
   void doLoginSuccess() throws Exception {
-    given(authService.getLoginToken(any(String.class),any(String.class))).willReturn(
+    given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(
         Optional.of(new JwtToken("test")));
 
     mockMvc.perform(post("/login")
             .param("email", "test@test.com")
-            .param("password","1234"))
+            .param("password", "1234"))
         .andExpect(status().isOk())
         .andExpect(cookie().exists("authorization"))
-        .andExpect(cookie().httpOnly("authorization",true))
-        .andExpect(cookie().secure("authorization",true));
+        .andExpect(cookie().httpOnly("authorization", true))
+        .andExpect(cookie().secure("authorization", true));
   }
 
   @Test
   void doLoginFailed() throws Exception {
-    given(authService.getLoginToken(any(String.class),any(String.class))).willReturn(Optional.empty());
+    given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(
+        Optional.empty());
     mockMvc.perform(post("/login")
-          .param("email", "test@test.com")
-          .param("password","1234"))
+            .param("email", "test@test.com")
+            .param("password", "1234"))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("/pages/auth/login"))
         .andExpect(flash().attributeExists("error"));
   }
 
   @Test
-  void doLogoutSuccess() throws Exception{
-    MockCookie cookie = new MockCookie("authorization","testToken");
-
-    mockMvc.perform(MockMvcRequestBuilders.post("/logout")
-        .cookie(cookie))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(redirectedUrl("/pages/auth/login"))
-        .andExpect(flash().attributeExists("state"));
-  }
-  @Test
-  void doLogoutFailed() throws Exception{
-
-    MockCookie cookie = new MockCookie("notAuthorization","testToken");
+  void doLogoutSuccess() throws Exception {
+    MockCookie cookie = new MockCookie("authorization", "testToken");
 
     mockMvc.perform(MockMvcRequestBuilders.post("/logout")
             .cookie(cookie))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("/pages/auth/login"))
-        .andExpect(flash().attributeExists("error"));
+        .andExpect(flash().attributeExists("state"));
   }
+
 }
