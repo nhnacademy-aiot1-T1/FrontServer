@@ -29,10 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class AuthController {
 
-    /**
-     * 추가적인 처리를 위한 authService
-     * @see com.nhnacademy.front.server.service.AuthService
-     */
+
     private final AuthService authService;
 
     /**
