@@ -1,7 +1,7 @@
 package com.nhnacademy.front.server.service.impl;
 
 import com.nhnacademy.front.server.adapter.AuthAdapter;
-import com.nhnacademy.front.server.domain.JwtToken;
+import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,10 +18,10 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public Optional<JwtToken> getLoginToken(String id, String password) {
-        JwtToken token;
-        token = authAdapter.userLogin(id,password);
-        return Optional.ofNullable(token);
+    public String getLoginToken(String id, String password) {
+        LoginResponseDto loginResponseDto;
+        loginResponseDto = authAdapter.userLogin(id,password);
+        return loginResponseDto.getAccessToken();
     }
 
     @Override

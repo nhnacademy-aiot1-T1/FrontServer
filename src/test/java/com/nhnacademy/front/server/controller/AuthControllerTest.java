@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.nhnacademy.front.server.domain.JwtToken;
+import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.service.AuthService;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class AuthControllerTest {
   @Test
   void doLoginSuccess() throws Exception {
     given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(
-        Optional.of(new JwtToken("test")));
+        Optional.of("token"));
 
     mockMvc.perform(post("/login")
             .param("id", "test")
