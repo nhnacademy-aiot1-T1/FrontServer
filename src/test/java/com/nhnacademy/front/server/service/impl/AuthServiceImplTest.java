@@ -25,15 +25,15 @@ class AuthServiceImplTest {
   void getLoginTokenSuccess() {
     String email = "test@stest.com";
     String password = "1234";
-    given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(new LoginResponseDto("success",new ResponseData("tempToekn"),"hihi","2024-04-03T15:30:15"));
-    assertTrue(authService.getLoginToken(email,password).isPresent());
+    given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(new LoginResponseDto("admin","testToken"));
+    assertTrue(authService.getLoginToken(email,password).matches("testToken"));
   }
   @Test
   void getLoginTokenFailed() {
     String email = "test@stest.com";
     String password = "1234";
-    given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(null);
-    assertTrue(authService.getLoginToken(email,password).isEmpty());
+    given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(new LoginResponseDto("admin",null));
+    assertNull(authService.getLoginToken(email,password));
   }
 
   @Test

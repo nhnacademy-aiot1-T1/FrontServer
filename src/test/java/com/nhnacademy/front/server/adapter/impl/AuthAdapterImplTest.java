@@ -36,11 +36,11 @@ class AuthAdapterImplTest {
 
   @Test
   void userLogin() {
-    mockServer.expect(MockRestRequestMatchers.requestTo("http://192.168.0.27:8080/api/auth/login"))
+    mockServer.expect(MockRestRequestMatchers.requestTo("http://192.168.71.99:8080/api/auth/login"))
         .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
         .andRespond(MockRestResponseCreators.withSuccess(
             "{ \"status\": \"success\","
-                + " \"data\": { \"userId\": \"userId\", \"userRole\": \"ADMIN\", \"accessToken\": \"faketoken\"}, "
+                + " \"data\": { \"userId\": \"userId\", \"userRole\": \"ADMIN\", \"accessToken\": \"fakeToken\"}, "
                 + "\"message\": null, "
                 + "\"timestamp\" : \"" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + "\" }",
             MediaType.APPLICATION_JSON));

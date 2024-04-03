@@ -37,7 +37,7 @@ public class AuthAdapterImpl implements AuthAdapter {
     HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto,headers);
 
     ResponseEntity<CommonResponse<LoginResponseDto>> exchange = restTemplate.exchange(
-        "http://192.168.0.27:8080/api/auth/login",
+        "http://192.168.71.99:8080/api/auth/login",
         HttpMethod.POST,
         requestEntity,
         new ParameterizedTypeReference<>() {

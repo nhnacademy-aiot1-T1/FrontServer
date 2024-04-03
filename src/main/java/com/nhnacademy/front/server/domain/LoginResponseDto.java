@@ -14,6 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginResponseDto {
+  String userId;
   String accessToken;
 }
 
