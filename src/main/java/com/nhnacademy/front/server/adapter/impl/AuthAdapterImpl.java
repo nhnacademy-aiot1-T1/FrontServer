@@ -4,7 +4,9 @@ import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.domain.CommonResponse;
 import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.domain.UserLoginRequestDto;
+import com.nhnacademy.front.server.exception.LoginFailedException;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -43,7 +45,7 @@ public class AuthAdapterImpl implements AuthAdapter {
         new ParameterizedTypeReference<>() {
         }
     );
-    return exchange.getBody().dataOrElseThrow(() -> new RuntimeException("로그인 실패"));
+    return Objects.requireNonNull(exchange.getBody()).dataOrElseThrow(() -> new LoginFailedException("로그인 실패"));
   }
 
   @Override
