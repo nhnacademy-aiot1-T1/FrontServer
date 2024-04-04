@@ -58,6 +58,6 @@ public class RegisterController {
       return "pages/auth/register";
     }
   redirectAttributes.addFlashAttribute("successMessage","회원가입이 완료되었습니다!");
-    return "redirect::pages/auth/registerSuccess";
+    return "redirect:pages/auth/registerSuccess";
   }
 }
