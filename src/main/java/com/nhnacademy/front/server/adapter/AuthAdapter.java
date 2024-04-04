@@ -1,6 +1,7 @@
 package com.nhnacademy.front.server.adapter;
 
 import com.nhnacademy.front.server.domain.LoginResponseDto;
+import com.nhnacademy.front.server.domain.register.CreateRegisterRequestDto;
 
 /**
  * Javadoc 인증 클래스
@@ -25,5 +26,7 @@ public interface AuthAdapter {
    * @param accessToken 로그아웃에 필요한 client의 token
    */
   void logout(String accessToken);
+
+  void registerUser(CreateRegisterRequestDto createRegisterRequestDto);
 
 }

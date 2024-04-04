@@ -12,13 +12,4 @@ public class PageController {
     public String loadMainPage(){
         return "/pages/main/index";
     }
-
-    @GetMapping("/sidebar")
-    public String loadSideBar(){
-        return "pages/sidebar/sidebar";
-    }
-    @GetMapping("/navbar")
-    public String loadNavBar(){
-        return "pages/navbar/navbar";
-    }
 }
