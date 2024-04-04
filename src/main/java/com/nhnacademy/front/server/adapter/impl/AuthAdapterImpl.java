@@ -7,6 +7,7 @@ import com.nhnacademy.front.server.domain.CommonResponse;
 import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.domain.UserLoginRequestDto;
 import com.nhnacademy.front.server.domain.register.CreateRegisterRequestDto;
+import com.nhnacademy.front.server.exception.JsonParseFailException;
 import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
 import java.io.IOException;
@@ -96,7 +97,7 @@ public class AuthAdapterImpl implements AuthAdapter {
           throw new RegisterFailException(message);
         } catch (IOException ioException) {
           // JSON 파싱 실패 처리
-          throw new RuntimeException("JSON 파싱 오류", ioException);
+          throw new JsonParseFailException("JSON 파싱 오류", ioException);
         }
       }
     }
