@@ -19,10 +19,10 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public String getLoginToken(String id, String password) {
+    public String getLoginToken(String id, String password,String userAddress) {
         LoginResponseDto loginResponseDto;
         try{
-            loginResponseDto = authAdapter.userLogin(id,password);
+            loginResponseDto = authAdapter.userLogin(id,password,userAddress);
         }catch (LoginFailedException e){
             return null;
         }

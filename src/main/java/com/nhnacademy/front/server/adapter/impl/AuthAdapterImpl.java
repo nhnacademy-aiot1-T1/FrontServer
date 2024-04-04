@@ -32,10 +32,11 @@ public class AuthAdapterImpl implements AuthAdapter {
   }
 
   @Override
-  public LoginResponseDto userLogin(String id, String password) {
+  public LoginResponseDto userLogin(String id, String password, String userAddress) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+    headers.add("userId",userAddress);
 
     UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(id,password);
 

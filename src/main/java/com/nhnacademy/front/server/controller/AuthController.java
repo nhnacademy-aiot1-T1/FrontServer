@@ -1,7 +1,7 @@
 package com.nhnacademy.front.server.controller;
 
-import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.service.AuthService;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,9 +19,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  * 인증서버와 관련된 api를 처리하는 controller입니다 각각 해당하는 위치의 html파일을 반환합니다!
  * @author AoiTuNa
- * @version 1.0
+ * @version 1.1
  * @see #showLoginForm()
- * @see #doLogin(String, String, HttpServletResponse, RedirectAttributes)
+ * @see #doLogin(String, String, HttpServletRequest ,HttpServletResponse, RedirectAttributes)
  * @see #doLogout(String, RedirectAttributes)
  */
 @Controller
@@ -47,6 +47,7 @@ public class AuthController {
      * 로그인 인증 로직입니다 성공하면 메인으로 실패시 다시 로그인 화면을 redirect합니다!
      * @param id 유저가 입력한 이메일 정보 입니다!
      * @param password 유저가 입력한 비밀번호 정보 입니다!
+     * @param req 유저의 IPAddress 정보를 가지고 오기위한 request입니다!
      * @param res 쿠키에 발급받은 토큰을 저장하기 위한 response입니다!
      * @param redirectAttributes 에러 발생시 flash 로 정보를 넘겨주기 위한 attribute입니다!
      * @return 성고하면 메인페이지로 실패하면 로그인 페이지로 반환합니다!
@@ -54,9 +55,12 @@ public class AuthController {
     @PostMapping("/login")
     public String doLogin(@RequestParam("id")String id,
                           @RequestParam("password")String password,
+                            HttpServletRequest req,
                             HttpServletResponse res,
                             RedirectAttributes redirectAttributes){
-        String token = authService.getLoginToken(id,password);
+        //Todo 유저의 주소 정보가 들어있는 헤더값 - 키값이 정해지면 설정 하기!!
+        String userAddress = req.getHeader("userAddress");
+        String token = authService.getLoginToken(id,password,userAddress);
         if(token==null){
             //redirect 해도 1번은 정보가 넘어가는 session 오류정보를 전달함.
             redirectAttributes.addFlashAttribute("error","do not match Id or Password.");
