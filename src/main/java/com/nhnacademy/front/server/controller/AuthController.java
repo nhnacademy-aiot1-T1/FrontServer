@@ -32,6 +32,7 @@ public class AuthController {
 
     private final AuthService authService;
 
+
     /**
      * 해당 request 와 Uri pattern이 오면 해당 controller을 호출합니다
      * @return 로그인 메인 페이지
