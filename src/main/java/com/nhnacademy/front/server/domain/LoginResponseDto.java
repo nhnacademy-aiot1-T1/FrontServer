@@ -14,6 +14,5 @@ import lombok.*;
 public class LoginResponseDto {
   String userId;
   String accessToken;
-  String userAddress;
 }
 

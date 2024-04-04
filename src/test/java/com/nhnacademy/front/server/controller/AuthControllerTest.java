@@ -36,12 +36,13 @@ class AuthControllerTest {
 
   @Test
   void doLoginSuccess() throws Exception {
-    given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(
+    given(authService.getLoginToken(any(String.class), any(String.class),any(String.class))).willReturn(
         Optional.of("token").orElse(null));
 
     mockMvc.perform(post("/login")
             .param("id", "test")
-            .param("password", "1234"))
+            .param("password", "1234")
+            .header("userAddress","192.168.0.1"))
         .andExpect(status().isOk())
         .andExpect(cookie().exists("authorization"))
         .andExpect(cookie().httpOnly("authorization", true))
@@ -50,10 +51,11 @@ class AuthControllerTest {
 
   @Test
   void doLoginFailed() throws Exception {
-    given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(null);
+    given(authService.getLoginToken(any(String.class), any(String.class),any(String.class))).willReturn(null);
     mockMvc.perform(post("/login")
             .param("id", "test")
-            .param("password", "1234"))
+            .param("password", "1234")
+            .param("userAddress", "192.168.0.1"))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("/pages/auth/login"))
         .andExpect(flash().attributeExists("error"));

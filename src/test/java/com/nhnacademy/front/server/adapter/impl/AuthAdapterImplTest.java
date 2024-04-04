@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.domain.LoginResponseDto;
+import com.nhnacademy.front.server.domain.register.CreateRegisterRequestDto;
+import com.nhnacademy.front.server.exception.RegisterFailException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +47,7 @@ class AuthAdapterImplTest {
                 + "\"timestamp\" : \"" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + "\" }",
             MediaType.APPLICATION_JSON));
 
-    LoginResponseDto result = authAdapter.userLogin("user", "1234");
+    LoginResponseDto result = authAdapter.userLogin("user", "1234","192.168.0.1");
     assertNotNull(result);
     assertEquals("fakeToken", result.getAccessToken());
 
@@ -64,4 +66,20 @@ class AuthAdapterImplTest {
 
 
   }
+
+  @Test
+  void registerUser() {
+    mockServer.expect(MockRestRequestMatchers.requestTo("http://192.168.0.27:8080/register"))
+        .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
+        .andRespond(MockRestResponseCreators.withUnauthorizedRequest().body(
+            "{ \"status\": \"fail\","
+                + " \"data\": null, "
+                + "\"message\": \"is already use id!!!\","
+                + "\"timestamp\" : \"" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + "\" }"
+        ));
+    CreateRegisterRequestDto registerRequestDto = new CreateRegisterRequestDto("user","1234");
+    assertThrows(
+        RegisterFailException.class, () -> authAdapter.registerUser(registerRequestDto));
+    mockServer.verify();
+    }
 }

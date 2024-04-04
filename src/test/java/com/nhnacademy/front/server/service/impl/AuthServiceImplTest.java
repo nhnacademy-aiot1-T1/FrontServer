@@ -23,17 +23,19 @@ class AuthServiceImplTest {
   private AuthAdapter authAdapter;
   @Test
   void getLoginTokenSuccess() {
-    String email = "test@stest.com";
+    String id = "test";
     String password = "1234";
-    given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(new LoginResponseDto("admin","testToken"));
-    assertTrue(authService.getLoginToken(email,password).matches("testToken"));
+    String userAddress ="192.168.0.1";
+    given(authAdapter.userLogin(any(String.class),any(String.class),any(String.class))).willReturn(new LoginResponseDto("admin","testToken"));
+    assertTrue(authService.getLoginToken(id,password,userAddress).matches("testToken"));
   }
   @Test
   void getLoginTokenFailed() {
-    String email = "test@stest.com";
+    String id = "test";
     String password = "1234";
-    given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(new LoginResponseDto("admin",null));
-    assertNull(authService.getLoginToken(email,password));
+    String userAddress ="192.168.0.1";
+    given(authAdapter.userLogin(any(String.class),any(String.class),any(String.class))).willReturn(new LoginResponseDto("admin",null));
+    assertNull(authService.getLoginToken(id,password,userAddress));
   }
 
   @Test

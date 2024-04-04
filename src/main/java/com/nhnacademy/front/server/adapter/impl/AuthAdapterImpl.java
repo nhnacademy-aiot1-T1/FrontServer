@@ -1,5 +1,7 @@
 package com.nhnacademy.front.server.adapter.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.domain.CommonResponse;
 import com.nhnacademy.front.server.domain.LoginResponseDto;
@@ -7,6 +9,7 @@ import com.nhnacademy.front.server.domain.UserLoginRequestDto;
 import com.nhnacademy.front.server.domain.register.CreateRegisterRequestDto;
 import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -74,16 +78,27 @@ public class AuthAdapterImpl implements AuthAdapter {
 
     HttpEntity<CreateRegisterRequestDto> requestEntity = new HttpEntity<>(createRegisterRequestDto,headers);
 
-    ResponseEntity<CommonResponse<Void>> exchange = restTemplate.exchange(
-        //Todo 유레카 사용해서 gateway 주소 받아오기!!
-        "http://192.168.0.27:8080/register",
-        HttpMethod.POST,
-        requestEntity,
-        new ParameterizedTypeReference<>() {
+    try {
+      restTemplate.exchange(
+          "http://192.168.0.27:8080/register",
+          HttpMethod.POST,
+          requestEntity,
+          new ParameterizedTypeReference<CommonResponse<Void>>() {}
+      );
+    } catch (HttpClientErrorException e) {
+      if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+        String responseBody = e.getResponseBodyAsString();
+        try {
+          ObjectMapper objectMapper = new ObjectMapper();
+          JsonNode rootNode = objectMapper.readTree(responseBody);
+          String message = rootNode.path("message").asText(); // "message" 속성 값 추출
+
+          throw new RegisterFailException(message);
+        } catch (IOException ioException) {
+          // JSON 파싱 실패 처리
+          throw new RuntimeException("JSON 파싱 오류", ioException);
         }
-    );
-    if(exchange.getStatusCode()== HttpStatus.UNAUTHORIZED){
-      throw new RegisterFailException(Objects.requireNonNull(exchange.getBody()).getMessage());
+      }
     }
   }
 }
