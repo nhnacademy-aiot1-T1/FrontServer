@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.nhnacademy.front.server.domain.JwtToken;
 import com.nhnacademy.front.server.service.AuthService;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -38,7 +37,7 @@ class AuthControllerTest {
   @Test
   void doLoginSuccess() throws Exception {
     given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(
-        Optional.of(new JwtToken("test")));
+        Optional.of("token").orElse(null));
 
     mockMvc.perform(post("/login")
             .param("id", "test")
@@ -51,8 +50,7 @@ class AuthControllerTest {
 
   @Test
   void doLoginFailed() throws Exception {
-    given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(
-        Optional.empty());
+    given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(null);
     mockMvc.perform(post("/login")
             .param("id", "test")
             .param("password", "1234"))

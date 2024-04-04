@@ -1,6 +1,6 @@
 package com.nhnacademy.front.server.controller;
 
-import com.nhnacademy.front.server.domain.JwtToken;
+import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,14 +56,13 @@ public class AuthController {
                           @RequestParam("password")String password,
                             HttpServletResponse res,
                             RedirectAttributes redirectAttributes){
-        JwtToken token = authService.getLoginToken(id,password).orElse(null);
+        String token = authService.getLoginToken(id,password);
         if(token==null){
             //redirect 해도 1번은 정보가 넘어가는 session 오류정보를 전달함.
             redirectAttributes.addFlashAttribute("error","do not match Id or Password.");
             return "redirect:/pages/auth/login";
         }
-        String accessToken = token.getAccessToken();
-        Cookie cookie = new Cookie("authorization",accessToken);
+        Cookie cookie = new Cookie("authorization",token);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         res.addCookie(cookie);

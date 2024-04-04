@@ -1,9 +1,13 @@
 package com.nhnacademy.front.server.adapter.impl;
 
 import com.nhnacademy.front.server.adapter.AuthAdapter;
-import com.nhnacademy.front.server.domain.JwtToken;
+import com.nhnacademy.front.server.domain.CommonResponse;
+import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.domain.UserLoginRequestDto;
+import com.nhnacademy.front.server.exception.LoginFailedException;
 import java.util.List;
+import java.util.Objects;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,7 +29,7 @@ public class AuthAdapterImpl implements AuthAdapter {
   }
 
   @Override
-  public JwtToken userLogin(String id, String password) {
+  public LoginResponseDto userLogin(String id, String password) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     headers.setAccept(List.of(MediaType.APPLICATION_JSON));
@@ -34,13 +38,14 @@ public class AuthAdapterImpl implements AuthAdapter {
 
     HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto,headers);
 
-    ResponseEntity<JwtToken> exchange = restTemplate.exchange(
-        "http://192.168.0.27:8080/login",
+    ResponseEntity<CommonResponse<LoginResponseDto>> exchange = restTemplate.exchange(
+        "http://192.168.71.99:8080/api/auth/login",
         HttpMethod.POST,
         requestEntity,
-        JwtToken.class
+        new ParameterizedTypeReference<>() {
+        }
     );
-    return exchange.getBody();
+    return Objects.requireNonNull(exchange.getBody()).dataOrElseThrow(() -> new LoginFailedException("로그인 실패"));
   }
 
   @Override

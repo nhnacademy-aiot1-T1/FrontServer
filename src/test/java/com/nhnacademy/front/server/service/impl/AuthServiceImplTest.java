@@ -6,7 +6,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 
 import com.nhnacademy.front.server.adapter.AuthAdapter;
-import com.nhnacademy.front.server.domain.JwtToken;
+import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.service.AuthService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +25,15 @@ class AuthServiceImplTest {
   void getLoginTokenSuccess() {
     String email = "test@stest.com";
     String password = "1234";
-    given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(new JwtToken("testToken"));
-    assertTrue(authService.getLoginToken(email,password).isPresent());
+    given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(new LoginResponseDto("admin","testToken"));
+    assertTrue(authService.getLoginToken(email,password).matches("testToken"));
   }
   @Test
   void getLoginTokenFailed() {
     String email = "test@stest.com";
     String password = "1234";
-    given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(null);
-    assertTrue(authService.getLoginToken(email,password).isEmpty());
+    given(authAdapter.userLogin(any(String.class),any(String.class))).willReturn(new LoginResponseDto("admin",null));
+    assertNull(authService.getLoginToken(email,password));
   }
 
   @Test
