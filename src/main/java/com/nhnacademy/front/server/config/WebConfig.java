@@ -24,10 +24,7 @@ public class WebConfig {
      */
     @Bean
     @LoadBalanced
-    public RestTemplate restTemplate(RestTemplateBuilder builder){
-        return builder
-                .setReadTimeout(Duration.ofSeconds(5L))
-                .setConnectTimeout(Duration.ofSeconds(3L))
-                .build();
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 }

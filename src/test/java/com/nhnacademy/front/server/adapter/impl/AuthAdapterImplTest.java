@@ -41,7 +41,7 @@ class AuthAdapterImplTest {
 
   @Test
   void userLogin() {
-    mockServer.expect(MockRestRequestMatchers.requestTo("http://192.168.71.99:8080/api/auth/login"))
+    mockServer.expect(MockRestRequestMatchers.requestTo("http://GATEWAY-SERVICE/api/auth/login"))
         .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
         .andRespond(MockRestResponseCreators.withSuccess(
             "{ \"status\": \"success\","
@@ -59,7 +59,7 @@ class AuthAdapterImplTest {
 
   @Test
   void logout() {
-    mockServer.expect(MockRestRequestMatchers.requestTo("http://192.168.0.27:8080/logout"))
+    mockServer.expect(MockRestRequestMatchers.requestTo("http://GATEWAY-SERVICE/logout"))
         .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
         .andRespond(MockRestResponseCreators.withUnauthorizedRequest());
 
@@ -72,7 +72,7 @@ class AuthAdapterImplTest {
 
   @Test
   void registerUser() {
-    mockServer.expect(MockRestRequestMatchers.requestTo("http://192.168.0.27:8080/register"))
+    mockServer.expect(MockRestRequestMatchers.requestTo("http://GATEWAY-SERVICE/register"))
         .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
         .andRespond(MockRestResponseCreators.withStatus(HttpStatus.CONFLICT).body(
             "{ \"status\": \"fail\","
@@ -80,7 +80,7 @@ class AuthAdapterImplTest {
                 + "\"message\": \"is already use id!!!\","
                 + "\"timestamp\" : \"" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + "\" }"
         ));
-    RegisterRequestDto registerRequestDto = new RegisterRequestDto("user","1234");
+    RegisterRequestDto registerRequestDto = new RegisterRequestDto("user","1234","바보","test@test.com");
     assertThrows(
         RegisterFailException.class, () -> authAdapter.registerUser(registerRequestDto));
     mockServer.verify();

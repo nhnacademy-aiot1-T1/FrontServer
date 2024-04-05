@@ -30,7 +30,7 @@ public interface AuthAdapter {
 
   /**
    * 회원가입한 유저의 정보를 보내기 위한 메서드 입니다!
-   * @param createRegisterRequestDto 1.1V 기준 id pw 값이 포함되어 있습니다! 추후 추가될 가능성이 있습니다!.
+   * @param registerRequestDto 1.1V 기준 id pw 값이 포함되어 있습니다! 추후 추가될 가능성이 있습니다!.
    */
   void registerUser(RegisterRequestDto registerRequestDto);
 

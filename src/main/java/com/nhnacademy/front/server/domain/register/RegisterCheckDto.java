@@ -14,4 +14,6 @@ public class RegisterCheckDto {
   private String id;
   private String password;
   private String passwordRetype;
+  private String name;
+  private String email;
 }

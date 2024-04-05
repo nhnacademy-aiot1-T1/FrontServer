@@ -13,6 +13,7 @@ import com.nhnacademy.front.server.exception.RegisterFailException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +26,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
+@Slf4j
 public class AuthAdapterImpl implements AuthAdapter {
 
   private static final String TOKEN_TYPE = "Bearer";
@@ -33,7 +35,6 @@ public class AuthAdapterImpl implements AuthAdapter {
 
   public AuthAdapterImpl(RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
-
   }
 
   @Override
@@ -48,7 +49,7 @@ public class AuthAdapterImpl implements AuthAdapter {
     HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto,headers);
 
     ResponseEntity<CommonResponse<LoginResponseDto>> exchange = restTemplate.exchange(
-        "http://GATEWAY-SERVICE/api/auth/login",
+        "GATEWAY-SERVICE/api/auth/login",
         HttpMethod.POST,
         requestEntity,
         new ParameterizedTypeReference<>() {
@@ -64,7 +65,7 @@ public class AuthAdapterImpl implements AuthAdapter {
 
     HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
     restTemplate.exchange(
-        "http://GATEWAY-SERVICE/logout",
+        "GATEWAY-SERVICE/logout",
         HttpMethod.POST,
         requestEntity,
         Void.class
@@ -78,13 +79,13 @@ public class AuthAdapterImpl implements AuthAdapter {
     headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
     HttpEntity<RegisterRequestDto> requestEntity = new HttpEntity<>(registerRequestDto,headers);
-
+    log.warn("여기까지옴 adapter");
     try {
       restTemplate.exchange(
-          "http://GATEWAY-SERVICE/register",
+          "http://GATEWAY-SERVICE/api/users",
           HttpMethod.POST,
           requestEntity,
-          new ParameterizedTypeReference<CommonResponse<Void>>() {}
+          Void.class
       );
     } catch (HttpClientErrorException e) {
       if (e.getStatusCode() == HttpStatus.CONFLICT) {

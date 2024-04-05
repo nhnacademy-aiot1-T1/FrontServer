@@ -11,6 +11,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class RegisterRequestDto {
-  private String id;
+  private String userId;
   private String password;
+  private String name;
+  private String email;
 }

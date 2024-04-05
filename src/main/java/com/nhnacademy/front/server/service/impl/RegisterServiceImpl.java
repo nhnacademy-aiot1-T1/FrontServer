@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RegisterServiceImpl implements RegisterService {
-
+//Todo 스프링을 사용하는 검정으로 변경...
   private final AuthAdapter authAdapter;
   @Override
   public ValidationResult validationRegisterRequest(RegisterCheckDto registerCheckDto) {

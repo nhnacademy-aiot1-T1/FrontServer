@@ -6,6 +6,7 @@ import com.nhnacademy.front.server.domain.register.ValidationResult;
 import com.nhnacademy.front.server.exception.RegisterFailException;
 import com.nhnacademy.front.server.service.RegisterService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class RegisterController {
   private static final String REGISTER_PAGE = "pages/auth/register";
   private static final String REASON_MESSAGE = "message";
@@ -47,15 +49,17 @@ public class RegisterController {
    */
   @PostMapping("/register")
   public String doRegister(@ModelAttribute RegisterCheckDto registerCheckDto, Model model, RedirectAttributes redirectAttributes){
+    log.warn("init postMapping");
     ValidationResult validationResult = registerService.validationRegisterRequest(registerCheckDto);
     if(!validationResult.isValid()){
       model.addAttribute(REASON_MESSAGE, validationResult.getMessage());
       return REGISTER_PAGE;
     }
-    RegisterRequestDto registerRequestDto = new RegisterRequestDto(registerCheckDto.getId(),registerCheckDto.getPassword());
+    RegisterRequestDto registerRequestDto = new RegisterRequestDto(registerCheckDto.getId(),registerCheckDto.getPassword(),registerCheckDto.getName(),registerCheckDto.getEmail());
     try{
       registerService.registerCreated(registerRequestDto);
     }catch (RegisterFailException e){
+      log.warn(e.getMessage());
       model.addAttribute(REASON_MESSAGE, e.getMessage());
       return REGISTER_PAGE;
     }
