@@ -1,6 +1,5 @@
 package com.nhnacademy.front.server.controller;
 
-import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.service.AuthService;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -64,12 +63,9 @@ public class AuthController {
         //Todo 유저의 주소 정보가 들어있는 헤더값 - 키값이 정해지면 설정 하기!!
         String userAddress = req.getHeader("userAddress");
         String token;
-        try{
-            token = authService.getLoginToken(id,password,userAddress);
-        }catch (LoginFailedException e){
-            redirectAttributes.addFlashAttribute("error",e.getMessage());
-            return REDIRECT+LOGIN_PAGE;
-        }
+
+        token = authService.getLoginToken(id,password,userAddress);
+
         if(token==null){
             //redirect 해도 1번은 정보가 넘어가는 session 오류정보를 전달함.
             redirectAttributes.addFlashAttribute("error","do not match Id or Password.");

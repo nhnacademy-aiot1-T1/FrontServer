@@ -7,11 +7,14 @@ import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.nhnacademy.front.server.adapter.impl.AuthAdapterImpl;
 import com.nhnacademy.front.server.domain.register.CreateRegisterRequestDto;
 import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
 import com.nhnacademy.front.server.domain.register.ValidationResult;
+import com.nhnacademy.front.server.exception.JsonParseFailException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
 import com.nhnacademy.front.server.service.RegisterService;
+import java.io.IOException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,20 +49,33 @@ class RegisterControllerTest {
             .param("password","12345678")
             .param("passwordRetype","12345678"))
             .andExpect(status().isOk())
-            .andExpect(model().attributeExists("failedResult"))
+            .andExpect(model().attributeExists("message"))
             .andExpect(view().name("pages/auth/register"));
   }
   @Test
   void doRegisterFailedFromApi() throws Exception{
     given(registerService.validationRegisterRequest(any(RegisterRequestDto.class))).willReturn(new ValidationResult(true,"유효한 입력입니다!"));
-    doThrow(new RegisterFailException("로그인 터짐 ㅇㅇ")).when(registerService).isCreated(any(CreateRegisterRequestDto.class));
+    doThrow(new RegisterFailException("로그인 터짐 ㅇㅇ",AuthAdapterImpl.class.getSimpleName())).when(registerService).isCreated(any(CreateRegisterRequestDto.class));
     mockMvc.perform(post("/register")
             .param("id","ppapppa")
             .param("password","12345678")
             .param("passwordRetype","12345678"))
-            .andExpect(status().isOk())
-            .andExpect(model().attributeExists("failedResult"))
-            .andExpect(view().name("pages/auth/register"));
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("message"))
+        .andExpect(view().name("pages/auth/register"));
+  }
+
+  @Test
+  void doRegisterFailedFromJsonParsing() throws Exception{
+    given(registerService.validationRegisterRequest(any(RegisterRequestDto.class))).willReturn(new ValidationResult(true,"유효한 입력입니다!"));
+    doThrow(new JsonParseFailException("json 파싱 오류",new IOException(), AuthAdapterImpl.class.getSimpleName())).when(registerService).isCreated(any(CreateRegisterRequestDto.class));
+    mockMvc.perform(post("/register")
+            .param("id","ppapppa")
+            .param("password","12345678")
+            .param("passwordRetype","12345678"))
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("message"))
+        .andExpect(view().name("pages/auth/register"));
   }
   @Test
   void doResisterSuccessTest() throws Exception{
@@ -69,7 +85,7 @@ class RegisterControllerTest {
                     .param("password","12345678")
                     .param("passwordRetype","12345678"))
             .andExpect(status().is3xxRedirection())
-            .andExpect(flash().attributeExists("successMessage"))
+            .andExpect(flash().attributeExists("message"))
             .andExpect(redirectedUrl("pages/auth/registerSuccess"));
 
 

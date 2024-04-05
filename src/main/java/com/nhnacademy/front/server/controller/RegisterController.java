@@ -3,7 +3,6 @@ package com.nhnacademy.front.server.controller;
 import com.nhnacademy.front.server.domain.register.CreateRegisterRequestDto;
 import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
 import com.nhnacademy.front.server.domain.register.ValidationResult;
-import com.nhnacademy.front.server.exception.JsonParseFailException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
 import com.nhnacademy.front.server.service.RegisterService;
 import lombok.RequiredArgsConstructor;
@@ -58,9 +57,6 @@ public class RegisterController {
       registerService.isCreated(createRegisterRequestDto);
     }catch (RegisterFailException e){
       model.addAttribute(REASON_MESSAGE, e.getMessage());
-      return REGISTER_PAGE;
-    }catch (JsonParseFailException e){
-      model.addAttribute(REASON_MESSAGE, "로그인에 실패 했습니다 다시 시도해 주세요!");
       return REGISTER_PAGE;
     }
   redirectAttributes.addFlashAttribute(REASON_MESSAGE,"회원가입이 완료되었습니다!");

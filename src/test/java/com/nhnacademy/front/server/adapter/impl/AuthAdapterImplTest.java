@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.match.MockRestRequestMatchers;
@@ -73,7 +74,7 @@ class AuthAdapterImplTest {
   void registerUser() {
     mockServer.expect(MockRestRequestMatchers.requestTo("http://192.168.0.27:8080/register"))
         .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
-        .andRespond(MockRestResponseCreators.withUnauthorizedRequest().body(
+        .andRespond(MockRestResponseCreators.withStatus(HttpStatus.CONFLICT).body(
             "{ \"status\": \"fail\","
                 + " \"data\": null, "
                 + "\"message\": \"is already use id!!!\","

@@ -54,7 +54,7 @@ public class AuthAdapterImpl implements AuthAdapter {
         new ParameterizedTypeReference<>() {
         }
     );
-    return Objects.requireNonNull(exchange.getBody()).dataOrElseThrow(() -> new LoginFailedException("로그인 실패"));
+    return Objects.requireNonNull(exchange.getBody()).dataOrElseThrow(() -> new LoginFailedException("로그인 실패",this.getClass().getSimpleName()));
   }
 
   @Override
@@ -94,10 +94,10 @@ public class AuthAdapterImpl implements AuthAdapter {
           JsonNode rootNode = objectMapper.readTree(responseBody);
           String message = rootNode.path("message").asText(); // "message" 속성 값 추출
 
-          throw new RegisterFailException(message);
+          throw new RegisterFailException(message,this.getClass().getSimpleName());
         } catch (IOException ioException) {
           // JSON 파싱 실패 처리
-          throw new JsonParseFailException("JSON 파싱 오류", ioException);
+          throw new JsonParseFailException("JSON 파싱 오류", ioException,this.getClass().getSimpleName());
         }
       }
     }
