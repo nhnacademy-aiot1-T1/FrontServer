@@ -87,7 +87,7 @@ public class AuthAdapterImpl implements AuthAdapter {
           new ParameterizedTypeReference<CommonResponse<Void>>() {}
       );
     } catch (HttpClientErrorException e) {
-      if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+      if (e.getStatusCode() == HttpStatus.CONFLICT) {
         String responseBody = e.getResponseBodyAsString();
         try {
           ObjectMapper objectMapper = new ObjectMapper();
