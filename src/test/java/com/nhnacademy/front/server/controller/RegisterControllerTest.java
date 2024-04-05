@@ -12,6 +12,7 @@ import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
 import com.nhnacademy.front.server.domain.register.ValidationResult;
 import com.nhnacademy.front.server.exception.RegisterFailException;
 import com.nhnacademy.front.server.service.RegisterService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,6 +20,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers = RegisterController.class)
+@DisplayName("회원가입 로직 테스트")
 class RegisterControllerTest {
   @Autowired
   RegisterController registerController;

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.doThrow;
 import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.service.AuthService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.web.client.HttpClientErrorException;
 
 @SpringBootTest
+@DisplayName("회원가입 로그인 서비스 로직 테스트")
 class AuthServiceImplTest {
   @Autowired
   private AuthService authService;
