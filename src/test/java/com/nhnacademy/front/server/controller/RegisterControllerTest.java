@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.nhnacademy.front.server.adapter.impl.AuthAdapterImpl;
-import com.nhnacademy.front.server.domain.register.CreateRegisterRequestDto;
+import com.nhnacademy.front.server.domain.register.RegisterCheckDto;
 import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
 import com.nhnacademy.front.server.domain.register.ValidationResult;
 import com.nhnacademy.front.server.exception.JsonParseFailException;
@@ -43,7 +43,7 @@ class RegisterControllerTest {
 
   @Test
   void doRegisterFailedFromFront() throws Exception {
-    given(registerService.validationRegisterRequest(any(RegisterRequestDto.class))).willReturn(new ValidationResult(false,"Id는 5글자 이상이어야 합니다"));
+    given(registerService.validationRegisterRequest(any(RegisterCheckDto.class))).willReturn(new ValidationResult(false,"Id는 5글자 이상이어야 합니다"));
     mockMvc.perform(post("/register")
             .param("id","ppap")
             .param("password","12345678")
@@ -54,8 +54,9 @@ class RegisterControllerTest {
   }
   @Test
   void doRegisterFailedFromApi() throws Exception{
-    given(registerService.validationRegisterRequest(any(RegisterRequestDto.class))).willReturn(new ValidationResult(true,"유효한 입력입니다!"));
-    doThrow(new RegisterFailException("로그인 터짐 ㅇㅇ",AuthAdapterImpl.class.getSimpleName())).when(registerService).isCreated(any(CreateRegisterRequestDto.class));
+    given(registerService.validationRegisterRequest(any(RegisterCheckDto.class))).willReturn(new ValidationResult(true,"유효한 입력입니다!"));
+    doThrow(new RegisterFailException("로그인 터짐 ㅇㅇ",AuthAdapterImpl.class.getSimpleName())).when(registerService).registerCreated(any(
+        RegisterRequestDto.class));
     mockMvc.perform(post("/register")
             .param("id","ppapppa")
             .param("password","12345678")
@@ -67,8 +68,8 @@ class RegisterControllerTest {
 
   @Test
   void doRegisterFailedFromJsonParsing() throws Exception{
-    given(registerService.validationRegisterRequest(any(RegisterRequestDto.class))).willReturn(new ValidationResult(true,"유효한 입력입니다!"));
-    doThrow(new JsonParseFailException("json 파싱 오류",new IOException(), AuthAdapterImpl.class.getSimpleName())).when(registerService).isCreated(any(CreateRegisterRequestDto.class));
+    given(registerService.validationRegisterRequest(any(RegisterCheckDto.class))).willReturn(new ValidationResult(true,"유효한 입력입니다!"));
+    doThrow(new JsonParseFailException("json 파싱 오류",new IOException(), AuthAdapterImpl.class.getSimpleName())).when(registerService).registerCreated(any(RegisterRequestDto.class));
     mockMvc.perform(post("/register")
             .param("id","ppapppa")
             .param("password","12345678")
@@ -79,7 +80,7 @@ class RegisterControllerTest {
   }
   @Test
   void doResisterSuccessTest() throws Exception{
-    given(registerService.validationRegisterRequest(any(RegisterRequestDto.class))).willReturn(new ValidationResult(true,"유효한 입력입니다!"));
+    given(registerService.validationRegisterRequest(any(RegisterCheckDto.class))).willReturn(new ValidationResult(true,"유효한 입력입니다!"));
     mockMvc.perform(post("/register")
                     .param("id","ppapppa")
                     .param("password","12345678")

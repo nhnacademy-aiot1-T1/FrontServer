@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 회원가입 폼에서 유저가 입력한 정보를 저장하기 위해 사용하는 domain객체 입니다!
+ * gateway server를 통해 api server로 회원가입한 유저의 정보를 보내기위해 만들어진 domain객체 입니다!
  * @author AoiTuNa
  * @version 1.0
  */
@@ -13,5 +13,4 @@ import lombok.Getter;
 public class RegisterRequestDto {
   private String id;
   private String password;
-  private String passwordRetype;
 }

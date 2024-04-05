@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.domain.LoginResponseDto;
-import com.nhnacademy.front.server.domain.register.CreateRegisterRequestDto;
+import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
 import com.nhnacademy.front.server.exception.RegisterFailException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -80,7 +80,7 @@ class AuthAdapterImplTest {
                 + "\"message\": \"is already use id!!!\","
                 + "\"timestamp\" : \"" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + "\" }"
         ));
-    CreateRegisterRequestDto registerRequestDto = new CreateRegisterRequestDto("user","1234");
+    RegisterRequestDto registerRequestDto = new RegisterRequestDto("user","1234");
     assertThrows(
         RegisterFailException.class, () -> authAdapter.registerUser(registerRequestDto));
     mockServer.verify();

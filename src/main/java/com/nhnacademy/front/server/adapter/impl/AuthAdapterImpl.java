@@ -6,7 +6,7 @@ import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.domain.CommonResponse;
 import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.domain.UserLoginRequestDto;
-import com.nhnacademy.front.server.domain.register.CreateRegisterRequestDto;
+import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
 import com.nhnacademy.front.server.exception.JsonParseFailException;
 import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
@@ -72,12 +72,12 @@ public class AuthAdapterImpl implements AuthAdapter {
   }
 
   @Override
-  public void registerUser(CreateRegisterRequestDto createRegisterRequestDto) {
+  public void registerUser(RegisterRequestDto registerRequestDto) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-    HttpEntity<CreateRegisterRequestDto> requestEntity = new HttpEntity<>(createRegisterRequestDto,headers);
+    HttpEntity<RegisterRequestDto> requestEntity = new HttpEntity<>(registerRequestDto,headers);
 
     try {
       restTemplate.exchange(
