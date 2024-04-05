@@ -1,6 +1,7 @@
 package com.nhnacademy.front.server.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +23,7 @@ public class WebConfig {
      * @return 설정된 빌더를 리턴합니다!
      */
     @Bean
+    @LoadBalanced
     public RestTemplate restTemplate(RestTemplateBuilder builder){
         return builder
                 .setReadTimeout(Duration.ofSeconds(5L))
