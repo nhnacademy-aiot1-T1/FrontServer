@@ -14,7 +14,7 @@ public interface AuthAdapter {
 
   /**
    * 유저의 로그인 정보를 보내 token value를 가져오는 메서드 입니다!
-   * @param id 로그인에 필요한 유저 email
+   * @param id 로그인에 필요한 유저 id
    * @param password 로그인에 필요한 유저 password
    * @param userAddress accessToken의 발급을 위한 유저의 ip정보
    * @return accessToken이 포함된 domain class

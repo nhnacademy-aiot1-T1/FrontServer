@@ -45,7 +45,7 @@ public class AuthController {
 
     /**
      * 로그인 인증 로직입니다 성공하면 메인으로 실패시 다시 로그인 화면을 redirect합니다!
-     * @param id 유저가 입력한 이메일 정보 입니다!
+     * @param id 유저가 입력한 아이디 정보 입니다!
      * @param password 유저가 입력한 비밀번호 정보 입니다!
      * @param req 유저의 IPAddress 정보를 가지고 오기위한 request입니다!
      * @param res 쿠키에 발급받은 토큰을 저장하기 위한 response입니다!
