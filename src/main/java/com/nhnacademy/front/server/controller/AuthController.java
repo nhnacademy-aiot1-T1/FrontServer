@@ -1,5 +1,6 @@
 package com.nhnacademy.front.server.controller;
 
+import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.service.AuthService;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private static final String LOGIN_PAGE = "/pages/auth/login";
+    private static final String REDIRECT = "redirect:";
 
     private final AuthService authService;
 
@@ -38,7 +41,7 @@ public class AuthController {
      * @return 로그인 메인 페이지
      */
     @GetMapping("/login")
-    public String showLoginForm(){return "pages/auth/login";}
+    public String showLoginForm(){return LOGIN_PAGE;}
 
 
     //Id -> email 상황따라 변경
@@ -60,17 +63,23 @@ public class AuthController {
                             RedirectAttributes redirectAttributes){
         //Todo 유저의 주소 정보가 들어있는 헤더값 - 키값이 정해지면 설정 하기!!
         String userAddress = req.getHeader("userAddress");
-        String token = authService.getLoginToken(id,password,userAddress);
+        String token;
+        try{
+            token = authService.getLoginToken(id,password,userAddress);
+        }catch (LoginFailedException e){
+            redirectAttributes.addFlashAttribute("error",e.getMessage());
+            return REDIRECT+LOGIN_PAGE;
+        }
         if(token==null){
             //redirect 해도 1번은 정보가 넘어가는 session 오류정보를 전달함.
             redirectAttributes.addFlashAttribute("error","do not match Id or Password.");
-            return "redirect:/pages/auth/login";
+            return REDIRECT+LOGIN_PAGE;
         }
         Cookie cookie = new Cookie("authorization",token);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         res.addCookie(cookie);
-        return "pages/main/index";
+        return "/pages/main/index";
     }
 
     /**
@@ -87,7 +96,7 @@ public class AuthController {
         }
         authService.tokenLogout(token);
         redirectAttributes.addFlashAttribute("state","success");
-      return "redirect:/pages/auth/login";
+      return REDIRECT+LOGIN_PAGE;
     }
 
 }
