@@ -49,7 +49,7 @@ public class RegisterController {
    */
   @PostMapping("/register")
   public String doRegister(@ModelAttribute RegisterCheckDto registerCheckDto, Model model, RedirectAttributes redirectAttributes){
-    log.warn("init postMapping");
+    log.debug("회원가입 로직 실행");
     ValidationResult validationResult = registerService.validationRegisterRequest(registerCheckDto);
     if(!validationResult.isValid()){
       model.addAttribute(REASON_MESSAGE, validationResult.getMessage());

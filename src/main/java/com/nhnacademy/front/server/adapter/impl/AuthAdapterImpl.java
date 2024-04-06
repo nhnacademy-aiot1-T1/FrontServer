@@ -79,7 +79,7 @@ public class AuthAdapterImpl implements AuthAdapter {
     headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
     HttpEntity<RegisterRequestDto> requestEntity = new HttpEntity<>(registerRequestDto,headers);
-    log.warn("여기까지옴 adapter");
+    log.debug("유저 회원가입 로직 api 실행");
     try {
       restTemplate.exchange(
           "http://GATEWAY-SERVICE/api/users",
