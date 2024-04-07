@@ -17,7 +17,7 @@ public class PageController {
      * 메인페이지를 로드합니다
      * @return 메인페이지의 주소입니다!
      */
-    @GetMapping
+    @GetMapping("/")
     public String loadMainPage(){
         return "/pages/main/index";
     }
