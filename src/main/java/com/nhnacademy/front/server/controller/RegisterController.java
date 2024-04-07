@@ -25,7 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 @Slf4j
 public class RegisterController {
-  private static final String REGISTER_PAGE = "pages/auth/register";
+  private static final String REGISTER_PAGE = "/pages/auth/register";
   private static final String REASON_MESSAGE = "message";
 
   private final RegisterService registerService;
