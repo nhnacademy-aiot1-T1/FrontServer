@@ -50,7 +50,7 @@ class RegisterControllerTest {
             .param("passwordRetype","12345678"))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("message"))
-            .andExpect(view().name("pages/auth/register"));
+            .andExpect(view().name("/pages/auth/register"));
   }
   @Test
   void doRegisterFailedFromApi() throws Exception{
@@ -63,7 +63,7 @@ class RegisterControllerTest {
             .param("passwordRetype","12345678"))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("message"))
-        .andExpect(view().name("pages/auth/register"));
+        .andExpect(view().name("/pages/auth/register"));
   }
 
   @Test
@@ -76,7 +76,7 @@ class RegisterControllerTest {
             .param("passwordRetype","12345678"))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("message"))
-        .andExpect(view().name("pages/auth/register"));
+        .andExpect(view().name("/pages/auth/register"));
   }
   @Test
   void doResisterSuccessTest() throws Exception{
@@ -87,7 +87,7 @@ class RegisterControllerTest {
                     .param("passwordRetype","12345678"))
             .andExpect(status().is3xxRedirection())
             .andExpect(flash().attributeExists("message"))
-            .andExpect(redirectedUrl("pages/auth/registerSuccess"));
+            .andExpect(redirectedUrl("/pages/auth/registerSuccess"));
 
 
   }
