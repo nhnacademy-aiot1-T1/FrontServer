@@ -65,7 +65,7 @@ public class AuthAdapterImpl implements AuthAdapter {
 
     HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
     restTemplate.exchange(
-        "GATEWAY-SERVICE/logout",
+        "GATEWAY-SERVICE/api/auth/logout",
         HttpMethod.POST,
         requestEntity,
         Void.class

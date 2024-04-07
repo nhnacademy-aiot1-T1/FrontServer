@@ -13,6 +13,6 @@ public class LoginFailedException extends RuntimeException{
   private final String originClass;
   public LoginFailedException(String message,String originClass) {
     super(message);
-    this.originClass =originClass;
+    this.originClass = originClass;
   }
 }
