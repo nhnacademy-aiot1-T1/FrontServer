@@ -65,6 +65,6 @@ public class RegisterController {
     }
   redirectAttributes.addFlashAttribute(REASON_MESSAGE,"회원가입이 완료되었습니다!");
     //Todo 임시로 연결하는 페이지 modal 적용 검토
-    return "redirect:pages/auth/registerSuccess";
+    return "redirect:/pages/auth/registerSuccess";
   }
 }
