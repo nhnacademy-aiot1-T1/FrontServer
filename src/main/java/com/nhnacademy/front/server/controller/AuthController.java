@@ -1,6 +1,7 @@
 package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.service.AuthService;
+import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +64,13 @@ public class AuthController {
         //Todo 유저의 주소 정보가 들어있는 헤더값 - 키값이 정해지면 설정 하기!!
         String userAddress = req.getHeader("userAddress");
         String token;
+        //Todo 테스트용 가독성을 위한 log 추후 레벨 조정 필요!!
+      Enumeration<String> headerNames = req.getHeaderNames();
+        if (headerNames != null) {
+            while (headerNames.hasMoreElements()) {
+                log.warn("Header: " + req.getHeader(headerNames.nextElement()));
+            }
+        }
 
         token = authService.getLoginToken(id,password,userAddress);
 
