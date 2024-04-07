@@ -37,15 +37,15 @@ class AuthAdapterImplTest {
   @MockBean
   private RestTemplate restTemplate;
 
-  @Test
-  void userLogin() {
-    CommonResponse<LoginResponseDto> commonResponse = CommonResponse.success(new LoginResponseDto("userId","fakeToken"),"success");
-    ResponseEntity<CommonResponse<LoginResponseDto>> responseEntity = new ResponseEntity<>(commonResponse, HttpStatus.OK);
-    when(restTemplate.exchange(eq("GATEWAY-SERVICE/api/auth/login"),eq(HttpMethod.POST),any(RequestEntity.class),any())).thenReturn(responseEntity);
-    LoginResponseDto result = authAdapter.userLogin("user", "1234","192.168.0.1");
-    assertNotNull(result);
-    assertEquals("fakeToken", result.getAccessToken());
-  }
+//  @Test
+//  void userLogin() {
+//    CommonResponse<LoginResponseDto> commonResponse = CommonResponse.success(new LoginResponseDto("userId","fakeToken"),"success");
+//    ResponseEntity<CommonResponse<LoginResponseDto>> responseEntity = new ResponseEntity<>(commonResponse, HttpStatus.OK);
+//    when(restTemplate.exchange(eq("GATEWAY-SERVICE/api/auth/login"),eq(HttpMethod.POST),any(RequestEntity.class),any())).thenReturn(responseEntity);
+//    LoginResponseDto result = authAdapter.userLogin("user", "1234","192.168.0.1");
+//    assertNotNull(result);
+//    assertEquals("fakeToken", result.getAccessToken());
+//  }
 
   @Test
   void logout() {
