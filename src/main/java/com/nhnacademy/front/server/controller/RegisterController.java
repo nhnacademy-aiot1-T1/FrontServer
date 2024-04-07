@@ -25,7 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 @Slf4j
 public class RegisterController {
-  private static final String REGISTER_PAGE = "/pages/auth/register";
+  private static final String REGISTER_PAGE = "pages/auth/register";
   private static final String REASON_MESSAGE = "message";
 
   private final RegisterService registerService;
@@ -36,7 +36,7 @@ public class RegisterController {
    */
   @GetMapping("/register")
   public String showRegisterForm(){
-    return "/pages/auth/register";
+    return "pages/auth/register";
   }
 
   /**
@@ -65,6 +65,6 @@ public class RegisterController {
     }
   redirectAttributes.addFlashAttribute(REASON_MESSAGE,"회원가입이 완료되었습니다!");
     //Todo 임시로 연결하는 페이지 modal 적용 검토
-    return "redirect:/pages/auth/registerSuccess";
+    return "redirect:pages/auth/registerSuccess";
   }
 }

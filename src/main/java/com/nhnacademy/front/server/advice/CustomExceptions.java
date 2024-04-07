@@ -16,7 +16,7 @@ public class CustomExceptions {
   public String jsonParserFailActivePage(JsonParseFailException parseFailException, Model model){
     if(parseFailException.getOriginClass().equals("AuthAdapterImpl")){
       model.addAttribute("message",parseFailException.getMessage());
-      return "/pages/auth/register";
+      return "pages/auth/register";
     }
     return null;
   }
@@ -25,7 +25,7 @@ public class CustomExceptions {
   public String showLoginFailedReason(LoginFailedException loginFailedException, RedirectAttributes redirectAttributes){
 
       redirectAttributes.addFlashAttribute("error",loginFailedException.getMessage());
-      return "redirect:/pages/auth/login";
+      return "redirect:pages/auth/login";
 
 
   }

@@ -19,6 +19,6 @@ public class PageController {
      */
     @GetMapping("/")
     public String loadMainPage(){
-        return "/pages/main/index";
+        return "pages/main/index";
     }
 }

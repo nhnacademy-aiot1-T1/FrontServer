@@ -31,7 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AuthController {
 
 
-    private static final String LOGIN_PAGE = "/pages/auth/login";
+    private static final String LOGIN_PAGE = "pages/auth/login";
     private static final String REDIRECT = "redirect:";
 
     private final AuthService authService;
@@ -84,7 +84,7 @@ public class AuthController {
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         res.addCookie(cookie);
-        return "/pages/main/index";
+        return "pages/main/index";
     }
 
     /**
