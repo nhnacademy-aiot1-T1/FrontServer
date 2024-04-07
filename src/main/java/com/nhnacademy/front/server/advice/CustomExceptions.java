@@ -16,7 +16,7 @@ public class CustomExceptions {
   public String jsonParserFailActivePage(JsonParseFailException parseFailException, Model model){
     if(parseFailException.getOriginClass().equals("AuthAdapterImpl")){
       model.addAttribute("message",parseFailException.getMessage());
-      return "pages/auth/register";
+      return "/pages/auth/register";
     }
     return null;
   }
