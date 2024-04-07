@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,15 +36,12 @@
   </div>
 
   <!-- Navbar -->
-  <nav id="navbar" class="main-header navbar navbar-expand navbar-white navbar-light">
-
-  </nav>
+  <div th:replace="/pages/navbar/navbar.html :: fragment-nav"></div>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside id="sidebar" class="main-sidebar sidebar-dark-primary elevation-4">
+  <div th:replace="/pages/sidebar/sidebar.html :: fragment-side"></div>
 
-  </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -697,30 +694,8 @@
 <script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.js"></script>
-<script>
-  fetch("/navbar")
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById("navbar").innerHTML = data;
-            // Navbar가 로드된 후 demo.js 로드
-            loadScript("/dist/js/demo.js");
-          });
-
-  // 동적으로 스크립트를 로드하는 함수
-  function loadScript(src) {
-    const script = document.createElement('script');
-    script.src = src;
-    document.head.appendChild(script);
-  }
-</script>
+<script src="/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/dist/js/pages/dashboard.js"></script>
-<script>
-  fetch("/sidebar")
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById("sidebar").innerHTML = data;
-          });
-</script>
 </body>
 </html>

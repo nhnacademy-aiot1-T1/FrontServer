@@ -3,21 +3,17 @@ package com.nhnacademy.front.server.domain;
 import java.time.LocalDateTime;
 import java.util.function.Supplier;
 import lombok.Getter;
-import org.springframework.web.client.HttpClientErrorException;
 
 /***
  * 기본 응답 포맷
  * @param <T> - 전달될 응답 DTO 타입
  */
+@Getter
 public class CommonResponse<T> {
 
-  @Getter
   private final String status;
-  @Getter
   private final T data;
-  @Getter
   private final String message;
-  @Getter
   private final LocalDateTime timestamp;
 
   private CommonResponse(String status, T data, String message) {

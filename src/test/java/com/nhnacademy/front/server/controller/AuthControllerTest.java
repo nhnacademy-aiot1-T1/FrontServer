@@ -1,7 +1,9 @@
 package com.nhnacademy.front.server.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
@@ -9,8 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.service.AuthService;
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(controllers = AuthController.class)
+@DisplayName("로그인 테스트")
 class AuthControllerTest {
 
   @Autowired
@@ -36,12 +41,13 @@ class AuthControllerTest {
 
   @Test
   void doLoginSuccess() throws Exception {
-    given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(
+    given(authService.getLoginToken(any(String.class), any(String.class),any(String.class))).willReturn(
         Optional.of("token").orElse(null));
 
     mockMvc.perform(post("/login")
             .param("id", "test")
-            .param("password", "1234"))
+            .param("password", "1234")
+            .header("userAddress","192.168.0.1"))
         .andExpect(status().isOk())
         .andExpect(cookie().exists("authorization"))
         .andExpect(cookie().httpOnly("authorization", true))
@@ -50,10 +56,11 @@ class AuthControllerTest {
 
   @Test
   void doLoginFailed() throws Exception {
-    given(authService.getLoginToken(any(String.class), any(String.class))).willReturn(null);
+    given(authService.getLoginToken(any(String.class), any(String.class),any(String.class))).willReturn(null);
     mockMvc.perform(post("/login")
             .param("id", "test")
-            .param("password", "1234"))
+            .param("password", "1234")
+            .param("userAddress", "192.168.0.1"))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("/pages/auth/login"))
         .andExpect(flash().attributeExists("error"));
