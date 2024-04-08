@@ -13,15 +13,28 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 모든요청에 클라이언트의 헤더의 토큰의 유무를 확인하는 필터를 적용하는 코드입니다!
+ * @author AoiTuNA
+ * @version 1.0
+ * @see #doFilter(ServletRequest, ServletResponse, FilterChain)
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class LoginCheckFilter implements Filter {
 
   private final AuthService authService;
 
+  /**
+   * 클라이언트의 헤더의 토큰을 검증하고 해당하는 페이지를 연결해 주는 필터입니다!
+   * @param servletRequest 쿠키의 값과 요청자의 ip정보를 받아오기 위해 사용합니다!
+   * @param servletResponse 원하는 페이지로 redirect해주기 위해 사용합니다!
+   * @param filterChain 필터 처리를 위한 필터체인 입니다
+   * @throws IOException 예기치 못한 예외가 발생 했을 시 IOException을 던집니다!
+   */
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-      FilterChain filterChain) throws IOException, ServletException {
+      FilterChain filterChain) throws IOException {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpServletResponse response = (HttpServletResponse) servletResponse;
 

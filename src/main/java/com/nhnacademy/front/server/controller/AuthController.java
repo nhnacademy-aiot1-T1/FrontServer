@@ -53,7 +53,7 @@ public class AuthController {
      * @param req 유저의 IPAddress 정보를 가지고 오기위한 request입니다!
      * @param res 쿠키에 발급받은 토큰을 저장하기 위한 response입니다!
      * @param redirectAttributes 에러 발생시 flash 로 정보를 넘겨주기 위한 attribute입니다!
-     * @return 성고하면 메인페이지로 실패하면 로그인 페이지로 반환합니다!
+     * @return 성공하면 메인페이지로 실패하면 로그인 페이지로 반환합니다!
      */
     @PostMapping("/login")
     public String doLogin(@RequestParam("id")String id,
@@ -63,13 +63,12 @@ public class AuthController {
                             RedirectAttributes redirectAttributes){
         String userAddress = req.getHeader("x-forwarded-for");
         String token;
-        //Todo 테스트용 가독성을 위한 log 추후 레벨 조정 필요!!
       Enumeration<String> headerNames = req.getHeaderNames();
       if (headerNames != null) {
         while (headerNames.hasMoreElements()) {
           String headerName = headerNames.nextElement();
           String headerValue = req.getHeader(headerName);
-          log.warn("Header: " + headerName + " = " + headerValue);
+          log.debug("Header: " + headerName + " = " + headerValue);
         }
       }
 

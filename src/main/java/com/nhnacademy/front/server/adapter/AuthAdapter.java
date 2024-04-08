@@ -9,6 +9,8 @@ import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
  * @version 1.1
  * @see #userLogin(String, String, String)
  * @see #logout(String)
+ * @see #registerUser(RegisterRequestDto)
+ * @see #checkAccessToken(String, String)
  */
 public interface AuthAdapter {
 
@@ -34,6 +36,11 @@ public interface AuthAdapter {
    */
   void registerUser(RegisterRequestDto registerRequestDto);
 
+  /**
+   * accessToken가 유효한지 검증하는 메서드 입니다!
+   * @param token 현재 가지고 있는 accessToken의 정보입니다!
+   * @param address 요청자의 IP주소를 지정합니다!
+   */
   void checkAccessToken(String token,String address);
 
 }

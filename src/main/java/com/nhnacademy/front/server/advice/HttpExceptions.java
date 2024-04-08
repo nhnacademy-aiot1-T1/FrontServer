@@ -13,8 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  * 4xx번대 요청이 왔을 때 알맞은 처리를 위해서 만들어진 advice입니다!
  * @author AoiTuNa
- * @version 1.0
- * @see #clientErrorState(String, HttpClientErrorException, RedirectAttributes)
+ * @version 1.1
+ * @see #clientErrorState(HttpClientErrorException, RedirectAttributes)
  */
 @ControllerAdvice
 @Slf4j
@@ -22,8 +22,9 @@ public class HttpExceptions {
   private static final String MESSAGE_NAME = "message";
 
   /**
-   * 4xx 번대 에러인 HttpClientException을 받아서 처리하는 advice의 로직입니다!
-   * @param token "authorizaion" 을 값으로 가지는 토큰 입니다!
+   * 4xx 번대 에러인 HttpClientException을 받아서 처리하는 advice의 로직입니다!<br/>
+   * 400번 badRequest 401번 unauthorized status를 처리합니다!<br/>
+   * 각 예외의 message 부분의 값을 기준으로 각 예외의 발생 위치와 처리를 규정합니다!
    * @param exception 해당하는 HttpClientException입니다!
    * @param redirectAttributes 다시 연결된 html page에 flash를 추가하기 위한 코드입니다
    * @return 403 요청이 들어오면 인증되지 않은 코인이라는 메시지를 flash로 보내 login 화면으로 redirect 합니다!

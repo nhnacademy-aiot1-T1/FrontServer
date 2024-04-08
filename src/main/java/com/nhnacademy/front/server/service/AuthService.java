@@ -4,9 +4,10 @@ package com.nhnacademy.front.server.service;
 /**
  * authController의 서비스 부분을 처리하는 class입니다!
  * @author AoiTuNa
- * @version 1.1
+ * @version 1.2
  * @see #getLoginToken(String, String, String)
  * @see #tokenLogout(String)
+ * @see #checkAccessToken(String, String)
  */
 public interface AuthService {
 
@@ -25,6 +26,11 @@ public interface AuthService {
      */
     void tokenLogout(String token);
 
+    /**
+     * 토큰 재발급 검증을 위한 메서드 입니다!
+     * @param token 유저의 토큰값이 들어 있습니다!
+     * @param address 유저의 ip정보가 들어 있습니다!
+     */
     void checkAccessToken(String token,String address);
 
 
