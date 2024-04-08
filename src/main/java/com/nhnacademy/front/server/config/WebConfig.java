@@ -1,12 +1,14 @@
 package com.nhnacademy.front.server.config;
 
+import com.nhnacademy.front.server.filter.LoginCheckFilter;
+import com.nhnacademy.front.server.service.AuthService;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.Duration;
 
 /**
  * 스프링 부트를 활용하기 위한 wevConfig 파일입니다!
@@ -26,5 +28,13 @@ public class WebConfig {
     @LoadBalanced
     public RestTemplate restTemplate(){
         return new RestTemplate();
+    }
+
+    @Bean
+    public FilterRegistrationBean<LoginCheckFilter> loginCheckFilterRegistrationBean(AuthService authService){
+        FilterRegistrationBean<LoginCheckFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new LoginCheckFilter(authService));
+        registrationBean.addUrlPatterns("/*");
+        return registrationBean;
     }
 }
