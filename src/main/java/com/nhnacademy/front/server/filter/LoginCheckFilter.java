@@ -25,17 +25,18 @@ public class LoginCheckFilter implements Filter {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-    boolean isHaveAuthToken = false;
-
     Cookie[] cookies = request.getCookies();
     for(Cookie cookie : cookies){
       if("authorization".equals(cookie.getName())){
         //Todo authService 단에서 처리하는 토큰 검증 요청 로직!!
         try{
           //authService.validateToken(검증 값)
+          response.sendRedirect("pages/main/index");
         }catch (Exception e){
           response.sendRedirect("pages/auth/login");
         }
+      }else {
+        response.sendRedirect("pages/auth/login");
       }
     }
 
