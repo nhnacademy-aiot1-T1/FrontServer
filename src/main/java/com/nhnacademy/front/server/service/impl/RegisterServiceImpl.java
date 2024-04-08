@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class RegisterServiceImpl implements RegisterService {
 
   private final AuthAdapter authAdapter;
-  
+
   @Override
   public void registerCreated(RegisterRequestDto registerRequestDto) {
     authAdapter.registerUser(registerRequestDto);
