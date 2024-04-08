@@ -62,8 +62,7 @@ public class AuthController {
                             HttpServletRequest req,
                             HttpServletResponse res,
                             RedirectAttributes redirectAttributes){
-        //Todo 유저의 주소 정보가 들어있는 헤더값 - 키값이 정해지면 설정 하기!!
-        String userAddress = req.getHeader("userAddress");
+        String userAddress = req.getHeader("x-forwarded-for");
         String token;
         //Todo 테스트용 가독성을 위한 log 추후 레벨 조정 필요!!
       Enumeration<String> headerNames = req.getHeaderNames();

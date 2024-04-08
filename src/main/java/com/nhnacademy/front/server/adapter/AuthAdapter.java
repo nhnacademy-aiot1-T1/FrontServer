@@ -34,4 +34,6 @@ public interface AuthAdapter {
    */
   void registerUser(RegisterRequestDto registerRequestDto);
 
+  void checkAccessToken(String token,String address);
+
 }

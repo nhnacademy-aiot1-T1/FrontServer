@@ -31,4 +31,12 @@ public class AuthServiceImpl implements AuthService {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @Override
+    public void checkAccessToken(String token, String address) {
+
+        authAdapter.checkAccessToken(token,address);
+
+    }
+
 }

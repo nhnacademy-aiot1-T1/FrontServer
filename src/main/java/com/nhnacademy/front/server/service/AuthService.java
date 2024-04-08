@@ -25,5 +25,7 @@ public interface AuthService {
      */
     void tokenLogout(String token);
 
+    void checkAccessToken(String token,String address);
+
 
 }

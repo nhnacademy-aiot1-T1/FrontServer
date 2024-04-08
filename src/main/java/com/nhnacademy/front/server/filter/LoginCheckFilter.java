@@ -26,11 +26,11 @@ public class LoginCheckFilter implements Filter {
     HttpServletResponse response = (HttpServletResponse) servletResponse;
 
     Cookie[] cookies = request.getCookies();
+    String clientIp = request.getHeader("x-forwarded-for");
     for(Cookie cookie : cookies){
       if("authorization".equals(cookie.getName())){
-        //Todo authService 단에서 처리하는 토큰 검증 요청 로직!!
         try{
-          //authService.validateToken(검증 값)
+          authService.checkAccessToken(cookie.getValue(),clientIp);
           response.sendRedirect("pages/main/index");
         }catch (Exception e){
           response.sendRedirect("pages/auth/login");

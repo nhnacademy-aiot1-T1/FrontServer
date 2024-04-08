@@ -42,7 +42,7 @@ public class AuthAdapterImpl implements AuthAdapter {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-    headers.add("userId",userAddress);
+    headers.add("x-forwarded-for",userAddress);
 
     UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(id,password);
 
@@ -102,5 +102,22 @@ public class AuthAdapterImpl implements AuthAdapter {
         }
       }
     }
+  }
+
+  @Override
+  public void checkAccessToken(String token, String address) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+    headers.add("Client-IP",address);
+    headers.add("Authorization",TOKEN_TYPE+address);
+    HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+    restTemplate.exchange(
+        "http://GATEWAY-SERVICE/api/api/regenerate",
+        HttpMethod.POST,
+        requestEntity,
+        Void.class
+    );
+
   }
 }
