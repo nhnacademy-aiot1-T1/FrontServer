@@ -2,6 +2,7 @@ package com.nhnacademy.front.server.advice;
 
 import com.nhnacademy.front.server.exception.JsonParseFailException;
 import com.nhnacademy.front.server.exception.LoginFailedException;
+import com.nhnacademy.front.server.exception.LogoutNotFoundTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,7 +27,11 @@ public class CustomExceptions {
 
       redirectAttributes.addFlashAttribute("error",loginFailedException.getMessage());
       return "redirect:pages/auth/login";
+  }
 
-
+  @ExceptionHandler(value = LogoutNotFoundTokenException.class)
+  public String logoutFailedReason(LoginFailedException loginFailedException,RedirectAttributes redirectAttributes){
+    redirectAttributes.addAttribute("error",loginFailedException.getMessage());
+    return "redirect:/pages/auth/login";
   }
 }

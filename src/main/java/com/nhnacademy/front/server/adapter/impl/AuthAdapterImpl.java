@@ -42,7 +42,7 @@ public class AuthAdapterImpl implements AuthAdapter {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-    headers.add("x-forwarded-for",userAddress);
+    headers.add("Client-IP",userAddress);
 
     UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(id,password);
 

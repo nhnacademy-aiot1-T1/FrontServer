@@ -1,11 +1,11 @@
 package com.nhnacademy.front.server.controller;
 
+import com.nhnacademy.front.server.exception.LogoutNotFoundTokenException;
 import com.nhnacademy.front.server.service.AuthService;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -98,7 +97,7 @@ public class AuthController {
     public String doLogout(@CookieValue(value = "authorization",required = false)String token,RedirectAttributes redirectAttributes){
         if(token == null || token.isEmpty()){
             log.info("토큰이 없거나 비어있음 ");
-            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+            throw new LogoutNotFoundTokenException("토큰이 없거나 비어있음!");
         }
         authService.tokenLogout(token);
         redirectAttributes.addFlashAttribute("state","success");
