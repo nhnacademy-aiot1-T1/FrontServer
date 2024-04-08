@@ -2,13 +2,13 @@ package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.domain.register.RegisterCheckDto;
 import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
-import com.nhnacademy.front.server.domain.register.ValidationResult;
 import com.nhnacademy.front.server.exception.RegisterFailException;
 import com.nhnacademy.front.server.service.RegisterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,13 +48,13 @@ public class RegisterController {
    * @see RegisterCheckDto
    */
   @PostMapping("/register")
-  public String doRegister(@ModelAttribute RegisterCheckDto registerCheckDto, Model model, RedirectAttributes redirectAttributes){
+  public String doRegister(@ModelAttribute @Validated RegisterCheckDto registerCheckDto, Model model, RedirectAttributes redirectAttributes){
     log.debug("회원가입 로직 실행");
-    ValidationResult validationResult = registerService.validationRegisterRequest(registerCheckDto);
-    if(!validationResult.isValid()){
-      model.addAttribute(REASON_MESSAGE, validationResult.getMessage());
+    if(!registerCheckDto.getPassword().equals(registerCheckDto.getPasswordRetype())){
+      model.addAttribute(REASON_MESSAGE,"pw와 pw확인이 일치하지 않습니다!");
       return REGISTER_PAGE;
     }
+
     RegisterRequestDto registerRequestDto = new RegisterRequestDto(registerCheckDto.getId(),registerCheckDto.getPassword(),registerCheckDto.getName(),registerCheckDto.getEmail());
     try{
       registerService.registerCreated(registerRequestDto);
