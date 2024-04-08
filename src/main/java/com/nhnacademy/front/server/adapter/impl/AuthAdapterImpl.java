@@ -113,7 +113,7 @@ public class AuthAdapterImpl implements AuthAdapter {
     headers.add("Authorization",TOKEN_TYPE+address);
     HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
     restTemplate.exchange(
-        "http://GATEWAY-SERVICE/api/api/regenerate",
+        "http://GATEWAY-SERVICE/api/regenerate",
         HttpMethod.POST,
         requestEntity,
         Void.class
