@@ -36,7 +36,7 @@ public class RegisterController {
    */
   @GetMapping("/register")
   public String showRegisterForm(){
-    return "pages/auth/register";
+    return REGISTER_PAGE;
   }
 
   /**

@@ -64,7 +64,7 @@ class AuthControllerTest {
             .param("password", "1234")
             .param("userAddress", "192.168.0.1"))
         .andExpect(status().is3xxRedirection())
-        .andExpect(redirectedUrl("/pages/auth/login"))
+        .andExpect(redirectedUrl("pages/auth/login"))
         .andExpect(flash().attributeExists("error"));
   }
 
@@ -75,7 +75,7 @@ class AuthControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.post("/logout")
             .cookie(cookie))
         .andExpect(status().is3xxRedirection())
-        .andExpect(redirectedUrl("/pages/auth/login"))
+        .andExpect(redirectedUrl("pages/auth/login"))
         .andExpect(flash().attributeExists("state"));
   }
 

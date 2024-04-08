@@ -67,11 +67,13 @@ public class AuthController {
         String token;
         //Todo 테스트용 가독성을 위한 log 추후 레벨 조정 필요!!
       Enumeration<String> headerNames = req.getHeaderNames();
-        if (headerNames != null) {
-            while (headerNames.hasMoreElements()) {
-                log.warn("Header: " + req.getHeader(headerNames.nextElement()));
-            }
+      if (headerNames != null) {
+        while (headerNames.hasMoreElements()) {
+          String headerName = headerNames.nextElement();
+          String headerValue = req.getHeader(headerName);
+          log.warn("Header: " + headerName + " = " + headerValue);
         }
+      }
 
         token = authService.getLoginToken(id,password,userAddress);
 

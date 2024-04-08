@@ -49,7 +49,7 @@ public class AuthAdapterImpl implements AuthAdapter {
     HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto,headers);
 
     ResponseEntity<CommonResponse<LoginResponseDto>> exchange = restTemplate.exchange(
-        "GATEWAY-SERVICE/api/auth/login",
+        "http://GATEWAY-SERVICE/api/auth/login",
         HttpMethod.POST,
         requestEntity,
         new ParameterizedTypeReference<>() {
@@ -65,7 +65,7 @@ public class AuthAdapterImpl implements AuthAdapter {
 
     HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
     restTemplate.exchange(
-        "GATEWAY-SERVICE/api/auth/logout",
+        "http://GATEWAY-SERVICE/api/auth/logout",
         HttpMethod.POST,
         requestEntity,
         Void.class

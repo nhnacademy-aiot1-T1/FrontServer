@@ -39,7 +39,7 @@ class RegisterControllerTest {
 
   @Test
   void showRegisterForm() {
-    String actual = "/pages/auth/register";
+    String actual = "pages/auth/register";
     assertEquals(registerController.showRegisterForm(),actual);
   }
 

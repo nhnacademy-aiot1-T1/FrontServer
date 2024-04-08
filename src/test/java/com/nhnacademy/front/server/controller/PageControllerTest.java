@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @DisplayName("페이지 로드 테스트")
-@Disabled
 class PageControllerTest {
   @Autowired
   private PageController pageController;
@@ -18,6 +17,6 @@ class PageControllerTest {
   @Test
   void loadMainPage() {
       String mainPage = pageController.loadMainPage();
-      assertEquals("/pages/main/index",mainPage);
+      assertEquals("pages/main/index",mainPage);
     }
 }
