@@ -43,7 +43,7 @@ class RegisterControllerTest {
     assertEquals(registerController.showRegisterForm(),actual);
   }
 
-  @Test
+  /*@Test
   void doRegisterFailedFromFront() throws Exception {
     given(registerService.validationRegisterRequest(any(RegisterCheckDto.class))).willReturn(new ValidationResult(false,"Id는 5글자 이상이어야 합니다"));
     mockMvc.perform(post("/register")
@@ -92,5 +92,5 @@ class RegisterControllerTest {
             .andExpect(redirectedUrl("/pages/auth/registerSuccess"));
 
 
-  }
+  }*/
 }

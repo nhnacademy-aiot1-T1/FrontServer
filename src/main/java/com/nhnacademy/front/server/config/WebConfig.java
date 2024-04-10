@@ -1,6 +1,6 @@
 package com.nhnacademy.front.server.config;
 
-import com.nhnacademy.front.server.filter.LoginCheckFilter;
+
 import com.nhnacademy.front.server.service.AuthService;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -36,11 +36,5 @@ public class WebConfig {
      * @param authService 토큰의 유무를 검증하기 위한 service 객체입니다!
      * @return 필터규칙을 리턴합니다!
      */
-    @Bean
-    public FilterRegistrationBean<LoginCheckFilter> loginCheckFilterRegistrationBean(AuthService authService){
-        FilterRegistrationBean<LoginCheckFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new LoginCheckFilter(authService));
-        registrationBean.addUrlPatterns("/*");
-        return registrationBean;
-    }
+
 }

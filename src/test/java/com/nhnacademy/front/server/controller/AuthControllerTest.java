@@ -4,6 +4,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
@@ -19,6 +21,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockCookie;
 import org.springframework.test.web.servlet.MockMvc;
@@ -46,14 +49,17 @@ class AuthControllerTest {
     given(authService.getLoginToken(any(String.class), any(String.class),any(String.class))).willReturn(
         Optional.of("token").orElse(null));
 
+
     mockMvc.perform(post("/login")
+                    .with(csrf())
             .param("id", "test")
             .param("password", "1234")
-            .header("userAddress","192.168.0.1"))
+            .header("x-forwarded-for","192.168.0.1"))
         .andExpect(status().isOk())
         .andExpect(cookie().exists("authorization"))
         .andExpect(cookie().httpOnly("authorization", true))
         .andExpect(cookie().secure("authorization", true));
+    verify(authService).getLoginToken(anyString(), anyString(), anyString());
   }
 
   @Test

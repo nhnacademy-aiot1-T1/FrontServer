@@ -34,9 +34,15 @@ public class LoginCheckFilter implements Filter {
    */
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-      FilterChain filterChain) throws IOException {
+      FilterChain filterChain) throws IOException, ServletException {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+    String path = request.getRequestURI();
+    if (path.startsWith("/register")) {
+      filterChain.doFilter(servletRequest,servletResponse);
+      return;
+    }
 
     Cookie[] cookies = request.getCookies();
     String clientIp = request.getHeader("x-forwarded-for");
