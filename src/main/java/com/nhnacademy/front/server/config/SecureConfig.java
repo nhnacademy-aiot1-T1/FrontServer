@@ -12,18 +12,18 @@ public class SecureConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
+                //.cors()
+                //.and()
+                .csrf().disable()
+                .httpBasic().disable()
+                .formLogin().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .antMatchers("/login","/register","/js/***","/css/**", "/images/**").permitAll()
-                                .anyRequest().authenticated()
-                )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login")
-                                .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/index",true)
-                                .failureUrl("redirect:/login")
-                                .permitAll());
+                                .anyRequest().authenticated())
+                .logout().disable();
         return http.build();
     }
 }

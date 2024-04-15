@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.nhnacademy.front.server.config.SecureConfig;
 import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.service.AuthService;
 import java.util.Optional;
@@ -23,13 +24,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockCookie;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(controllers = AuthController.class)
+@Import(SecureConfig.class)
 @DisplayName("로그인 테스트")
-@Disabled
 class AuthControllerTest {
 
   @Autowired
@@ -51,7 +54,6 @@ class AuthControllerTest {
 
 
     mockMvc.perform(post("/login")
-                    .with(csrf())
             .param("id", "test")
             .param("password", "1234")
             .header("x-forwarded-for","192.168.0.1"))
@@ -75,6 +77,7 @@ class AuthControllerTest {
   }
 
   @Test
+  @WithMockUser(username = "user")
   void doLogoutSuccess() throws Exception {
     MockCookie cookie = new MockCookie("authorization", "testToken");
 
