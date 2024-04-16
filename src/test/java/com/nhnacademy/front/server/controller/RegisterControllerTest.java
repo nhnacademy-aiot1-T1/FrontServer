@@ -2,38 +2,24 @@ package com.nhnacademy.front.server.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.nhnacademy.front.server.adapter.impl.AuthAdapterImpl;
 import com.nhnacademy.front.server.config.SecureConfig;
 import com.nhnacademy.front.server.domain.register.RegisterCheckDto;
 import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
-import com.nhnacademy.front.server.domain.register.ValidationResult;
-import com.nhnacademy.front.server.exception.JsonParseFailException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
 import com.nhnacademy.front.server.service.RegisterService;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindException;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 
 @WebMvcTest(controllers = RegisterController.class)
 @DisplayName("회원가입 로직 테스트")
