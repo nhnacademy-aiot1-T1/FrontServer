@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 /**
  * 유저의 회원가입 로직을 처리하는 컨트롤러 클래스 입니다!
  * @author AoiTuNa
@@ -48,7 +50,7 @@ public class RegisterController {
    * @see RegisterCheckDto
    */
   @PostMapping("/register")
-  public String doRegister(@ModelAttribute @Validated RegisterCheckDto registerCheckDto, Model model, RedirectAttributes redirectAttributes){
+  public String doRegister(@ModelAttribute @Valid RegisterCheckDto registerCheckDto, Model model, RedirectAttributes redirectAttributes){
     log.debug("회원가입 로직 실행");
     if(!registerCheckDto.getPassword().equals(registerCheckDto.getPasswordRetype())){
       model.addAttribute(REASON_MESSAGE,"pw와 pw확인이 일치하지 않습니다!");

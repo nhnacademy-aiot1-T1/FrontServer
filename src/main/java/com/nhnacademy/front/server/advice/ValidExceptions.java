@@ -6,6 +6,8 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.Objects;
+
 /**
  * 회원가입 부분의 입력 값이 validation을 통과하지 않았을 때 발생하는 예외를 처리하는 advice입니다!
  * @author AoiTuNa
@@ -25,7 +27,7 @@ public class ValidExceptions {
   @ExceptionHandler(BindException.class)
   public String handelMethodArgumentNotValid(BindException ex, Model model){
     if(ex.getBindingResult().getObjectName().equals("registerCheckDto")){
-      model.addAttribute("message",ex.getMessage());
+      model.addAttribute("message", Objects.requireNonNull(ex.getFieldError()).getDefaultMessage());
       return "pages/auth/register";
     }
     log.warn(ex.getMessage());
