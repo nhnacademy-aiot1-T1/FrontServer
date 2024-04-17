@@ -1,7 +1,8 @@
 package com.nhnacademy.front.server.config;
 
-
-import com.nhnacademy.front.server.interceptor.RegenerateTokenCheckInterceptor;
+import com.nhnacademy.front.server.adapter.AuthAdapter;
+import com.nhnacademy.front.server.adapter.impl.AuthAdapterImpl;
+import com.nhnacademy.front.server.filter.TokenExpirationFilter;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,18 +28,19 @@ public class WebConfig {
      * @return 설정된 빌더를 리턴합니다!
      */
     @Bean
-    @LoadBalanced
     public RestTemplate restTemplate(){
-        RestTemplate restTemplate = new RestTemplate();
-
-        List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
-        if(CollectionUtils.isEmpty(interceptors)){
-            interceptors = new ArrayList<>();
-        }
-        interceptors.add(new RegenerateTokenCheckInterceptor());
-        restTemplate.setInterceptors(interceptors);
-        return restTemplate;
+        return new RestTemplate();
     }
+
+    /*@Bean
+    public AuthAdapter authAdapter(){
+        return new AuthAdapterImpl(restTemplate());
+    }
+
+    @Bean
+    public TokenExpirationFilter tokenExpirationFilter(AuthAdapter authAdapter){
+        return new TokenExpirationFilter(authAdapter);
+    }*/
 
     /**
      * 모든 페이지에 접근하기전에 클라이언트의 쿠키에 인증 토큰의 유무를 확인하는 filter의 규칙을 추가합니다!<br/>

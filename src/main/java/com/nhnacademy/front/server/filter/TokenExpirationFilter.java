@@ -5,6 +5,7 @@ import com.nhnacademy.front.server.exception.NotFoundTokenException;
 import com.nhnacademy.front.server.util.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 public class TokenExpirationFilter implements Filter {
 
     private final AuthAdapter authAdapter;
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;

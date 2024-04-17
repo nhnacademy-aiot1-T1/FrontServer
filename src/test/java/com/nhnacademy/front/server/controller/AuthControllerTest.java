@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.config.SecureConfig;
 import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.service.AuthService;
@@ -40,6 +41,9 @@ class AuthControllerTest {
 
   @MockBean
   private AuthService authService;
+
+  @MockBean
+  AuthAdapter authAdapter;
 
   @Test
   void showLoginForm() throws Exception {
