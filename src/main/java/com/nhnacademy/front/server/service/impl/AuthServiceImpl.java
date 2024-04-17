@@ -32,11 +32,4 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
-    @Override
-    public void checkAccessToken(String token, String address) {
-
-        authAdapter.checkAccessToken(token,address);
-
-    }
-
 }

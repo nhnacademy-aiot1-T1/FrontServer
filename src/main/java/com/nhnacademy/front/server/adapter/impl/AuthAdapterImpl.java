@@ -105,6 +105,7 @@ public class AuthAdapterImpl implements AuthAdapter {
 
   @Override
   public void checkAccessToken(String token, String address) {
+    //Todo 혹시나 실행한 브라우저의 정보를 포함할 가능성 있름!
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     headers.setAccept(List.of(MediaType.APPLICATION_JSON));

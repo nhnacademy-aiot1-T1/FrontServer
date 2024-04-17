@@ -26,12 +26,5 @@ public interface AuthService {
      */
     void tokenLogout(String token);
 
-    /**
-     * 토큰 재발급 검증을 위한 메서드 입니다!
-     * @param token 유저의 토큰값이 들어 있습니다!
-     * @param address 유저의 ip정보가 들어 있습니다!
-     */
-    void checkAccessToken(String token,String address);
-
 
 }
