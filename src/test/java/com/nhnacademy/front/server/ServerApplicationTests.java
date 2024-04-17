@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @DisplayName("Git Action 테스트")
-@Disabled
 class ServerApplicationTests {
 
 	@Test

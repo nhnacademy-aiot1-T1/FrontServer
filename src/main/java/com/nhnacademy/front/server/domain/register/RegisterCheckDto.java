@@ -5,7 +5,6 @@ import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.validation.annotation.Validated;
 
 /**
  * 회원가입 폼에서 유저가 입력한 정보를 저장하기 위해 사용하는 domain객체 입니다!
@@ -14,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
  */
 @Getter
 @AllArgsConstructor
-@Validated
 public class RegisterCheckDto {
   @NotBlank(message = "id는 필수 입력 항목입나다!")
   @Length(min = 5, message = "id는 5자 이상이어야 합니다!")

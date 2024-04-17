@@ -88,4 +88,14 @@ class AuthControllerTest {
         .andExpect(flash().attributeExists("state"));
   }
 
+  @Test
+  @WithMockUser(username = "user")
+  void doLogoutFailed() throws Exception {
+
+    mockMvc.perform(MockMvcRequestBuilders.post("/logout"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("pages/auth/login"))
+            .andExpect(flash().attributeExists("error"));
+  }
+
 }

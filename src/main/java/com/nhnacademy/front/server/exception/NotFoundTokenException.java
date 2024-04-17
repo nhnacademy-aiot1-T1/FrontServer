@@ -5,8 +5,8 @@ package com.nhnacademy.front.server.exception;
  * @author AoiTuNa
  * @version 1.0
  */
-public class LogoutNotFoundTokenException extends RuntimeException{
-    public LogoutNotFoundTokenException(String message) {
+public class NotFoundTokenException extends RuntimeException{
+    public NotFoundTokenException(String message) {
         super(message);
     }
 }

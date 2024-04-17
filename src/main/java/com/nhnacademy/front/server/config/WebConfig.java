@@ -1,13 +1,16 @@
 package com.nhnacademy.front.server.config;
 
 
-import com.nhnacademy.front.server.service.AuthService;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import com.nhnacademy.front.server.interceptor.RegenerateTokenCheckInterceptor;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -15,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
  * @author AoiTuNa
  * @version 1.1
  * @see #restTemplate()
- * @see #loginCheckFilterRegistrationBean(AuthService)
  */
 @Configuration
 public class WebConfig {
@@ -27,7 +29,15 @@ public class WebConfig {
     @Bean
     @LoadBalanced
     public RestTemplate restTemplate(){
-        return new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
+
+        List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
+        if(CollectionUtils.isEmpty(interceptors)){
+            interceptors = new ArrayList<>();
+        }
+        interceptors.add(new RegenerateTokenCheckInterceptor());
+        restTemplate.setInterceptors(interceptors);
+        return restTemplate;
     }
 
     /**

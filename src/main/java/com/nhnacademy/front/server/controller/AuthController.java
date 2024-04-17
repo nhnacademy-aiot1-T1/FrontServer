@@ -1,6 +1,6 @@
 package com.nhnacademy.front.server.controller;
 
-import com.nhnacademy.front.server.exception.LogoutNotFoundTokenException;
+import com.nhnacademy.front.server.exception.NotFoundTokenException;
 import com.nhnacademy.front.server.service.AuthService;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
@@ -96,7 +96,7 @@ public class AuthController {
     public String doLogout(@CookieValue(value = "authorization",required = false)String token,RedirectAttributes redirectAttributes){
         if(token == null || token.isEmpty()){
             log.info("토큰이 없거나 비어있음 ");
-            throw new LogoutNotFoundTokenException("토큰이 없거나 비어있음!");
+            throw new NotFoundTokenException("토큰이 없거나 비어있음!");
         }
         authService.tokenLogout(token);
         redirectAttributes.addFlashAttribute("state","success");
