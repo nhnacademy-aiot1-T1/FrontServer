@@ -5,9 +5,7 @@ import com.nhnacademy.front.server.exception.NotFoundTokenException;
 import com.nhnacademy.front.server.util.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;

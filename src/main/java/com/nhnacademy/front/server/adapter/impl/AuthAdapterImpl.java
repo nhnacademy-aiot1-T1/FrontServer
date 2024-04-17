@@ -52,7 +52,7 @@ public class AuthAdapterImpl implements AuthAdapter {
         "http://GATEWAY-SERVICE/api/auth/login",
         HttpMethod.POST,
         requestEntity,
-        new ParameterizedTypeReference<CommonResponse<LoginResponseDto>>() {}
+        new ParameterizedTypeReference<>() {}
     );
     return Objects.requireNonNull(exchange.getBody()).dataOrElseThrow(() -> new LoginFailedException("로그인 실패",this.getClass().getSimpleName()));
   }

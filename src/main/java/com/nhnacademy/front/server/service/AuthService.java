@@ -7,7 +7,6 @@ package com.nhnacademy.front.server.service;
  * @version 1.2
  * @see #getLoginToken(String, String, String)
  * @see #tokenLogout(String)
- * @see #checkAccessToken(String, String)
  */
 public interface AuthService {
 
