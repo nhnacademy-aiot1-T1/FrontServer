@@ -2,7 +2,7 @@ package com.nhnacademy.front.server.advice;
 
 import com.nhnacademy.front.server.exception.JsonParseFailException;
 import com.nhnacademy.front.server.exception.LoginFailedException;
-import com.nhnacademy.front.server.exception.LogoutNotFoundTokenException;
+import com.nhnacademy.front.server.exception.NotFoundTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @version 1.0
  * @see #jsonParserFailActivePage(JsonParseFailException, Model)
  * @see #showLoginFailedReason(LoginFailedException, RedirectAttributes)
- * @see #logoutFailedReason(LogoutNotFoundTokenException, RedirectAttributes)
+ * @see #logoutFailedReason(NotFoundTokenException, RedirectAttributes)
  */
 @ControllerAdvice
 @Slf4j
@@ -51,13 +51,13 @@ public class CustomExceptions {
 
   /**
    * 로그아웃 시 토큰의 값이 null이거나 없을 시 발생하는 예외를 처리하는 advice입니다!
-   * @param logoutNotFoundTokenException 발생한 예외의 정보를 담고 있습니다!
+   * @param notFoundTokenException 발생한 예외의 정보를 담고 있습니다!
    * @param redirectAttributes Redirect 된 페이지에 정보를 전달 하기 위해 사용합니댜!
    * @return 요청을 전달할 페이지를 로드합니다!
    */
-  @ExceptionHandler(value = LogoutNotFoundTokenException.class)
-  public String logoutFailedReason(LogoutNotFoundTokenException logoutNotFoundTokenException,RedirectAttributes redirectAttributes){
-    redirectAttributes.addFlashAttribute("error",logoutNotFoundTokenException.getMessage());
+  @ExceptionHandler(value = NotFoundTokenException.class)
+  public String logoutFailedReason(NotFoundTokenException notFoundTokenException, RedirectAttributes redirectAttributes){
+    redirectAttributes.addFlashAttribute("error", notFoundTokenException.getMessage());
     return "redirect:pages/auth/login";
   }
 

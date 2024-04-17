@@ -13,6 +13,8 @@ import com.nhnacademy.front.server.domain.LoginResponseDto;
 import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
 import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
+
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.Disabled;
@@ -62,24 +64,20 @@ class AuthAdapterImplTest {
 
   @Test
   void logout() {
-    doThrow(new HttpClientErrorException(HttpStatus.UNAUTHORIZED)).when(restTemplate.exchange(eq("GATEWAY-SERVICE/api/auth/logout"),eq(HttpMethod.POST),any(HttpEntity.class),any(Class.class)));
+    when(restTemplate.exchange(anyString(),eq(HttpMethod.POST),any(HttpEntity.class),any(Class.class))).thenThrow(new HttpClientErrorException(HttpStatus.UNAUTHORIZED));
     assertThrows(HttpClientErrorException.class, () -> authAdapter.logout("notToken"));
   }
 
   @Test
-  void registerUser() {
-    doThrow(new HttpClientErrorException(HttpStatus.CONFLICT)).when(restTemplate.exchange(anyString(),any(HttpMethod.class),any(RequestEntity.class),any(Class.class)));
-//    mockServer.expect(MockRestRequestMatchers.requestTo("http://GATEWAY-SERVICE/register"))
-//        .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
-//        .andRespond(MockRestResponseCreators.withStatus(HttpStatus.CONFLICT).body(
-//            "{ \"status\": \"fail\","
-//                + " \"data\": null, "
-//                + "\"message\": \"is already use id!!!\","
-//                + "\"timestamp\" : \"" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + "\" }"
-//        ));
+  void registerFail() {
+    String jsonBody = "{ \"status\": \"fail\","
+            + " \"data\": null, "
+            + "\"message\": \"is already use id!!!\","
+            + "\"timestamp\" : \"" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + "\" }";
+
+    byte[] responseBody = jsonBody.getBytes(StandardCharsets.UTF_8);
+    when(restTemplate.exchange(anyString(),any(HttpMethod.class),any(HttpEntity.class),any(Class.class))).thenThrow((new HttpClientErrorException(HttpStatus.CONFLICT,"failed",responseBody,StandardCharsets.UTF_8)));
     RegisterRequestDto registerRequestDto = new RegisterRequestDto("user","1234","바보","test@test.com");
-    assertThrows(
-        RegisterFailException.class, () -> authAdapter.registerUser(registerRequestDto));
-//    mockServer.verify();
+    assertThrows(RegisterFailException.class,() -> authAdapter.registerUser(registerRequestDto));
     }
 }
