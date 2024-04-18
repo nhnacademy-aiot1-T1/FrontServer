@@ -1,5 +1,6 @@
 package com.nhnacademy.front.server.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -39,6 +40,7 @@ public class TokenUtils {
 
     @Getter
     @Setter
+    @JsonIgnoreProperties(ignoreUnknown = true)
     private static class TokenPayload{
         private Date exp;
     }

@@ -20,6 +20,9 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class TokenExpirationFilter implements Filter {
 
+    private static final String LOGIN_PATH = "/login";
+    private static final String REGISTER_PATH = "/register";
+
     private final AuthAdapter authAdapter;
 
     @Override
@@ -27,9 +30,12 @@ public class TokenExpirationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        String token = extractToken(request);
-        if(TokenUtils.isTokenExpired(token)){
-            authAdapter.checkAccessToken(token,request.getHeader("x-forwarded-for"));
+        String path = request.getRequestURI();
+        if (!(path.startsWith(LOGIN_PATH) || path.startsWith(REGISTER_PATH) )) {
+            String token = extractToken(request);
+            if (token != null && TokenUtils.isTokenExpired(token)) {
+                authAdapter.checkAccessToken(token, request.getHeader("x-forwarded-for"));
+            }
         }
         filterChain.doFilter(request,response);
     }

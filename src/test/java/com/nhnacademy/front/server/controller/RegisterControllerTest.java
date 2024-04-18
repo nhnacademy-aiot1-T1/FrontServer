@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.config.SecureConfig;
 import com.nhnacademy.front.server.domain.register.RegisterCheckDto;
 import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
@@ -33,6 +34,9 @@ class RegisterControllerTest {
 
     @MockBean
     RegisterService registerService;
+
+    @MockBean
+    AuthAdapter authAdapter;
 
     @Test
     void showRegisterForm() {

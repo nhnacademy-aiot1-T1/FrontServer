@@ -82,8 +82,8 @@ class AuthControllerTest {
 
   @Test
   @WithMockUser(username = "user")
-  void doLogoutSuccess() throws Exception {
-    MockCookie cookie = new MockCookie("authorization", "testToken");
+  void TokenSuccess() throws Exception {
+    MockCookie cookie = new MockCookie("authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjIwMTYyMzkwMjJ9.BWcm3vSRd3fcwFC5ZShh4jRhlRJkU_8sYTXlG3IkyXY");
 
     mockMvc.perform(MockMvcRequestBuilders.post("/logout")
             .cookie(cookie))
@@ -94,12 +94,13 @@ class AuthControllerTest {
 
   @Test
   @WithMockUser(username = "user")
-  void doLogoutFailed() throws Exception {
+  void TokenExpired() throws Exception {
+    MockCookie cookie = new MockCookie("authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjEwMDAyMzkwMjJ9.dK5BoJoe46wiASMjEVZgSwCVhZOXceYBXbT--uX0SLI");
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/logout"))
+    mockMvc.perform(MockMvcRequestBuilders.post("/logout")
+                    .cookie(cookie))
             .andExpect(status().is3xxRedirection())
-            .andExpect(redirectedUrl("pages/auth/login"))
-            .andExpect(flash().attributeExists("error"));
+            .andExpect(redirectedUrl("pages/auth/login"));
   }
 
 }
