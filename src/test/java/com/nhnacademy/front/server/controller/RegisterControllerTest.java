@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -47,7 +48,7 @@ class RegisterControllerTest {
     @Test
     void doRegisterFailedFromValidation() throws Exception {
         RegisterCheckDto registerCheckDto = new RegisterCheckDto("rude", "123456789", "123456789", "김춘삼", "KimCH@ppap.com");
-        mockMvc.perform(post("/register")
+        mockMvc.perform(post("/register").with(csrf())
                         .param("id", registerCheckDto.getId())
                         .param("password", registerCheckDto.getPassword())
                         .param("passwordRetype", registerCheckDto.getPasswordRetype())
@@ -62,7 +63,7 @@ class RegisterControllerTest {
     @Test
     void doRegisterFailedFromNotMatchPassword() throws Exception {
         RegisterCheckDto registerCheckDto = new RegisterCheckDto("AoiTuNa", "123456789", "PuppyTabeTai", "김춘삼", "KimCH@ppap.com");
-        mockMvc.perform(post("/register")
+        mockMvc.perform(post("/register").with(csrf())
                         .param("id", registerCheckDto.getId())
                         .param("password", registerCheckDto.getPassword())
                         .param("passwordRetype", registerCheckDto.getPasswordRetype())
@@ -79,7 +80,7 @@ class RegisterControllerTest {
 //        RegisterRequestDto registerRequestDto = new RegisterRequestDto("AoiTuNa", "123456789", "김춘삼", "KimCH@ppap.com");
         doThrow(new RegisterFailException("이미 존재하는 ID", "AuthAdapterImpl")).when(registerService).registerCreated(any(RegisterRequestDto.class));
         RegisterCheckDto registerCheckDto = new RegisterCheckDto("AoiTuNa", "123456789", "123456789", "김춘삼", "KimCH@ppap.com");
-        mockMvc.perform(post("/register")
+        mockMvc.perform(post("/register").with(csrf())
                         .param("id", registerCheckDto.getId())
                         .param("password", registerCheckDto.getPassword())
                         .param("passwordRetype", registerCheckDto.getPasswordRetype())
@@ -93,7 +94,7 @@ class RegisterControllerTest {
     @Test
     void doRegisterSuccess() throws Exception {
       RegisterCheckDto registerCheckDto = new RegisterCheckDto("AoiTuNa", "123456789", "123456789", "김춘삼", "KimCH@ppap.com");
-      mockMvc.perform(post("/register")
+      mockMvc.perform(post("/register").with(csrf())
                       .param("id", registerCheckDto.getId())
                       .param("password", registerCheckDto.getPassword())
                       .param("passwordRetype", registerCheckDto.getPasswordRetype())

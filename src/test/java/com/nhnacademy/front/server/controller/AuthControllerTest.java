@@ -57,7 +57,7 @@ class AuthControllerTest {
         Optional.of("token").orElse(null));
 
 
-    mockMvc.perform(post("/login")
+    mockMvc.perform(post("/login").with(csrf())
             .param("id", "test")
             .param("password", "1234")
             .header("x-forwarded-for","192.168.0.1"))
@@ -71,7 +71,7 @@ class AuthControllerTest {
   @Test
   void doLoginFailed() throws Exception {
     given(authService.getLoginToken(any(String.class), any(String.class),any(String.class))).willReturn(null);
-    mockMvc.perform(post("/login")
+    mockMvc.perform(post("/login").with(csrf())
             .param("id", "test")
             .param("password", "1234")
             .param("userAddress", "192.168.0.1"))
@@ -85,7 +85,7 @@ class AuthControllerTest {
   void TokenSuccess() throws Exception {
     MockCookie cookie = new MockCookie("authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjIwMTYyMzkwMjJ9.BWcm3vSRd3fcwFC5ZShh4jRhlRJkU_8sYTXlG3IkyXY");
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/logout")
+    mockMvc.perform(MockMvcRequestBuilders.post("/logout").with(csrf())
             .cookie(cookie))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("pages/auth/login"))
@@ -97,7 +97,7 @@ class AuthControllerTest {
   void TokenExpired() throws Exception {
     MockCookie cookie = new MockCookie("authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjEwMDAyMzkwMjJ9.dK5BoJoe46wiASMjEVZgSwCVhZOXceYBXbT--uX0SLI");
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/logout")
+    mockMvc.perform(MockMvcRequestBuilders.post("/logout").with(csrf())
                     .cookie(cookie))
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("pages/auth/login"));
