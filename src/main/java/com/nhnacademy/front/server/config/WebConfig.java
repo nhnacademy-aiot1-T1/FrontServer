@@ -32,15 +32,6 @@ public class WebConfig {
         return new RestTemplate();
     }
 
-    /*@Bean
-    public AuthAdapter authAdapter(){
-        return new AuthAdapterImpl(restTemplate());
-    }
-
-    @Bean
-    public TokenExpirationFilter tokenExpirationFilter(AuthAdapter authAdapter){
-        return new TokenExpirationFilter(authAdapter);
-    }*/
 
     /**
      * 모든 페이지에 접근하기전에 클라이언트의 쿠키에 인증 토큰의 유무를 확인하는 filter의 규칙을 추가합니다!<br/>
