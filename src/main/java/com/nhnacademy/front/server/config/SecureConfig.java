@@ -2,6 +2,7 @@ package com.nhnacademy.front.server.config;
 
 import com.nhnacademy.front.server.filter.TokenExpirationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,14 +14,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecureConfig {
+    @Bean
+    public FilterRegistrationBean<TokenExpirationFilter> registration(TokenExpirationFilter filter){
+        FilterRegistrationBean<TokenExpirationFilter> registration = new FilterRegistrationBean<>(filter);
+        registration.setEnabled(false);
+        return registration;
+    }
     private final TokenExpirationFilter tokenExpirationFilter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
-                //.cors()
-                //.and()
-                //Todo 다하면 csrf disable 해제하기!
-                .csrf().disable()
+                .cors().disable()
+                .csrf().and()
                 .httpBasic().disable()
                 .formLogin().disable()
                 .headers().frameOptions().disable()
