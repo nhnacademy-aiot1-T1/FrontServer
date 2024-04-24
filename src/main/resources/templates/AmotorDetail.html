@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr" xmlns="http://www.w3.org/1999/html">
+<!-- BEGIN: Head-->
+
+<head>
+    <div th:include="fixedTemplate/defaultCSS.html"></div>
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar" data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="content-detached-left-sidebar">
+
+<!-- BEGIN: Header-->
+<div th:include="fixedTemplate/fixed-top.html"></div>
+<!-- END: Header-->
+
+
+<!-- BEGIN: Main Menu-->
+<div th:include="fixedTemplate/side-navigation.html"></div>
+<!-- END: Main Menu-->
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-wrapper-before"></div>
+        <div class="content-header row">
+            <div class="content-header-left col-md-4 col-12 mb-2">
+                <h3 class="content-header-title">Motor Details</h3>
+            </div>
+
+            <div class="content-header-right col-md-8 col-12">
+                <div class="breadcrumbs-top float-md-right">
+                    <div class="breadcrumb-wrapper mr-1">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/vertical-menu-template/index.html">DashBoard</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="#">Sector3</a>
+                            </li>
+                            <li class="breadcrumb-item active">Motor-List
+                            </li>
+                            <li class="breadcrumb-item active" th:text="'MOTOR-'+${selectedMotor.getId()}">
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="content-body">
+            <section class="card">
+
+                <div id="invoice-template" class="card-body" >
+                    <!-- Invoice Company Details -->
+                    <div id="invoice-company-details" class="row">
+                        <div class="col-md-6 col-sm-12 text-left text-md-left">
+                            <img src="/vertical-menu-template/app-assets/images/logo/motor.png" alt="company logo" class="mb-2" width="200">
+                            <ul class="px-0 list-unstyled">
+                                <li class="text-bold-800" th:text="'MOTOR-'+${selectedMotor.getId()}" ></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <!-- 현재 모터 상태치 -->
+                    <div class="invoice stat" style="position: absolute; top: 0px; right:50px; width: 1100px">
+                        <div class="card" style="height: 40px">
+                            <div class="card-header">
+                                <h4 class="card-title">Motor Status</h4>
+                                <span class="text-medium-1 info line-height-2 text-uppercase">Summary</span>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0 display-block">
+                                        <li>
+                                            <a class="btn btn-md btn-info box-shadow-2 round btn-min-width pull-right" href="/motorlist" target="_blank">Back to List</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body pt-0 pb-1">
+
+                                    <div class="row mb-1">
+                                        <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                                            <p class="blue-grey lighten-2 mb-0">Running</p>
+                                            <p class="font-medium-5 text-bold-400" th:text="${selectedMotor.getRunningStatus()}"></p>
+                                        </div>
+                                        <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                                            <p class="blue-grey lighten-2 mb-0">Status</p>
+                                            <p class="font-medium-5 text-bold-400" th:text="${selectedMotor.getOperatingStatus()}"></p>
+                                        </div>
+                                        <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                                            <p class="blue-grey lighten-2 mb-0">Temperature</p>
+                                            <p class="font-medium-5 text-bold-400" th:text="${selectedMotor.getTemperature()}+'°C'"></p>
+                                        </div>
+                                        <div class="col-6 col-sm-3 col-md-6 col-lg-3 text-center">
+                                            <p class="blue-grey lighten-2 mb-0">Vibration Intensity</p>
+                                            <p class="font-medium-5 text-bold-400" th:text="${selectedMotor.getVibrationIntensity()}"></p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row mb-2">
+                                        <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                                            <p class="blue-grey lighten-2 mb-0">electric current</p>
+                                            <p class="font-medium-5 text-bold-400" th:text="${selectedMotor.getElectricCurrent()}+'A'"></p>
+                                        </div>
+                                        <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                                            <p class="blue-grey lighten-2 mb-0">Voltage</p>
+                                            <p class="font-medium-5 text-bold-400" >0</p>
+                                        </div>
+                                        <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                                            <p class="blue-grey lighten-2 mb-0">RPM</p>
+                                            <p class="font-medium-5 text-bold-400" th:text="${selectedMotor.getRpm()}"></p>
+                                        </div>
+                                        <div class="col-6 col-sm-3 col-md-6 col-lg-3 text-center">
+                                            <p class="blue-grey lighten-2 mb-0">noise</p>
+                                            <p class="font-medium-5 text-bold-400" th:text="${selectedMotor.getNoise()}"></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Invoice Items Details -->
+                <div id="invoice-items-details" class="pt-2">
+                    <div class="row">
+                        <div class="table-responsive col-sm-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <h1 style="text-align: center">Hourly Trend</h1>
+                                    <!--                                                <th class="text-right">Rate</th>-->
+                                    <!--                                                <th class="text-right">Hours</th>-->
+                                    <!--                                                <th class="text-right">Amount</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- 시간별 변화추이 차트 -->
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Temperature</h4>
+                                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                                <div class="heading-elements">
+                                                    <ul class="list-inline mb-0">
+                                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-content collapse show">
+                                                <div class="card-body">
+                                                    <p class="card-text">An example of a gradient line chart with two series.</p>
+                                                    <div id="gradient-line-chart1" class="height-300 GradientlineShadow"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Vibration intensity</h4>
+                                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                                <div class="heading-elements">
+                                                    <ul class="list-inline mb-0">
+                                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-content collapse show">
+                                                <div class="card-body">
+                                                    <p class="card-text">An example of a simple line chart with three series.</p>
+                                                    <div id="line-chart1" class="height-300"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Electric Current</h4>
+                                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                                <div class="heading-elements">
+                                                    <ul class="list-inline mb-0">
+                                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-content collapse show">
+                                                <div class="card-body">
+                                                    <p class="card-text">An example of a gradient line chart with two series.</p>
+                                                    <div id="gradient-line-chart2" class="height-300 GradientlineShadow"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Voltage</h4>
+                                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                                <div class="heading-elements">
+                                                    <ul class="list-inline mb-0">
+                                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-content collapse show">
+                                                <div class="card-body">
+                                                    <p class="card-text">An example of a simple line chart with three series.</p>
+                                                    <div id="line-chart2" class="height-300"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">RPM</h4>
+                                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                                <div class="heading-elements">
+                                                    <ul class="list-inline mb-0">
+                                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-content collapse show">
+                                                <div class="card-body">
+                                                    <p class="card-text">An example of a gradient line chart with two series.</p>
+                                                    <div id="gradient-line-chart3" class="height-300 GradientlineShadow"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Noise</h4>
+                                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                                <div class="heading-elements">
+                                                    <ul class="list-inline mb-0">
+                                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-content collapse show">
+                                                <div class="card-body">
+                                                    <p class="card-text">An example of a simple line chart with three series.</p>
+                                                    <div id="line-chart3" class="height-300"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+
+
+
+<!-- BEGIN: Footer-->
+<footer class="footer footer-static footer-light navbar-border navbar-shadow">
+    <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">2019 &copy; Copyright <a class="text-bold-800 grey darken-2" href="https://themeselection.com" target="_blank">ThemeSelection</a></span>
+        <ul class="list-inline float-md-right d-block d-md-inline-blockd-none d-lg-block mb-0">
+            <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/" target="_blank"> More themes</a></li>
+            <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/support" target="_blank"> Support</a></li>
+        </ul>
+    </div>
+</footer>
+<!-- END: Footer-->
+<div th:include="fixedTemplate/defaultJS.html"></div>
+
+</body>
+<!-- END: Body-->
+
+</html>

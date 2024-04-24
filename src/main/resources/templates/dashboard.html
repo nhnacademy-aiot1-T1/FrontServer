@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" >
+
+<!-- BEGIN: Head-->
+<head>
+  <meta charset="UTF-8">
+  <title>dashboard</title>
+
+  <div th:include="fixedTemplate/defaultCSS.html"></div>
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar" data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="content-detached-left-sidebar">
+
+<!-- BEGIN: FixedTop-->
+<div th:include="fixedTemplate/fixed-top.html"></div>
+<!-- END: Header-->
+
+<!-- BEGIN: Main Menu-->
+<div th:include="fixedTemplate/side-navigation.html"></div>
+<!-- END: Main Menu-->
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-wrapper-before"></div>
+    <div class="content-header row">
+    </div>
+    <!--/ Products sell and New Orders -->
+    <!--/ Task & Quarterly Sales -->
+    <div class="row">
+      <div class="col-xl-4 col-lg-12">
+        <div class="card" style="height: 313.625px;">
+          <div class="card-header">
+            <h4 class="card-title"><span id="Normal" class="text-success">Normal</span></h4>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-12">
+        <div class="card" style="height: 313.625px;">
+          <div class="card-header">
+            <h4 class="card-title"><span id="Caution" class="text-warning">Warning</span></h4>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-12">
+        <div class="card" style="height: 313.625px;">
+          <div class="card-header">
+            <h4 class="card-title"><span id="Warning" class="text-danger">Danger</span></h4>
+
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-body">
+      <!-- Chart -->
+
+      <!-- Chart -->
+      <!-- eCommerce statistic -->
+
+      <!--/ eCommerce statistic -->
+      <!-- Product Summary and Chat -->
+      <div class="row match-height">
+        <div class="col-xl-4 col-lg-12">
+          <h5 class="card-title text-bold-700 my-2">Product Summary</h5>
+          <div class="card" style="height: 313.625px;">
+            <div class="card-content">
+              <div id="product-summary" class="media-list position-relative">
+                <div class="table-responsive">
+                  <table class="table table-padded table-xl mb-0" id="product-summary-table">
+                    <thead>
+                    <tr>
+                      <th class="border-top-0">motor list</th>
+                      <th class="border-top-0">count</th>
+
+
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td class="text-truncate">총 모터 수</td>
+                      <td class="text-truncate">
+                                                        <span>
+                                                            <i class="ft-arrow-down danger"></i> 5.15%</span>
+                      </td>
+
+
+
+
+                    </tr>
+                    <tr>
+                      <td class="text-truncate">동작중인 모터 수</td>
+                      <td class="text-truncate">
+                                                        <span>
+                                                            <i class="ft-arrow-down danger"></i> 5.15%</span>
+                      </td>
+
+
+
+
+                    </tr>
+                    <tr>
+                      <td class="text-truncate">동작이 멈춘 모터 수</td>
+
+                      <td>
+                                                        <span>
+                                                            <i class="ft-arrow-down danger"></i> 5.15%</span>
+                      </td>
+
+
+
+                    </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8 col-lg-12">
+          <h5 class="card-title text-bold-700 my-2">Action log</h5>
+          <div class="card" style="height: 313.625px;">
+            <div class="card-header">
+              <h4 class="Action log">Action log</h4>
+            </div>
+            <div class="card-content">
+              <div class="card-body">
+                <div class="col-12 timeline-left" id="activity">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Task & Quarterly Sales -->
+
+      <!-- Statistics -->
+      <div class="row">
+        <!--section start-->
+        <div class="col-xl-4 col-lg-12 sectorSection" th:each="sector : ${sectorList}">
+          <div class="row">
+            <div class="col-12">
+              <div class="card pull-up"
+                   th:if="${sector.getId()}%3 == 1"
+                   th:class="bg-gradient-directional-purple">
+                <div class="card-header" th:class="bg-gradient-directional-purple">
+                  <h4 class="card-title white" th:text="'SECTOR ' + ${sector.getId()}"></h4>
+                  <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                </div>
+                <div class="card-content collapse show" th:class="bg-gradient-directional-purple">
+                  <div class="card-body">
+                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.getId()})}">
+                      <div class="media d-flex align-items-center justify-content-center">
+                      <div>
+                        <img src="../vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <h3 class="font-large-1 white normalRate_word">Normal Rate:</h3>
+                        <h3 class="font-large-2 white normalRate_value" th:text="${sector.getNormalPercentage()} +'%'"></h3>
+                      </div>
+                      <div class="col-xs-6">
+                        <h3 class="font-large-1 white runningRate_word">Running Rate:</h3>
+                        <h3 class="font-large-2 white runningRate_value" th:text="${sector.getRunningPercentage()} +'%'"></h3>
+                      </div>
+                    </div>
+                      </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card pull-up"
+                   th:if="${sector.getId()}%3 == 2"
+                   th:class="bg-gradient-directional-primary">
+                <div class="card-header" th:class="bg-gradient-directional-primary">
+                  <h4 class="card-title white" th:text="'SECTOR ' + ${sector.getId()}"></h4>
+                  <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                </div>
+                <div class="card-content collapse show" th:class="bg-gradient-directional-primary">
+                  <div class="card-body">
+                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.getId()})}">
+                    <div class="media d-flex align-items-center justify-content-center">
+                      <div>
+                        <img src="../vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <h3 class="font-large-1 white normalRate_word">Normal Rate:</h3>
+                        <h3 class="font-large-2 white normalRate_value" th:text="${sector.getNormalPercentage()} +'%'"></h3>
+                      </div>
+                      <div class="col-xs-6">
+                        <h3 class="font-large-1 white runningRate_word">Running Rate:</h3>
+                        <h3 class="font-large-2 white runningRate_value" th:text="${sector.getRunningPercentage()} +'%'"></h3>
+                      </div>
+                    </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card pull-up"
+                   th:if="${sector.getId()}%3 == 0"
+                   th:class="bg-gradient-directional-blue">
+                <div class="card-header" th:class="bg-gradient-directional-blue">
+                  <h4 class="card-title white" th:text="'SECTOR ' + ${sector.getId()}"></h4>
+                  <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                </div>
+                <div class="card-content collapse show" th:class="bg-gradient-directional-blue">
+                  <div class="card-body">
+                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.getId()})}">
+                    <div class="media d-flex align-items-center justify-content-center">
+                      <div>
+                        <img src="../vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <h3 class="font-large-1 white normalRate_word">Normal Rate:</h3>
+                        <h3 class="font-large-2 white normalRate_value" th:text="${sector.getNormalPercentage()} +'%'"></h3>
+                      </div>
+                      <div class="col-xs-6">
+                        <h3 class="font-large-1 white runningRate_word">Running Rate:</h3>
+                        <h3 class="font-large-2 white runningRate_value" th:text="${sector.getRunningPercentage()} +'%'"></h3>
+                      </div>
+                    </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <br>
+        <!--section end-->
+      </div>
+      <!--/ Statistics -->
+    </div>
+  </div>
+</div>
+
+
+<script>
+  (function() {
+    var ws = new WebSocket('ws://' + window.location.host +
+        '/jb-server-page?reloadMode=RELOAD_ON_SAVE&'+
+        'referrer=' + encodeURIComponent(window.location.pathname));
+    ws.onmessage = function (msg) {
+      if (msg.data === 'reload') {
+        window.location.reload();
+      }
+      if (msg.data.startsWith('update-css ')) {
+        var messageId = msg.data.substring(11);
+        var links = document.getElementsByTagName('link');
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          if (link.rel !== 'stylesheet') continue;
+          var clonedLink = link.cloneNode(true);
+          var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/, "$1jbUpdateLinksId=" + messageId);
+          if (newHref !== link.href) {
+            clonedLink.href = newHref;
+          }
+          else {
+            var indexOfQuest = newHref.indexOf('?');
+            if (indexOfQuest >= 0) {
+              // to support ?foo#hash
+              clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId=' + messageId + '&' +
+                  newHref.substring(indexOfQuest + 1);
+            }
+            else {
+              clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+            }
+          }
+          link.replaceWith(clonedLink);
+        }
+      }
+    };
+  })();
+</script><script>
+  (function() {
+    var ws = new WebSocket('ws://' + window.location.host +
+        '/jb-server-page?reloadMode=RELOAD_ON_SAVE&'+
+        'referrer=' + encodeURIComponent(window.location.pathname));
+    ws.onmessage = function (msg) {
+      if (msg.data === 'reload') {
+        window.location.reload();
+      }
+      if (msg.data.startsWith('update-css ')) {
+        var messageId = msg.data.substring(11);
+        var links = document.getElementsByTagName('link');
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          if (link.rel !== 'stylesheet') continue;
+          var clonedLink = link.cloneNode(true);
+          var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/, "$1jbUpdateLinksId=" + messageId);
+          if (newHref !== link.href) {
+            clonedLink.href = newHref;
+          }
+          else {
+            var indexOfQuest = newHref.indexOf('?');
+            if (indexOfQuest >= 0) {
+              // to support ?foo#hash
+              clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId=' + messageId + '&' +
+                  newHref.substring(indexOfQuest + 1);
+            }
+            else {
+              clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+            }
+          }
+          link.replaceWith(clonedLink);
+        }
+      }
+    };
+  })();
+</script><script>
+  (function() {
+    var ws = new WebSocket('ws://' + window.location.host +
+        '/jb-server-page?reloadMode=RELOAD_ON_SAVE&'+
+        'referrer=' + encodeURIComponent(window.location.pathname));
+    ws.onmessage = function (msg) {
+      if (msg.data === 'reload') {
+        window.location.reload();
+      }
+      if (msg.data.startsWith('update-css ')) {
+        var messageId = msg.data.substring(11);
+        var links = document.getElementsByTagName('link');
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          if (link.rel !== 'stylesheet') continue;
+          var clonedLink = link.cloneNode(true);
+          var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/, "$1jbUpdateLinksId=" + messageId);
+          if (newHref !== link.href) {
+            clonedLink.href = newHref;
+          }
+          else {
+            var indexOfQuest = newHref.indexOf('?');
+            if (indexOfQuest >= 0) {
+              // to support ?foo#hash
+              clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId=' + messageId + '&' +
+                  newHref.substring(indexOfQuest + 1);
+            }
+            else {
+              clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+            }
+          }
+          link.replaceWith(clonedLink);
+        }
+      }
+    };
+  })();
+</script><script>
+  (function() {
+    var ws = new WebSocket('ws://' + window.location.host +
+        '/jb-server-page?reloadMode=RELOAD_ON_SAVE&'+
+        'referrer=' + encodeURIComponent(window.location.pathname));
+    ws.onmessage = function (msg) {
+      if (msg.data === 'reload') {
+        window.location.reload();
+      }
+      if (msg.data.startsWith('update-css ')) {
+        var messageId = msg.data.substring(11);
+        var links = document.getElementsByTagName('link');
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          if (link.rel !== 'stylesheet') continue;
+          var clonedLink = link.cloneNode(true);
+          var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/, "$1jbUpdateLinksId=" + messageId);
+          if (newHref !== link.href) {
+            clonedLink.href = newHref;
+          }
+          else {
+            var indexOfQuest = newHref.indexOf('?');
+            if (indexOfQuest >= 0) {
+              // to support ?foo#hash
+              clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId=' + messageId + '&' +
+                  newHref.substring(indexOfQuest + 1);
+            }
+            else {
+              clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+            }
+          }
+          link.replaceWith(clonedLink);
+        }
+      }
+    };
+  })();
+</script>
+<!-- END: Content-->
+
+<div th:include="fixedTemplate/defaultJS.html"></div>
+
+</body>
+<!-- END: Body-->
+
+</html>
