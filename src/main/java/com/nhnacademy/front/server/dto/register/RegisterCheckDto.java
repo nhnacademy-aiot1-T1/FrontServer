@@ -1,8 +1,7 @@
-package com.nhnacademy.front.server.domain.register;
+package com.nhnacademy.front.server.dto.register;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
@@ -12,18 +11,21 @@ import org.hibernate.validator.constraints.Length;
  * @version 1.0
  */
 @Getter
-@AllArgsConstructor
 public class RegisterCheckDto {
   @NotBlank(message = "id는 필수 입력 항목입나다!")
   @Length(min = 5, message = "id는 5자 이상이어야 합니다!")
   private String id;
+
   @NotBlank(message = "pw는 필수 입력 항목입니다!")
   @Length(min = 8, message = "pw는 8글자 이상이어야 합니다!")
   private String password;
+
   @NotBlank(message = "pw확인은 필수 입력 항목입니다!")
-  @Length(min = 8, message = "pw확인은 8글자 이상이어야 합니다!")
+  @Length(min = 8, message = "pw확인은 8글자 이상이어야 합니다!") // todo, 비밀번호 재확인, 어노테이션 만들기
   private String passwordRetype;
+
   private String name;
+
   @Email(message = "이메일 형식이 아닙니다!")
   private String email;
 }
