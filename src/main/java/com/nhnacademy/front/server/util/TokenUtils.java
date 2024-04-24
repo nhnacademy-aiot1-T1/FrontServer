@@ -13,25 +13,26 @@ import java.util.Date;
 
 @Slf4j
 public class TokenUtils {
-    private TokenUtils(){
+    private TokenUtils() {
         throw new IllegalArgumentException("생성자가 필요하지 않습니다!");
     }
-    public static boolean isTokenExpired(String jwtToken){
-        try{
+
+    public static boolean isTokenExpired(String jwtToken) {
+        try {
             String payload = getPayloadFromToken(jwtToken);
             ObjectMapper mapper = new ObjectMapper();
             TokenPayload tokenDetails = mapper.readValue(payload, TokenPayload.class);
             Date now = new Date();
-            return  tokenDetails.exp.before(now);
-        }catch (JsonProcessingException e){
-         log.info("JWT 토큰의 파싱이 잘못되었음 만료로 처리함");
-         return true;
+            return tokenDetails.exp.before(now);
+        } catch (JsonProcessingException e) {
+            log.info("JWT 토큰의 파싱이 잘못되었음 만료로 처리함");
+            return true;
         }
     }
 
-    private static String getPayloadFromToken(String token){
+    private static String getPayloadFromToken(String token) {
         String[] parts = token.split("\\.");
-        if(parts.length==3){
+        if (parts.length == 3) {
             byte[] decodeBytes = Base64.getUrlDecoder().decode(parts[1]);
             return new String(decodeBytes, StandardCharsets.UTF_8);
         }
@@ -41,7 +42,7 @@ public class TokenUtils {
     @Getter
     @Setter
     @JsonIgnoreProperties(ignoreUnknown = true)
-    private static class TokenPayload{
+    private static class TokenPayload {
         private Date exp;
     }
 }
