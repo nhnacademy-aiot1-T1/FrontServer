@@ -8,11 +8,9 @@ import lombok.Getter;
  * @version 1.0
  */
 @Getter
-public class LoginFailedException extends RuntimeException{
+public class LoginFailedException extends RuntimeException {
 
-  private final String originClass;
-  public LoginFailedException(String message,String originClass) {
+  public LoginFailedException(String message) {
     super(message);
-    this.originClass = originClass;
   }
 }

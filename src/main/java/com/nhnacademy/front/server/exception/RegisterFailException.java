@@ -8,11 +8,8 @@ import lombok.Getter;
  * @version 1.0
  */
 @Getter
-public class RegisterFailException extends RuntimeException{
-  private final String originClass;
-
-  public RegisterFailException(String message,String originClass) {
+public class RegisterFailException extends RuntimeException {
+  public RegisterFailException(String message) {
     super(message);
-    this.originClass = originClass;
   }
 }
