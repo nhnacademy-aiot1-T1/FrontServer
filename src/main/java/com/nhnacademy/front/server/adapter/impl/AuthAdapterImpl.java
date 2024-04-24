@@ -1,18 +1,17 @@
 package com.nhnacademy.front.server.adapter.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.adapter.AuthAdapter;
-import com.nhnacademy.front.server.domain.CommonResponse;
-import com.nhnacademy.front.server.domain.LoginResponseDto;
-import com.nhnacademy.front.server.domain.UserLoginRequestDto;
-import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
-import com.nhnacademy.front.server.exception.JsonParseFailException;
+import com.nhnacademy.front.server.dto.LoginResponseDto;
+import com.nhnacademy.front.server.dto.UserLoginRequestDto;
+import com.nhnacademy.front.server.dto.register.RegisterRequestDto;
 import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
-import java.io.IOException;
+
 import java.util.List;
 import java.util.Objects;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -22,102 +21,93 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class AuthAdapterImpl implements AuthAdapter {
 
-  private static final String TOKEN_TYPE = "Bearer";
+    private static final String TOKEN_TYPE = "Bearer";
 
-  private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-  public AuthAdapterImpl(RestTemplate restTemplate) {
-    this.restTemplate = restTemplate;
-  }
+    @Override
+    public LoginResponseDto login(UserLoginRequestDto requestDto, String userIpAddress) {
+        HttpHeaders headers = new HttpHeaders();
 
-  @Override
-  public LoginResponseDto userLogin(String id, String password, String userAddress) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-    headers.add("Client-IP",userAddress);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        headers.add("Client-IP", userIpAddress);
 
-    UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(id,password);
+        HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(requestDto, headers);
 
-    HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto,headers);
+        ResponseEntity<CommonResponse<LoginResponseDto>> response = restTemplate.exchange(
+                "http://GATEWAY-SERVICE/api/auth/login",
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }
+        );
 
-    ResponseEntity<CommonResponse<LoginResponseDto>> exchange = restTemplate.exchange(
-        "http://GATEWAY-SERVICE/api/auth/login",
-        HttpMethod.POST,
-        requestEntity,
-        new ParameterizedTypeReference<>() {}
-    );
-    return Objects.requireNonNull(exchange.getBody()).dataOrElseThrow(() -> new LoginFailedException("로그인 실패",this.getClass().getSimpleName()));
-  }
+        // todo, common type으로 들어오는 걸로 알고 있음, 테스트 하고 수정해야 함.
 
-  @Override
-  public void logout(String accessToken) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.set("authorization",TOKEN_TYPE+" "+accessToken);
-
-    HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-    restTemplate.exchange(
-        "http://GATEWAY-SERVICE/api/auth/logout",
-        HttpMethod.POST,
-        requestEntity,
-        Void.class
-    );
-  }
-
-  @Override
-  public void registerUser(RegisterRequestDto registerRequestDto) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-
-    HttpEntity<RegisterRequestDto> requestEntity = new HttpEntity<>(registerRequestDto,headers);
-    log.debug("유저 회원가입 로직 api 실행");
-    try {
-      restTemplate.exchange(
-          "http://GATEWAY-SERVICE/api/users",
-          HttpMethod.POST,
-          requestEntity,
-          Void.class
-      );
-    } catch (HttpClientErrorException e) {
-      if (e.getStatusCode() == HttpStatus.CONFLICT) {
-        String responseBody = e.getResponseBodyAsString();
-        try {
-          ObjectMapper objectMapper = new ObjectMapper();
-          JsonNode rootNode = objectMapper.readTree(responseBody);
-          String message = rootNode.path("message").asText(); // "message" 속성 값 추출
-
-          throw new RegisterFailException(message,this.getClass().getSimpleName());
-        } catch (IOException ioException) {
-          // JSON 파싱 실패 처리
-          throw new JsonParseFailException("JSON 파싱 오류", ioException,this.getClass().getSimpleName());
-        }
-      }
+        return Objects.requireNonNull(response.getBody()).dataOrElseThrow(() -> new LoginFailedException("로그인 실패"));
     }
-  }
 
-  @Override
-  public void checkAccessToken(String token, String address) {
-    //Todo 혹시나 실행한 브라우저의 정보를 포함할 가능성 있름!
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-    headers.add("Client-IP",address);
-    headers.add("Authorization",TOKEN_TYPE+address);
-    HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-    restTemplate.exchange(
-        "http://GATEWAY-SERVICE/api/regenerate",
-        HttpMethod.POST,
-        requestEntity,
-        Void.class
-    );
+    @Override
+    public void logout(String accessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("authorization", TOKEN_TYPE + " " + accessToken);
 
-  }
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        restTemplate.exchange(
+                "http://GATEWAY-SERVICE/api/auth/logout",
+                HttpMethod.POST,
+                requestEntity,
+                Void.class
+        );
+    }
+
+    @Override
+    public void registerUser(RegisterRequestDto registerRequestDto) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        HttpEntity<RegisterRequestDto> requestEntity = new HttpEntity<>(registerRequestDto, headers);
+
+        ResponseEntity<CommonResponse<LoginResponseDto>> response = restTemplate.exchange(
+                "http://GATEWAY-SERVICE/api/users",
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        if (!response.getStatusCode().equals(HttpStatus.CREATED)) {
+            String message = response.getBody().getMessage(); // non-null test.
+
+            log.info(message); // todo, log를 여기서 처리해야 할지, 아니면 handler에서 처리하는게 맞을지?
+            throw new RegisterFailException(message);
+        }
+    }
+
+    @Override // todo, 여기 수정해야함
+    public void checkAccessToken(String token, String address) {
+        //Todo 혹시나 실행한 브라우저의 정보를 포함할 가능성 있름!
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        headers.add("Client-IP", address);
+        headers.add("Authorization", TOKEN_TYPE + address);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        restTemplate.exchange(
+                "http://GATEWAY-SERVICE/api/regenerate",
+                HttpMethod.POST,
+                requestEntity,
+                Void.class
+        );
+
+    }
 }
