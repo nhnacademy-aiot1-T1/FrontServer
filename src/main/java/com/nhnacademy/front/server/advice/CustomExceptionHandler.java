@@ -31,7 +31,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(value = { LoginFailedException.class })
     public String handleLoginFailException(LoginFailedException loginFailedException, RedirectAttributes redirectAttributes) {
 
-        redirectAttributes.addFlashAttribute("error", loginFailedException.getMessage());
+        redirectAttributes.addFlashAttribute("Error", loginFailedException.getMessage());
         return REDIRECT + "pages/auth/login";
     }
 
@@ -45,12 +45,20 @@ public class CustomExceptionHandler {
     @ExceptionHandler(value = { BindException.class }) // todo, 수정해야 함,
     public String handleValidationException(BindException ex, Model model) {
         if (ex.getBindingResult().getObjectName().equals("registerCheckDto")) {
-            model.addAttribute("message", Objects.requireNonNull(ex.getFieldError()).getDefaultMessage());
-            return "pages/auth/register";
+            model.addAttribute("Message", Objects.requireNonNull(ex.getFieldError()).getDefaultMessage());
+            return "/";
         }
         log.warn(ex.getMessage());
         log.warn(ex.getBindingResult().toString());
         return null;
     }
+
+    @ExceptionHandler(value = { Exception.class })
+    public String all(Exception e) {
+        log.error(e.getMessage());
+
+        return "/";
+    }
+
 
 }

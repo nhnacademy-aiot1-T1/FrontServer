@@ -35,5 +35,5 @@ public interface AuthAdapter {
    * @param token 현재 가지고 있는 accessToken의 정보입니다.
    * @param address 요청자의 IP주소를 지정합니다.
    */
-  void checkAccessToken(String token, String address);
+  void requestTokenRefresh(String token, String address);
 }

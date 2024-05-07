@@ -27,8 +27,8 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @Slf4j
 public class RegisterController {
-    private static final String REGISTER_PAGE = "pages/auth/register";
-    private static final String REASON_ATTRIBUTE_NAME = "message";
+    private static final String REGISTER_PAGE = "/home";
+    private static final String REASON_ATTRIBUTE_NAME = "Message";
 
     private final AuthAdapter authAdapter;
 
@@ -61,7 +61,7 @@ public class RegisterController {
             return REGISTER_PAGE;
         }
 
-        RegisterRequestDto registerRequestDto = null; // new RegisterRequestDto(registerCheckDto.getId(), registerCheckDto.getPassword(), registerCheckDto.getName(), registerCheckDto.getEmail());
+        RegisterRequestDto registerRequestDto = new RegisterRequestDto(registerCheckDto.getId(), registerCheckDto.getPassword(), registerCheckDto.getName(), registerCheckDto.getEmail());
 
         try {
             authAdapter.registerUser(registerRequestDto);

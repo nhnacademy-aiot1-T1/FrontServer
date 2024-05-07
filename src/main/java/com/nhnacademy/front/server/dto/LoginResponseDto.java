@@ -1,4 +1,4 @@
-package com.nhnacademy.front.server.domain;
+package com.nhnacademy.front.server.dto;
 
 import lombok.*;
 
@@ -11,6 +11,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated // common lib 이슈 해결되면 account api와 동일한 객체를 배포할 예정
 public class LoginResponseDto {
   String userId;
   String accessToken;

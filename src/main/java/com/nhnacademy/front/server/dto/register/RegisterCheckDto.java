@@ -2,6 +2,8 @@ package com.nhnacademy.front.server.dto.register;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
@@ -11,6 +13,8 @@ import org.hibernate.validator.constraints.Length;
  * @version 1.0
  */
 @Getter
+@AllArgsConstructor
+@Deprecated // common lib 이슈 해결되면 account api와 동일한 객체를 배포할 예정
 public class RegisterCheckDto {
   @NotBlank(message = "id는 필수 입력 항목입나다!")
   @Length(min = 5, message = "id는 5자 이상이어야 합니다!")
