@@ -2,7 +2,10 @@ package com.nhnacademy.front.server.adapter.impl;
 
 import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.adapter.MonitoringAdaptor;
+import com.nhnacademy.front.server.dto.MotorDetailDto;
 import com.nhnacademy.front.server.dto.MotorInfoOverviewDto;
+import com.nhnacademy.front.server.dto.MotorScoreDto;
+import com.nhnacademy.front.server.dto.MotorScoresDto;
 import com.nhnacademy.front.server.dto.MotorsDto;
 import com.nhnacademy.front.server.dto.SectorsDto;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +26,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
   // 종합 정보
   @Override
-  public CommonResponse<MotorInfoOverviewDto> getMotorInfoOverview(){
+  public CommonResponse<MotorInfoOverviewDto> getMotorInfoOverview() {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
@@ -37,7 +40,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
         }
     );
 
-    if(exchange.getStatusCode() != HttpStatus.OK){
+    if (exchange.getStatusCode() != HttpStatus.OK) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
 
@@ -46,7 +49,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
   // 구역 목록
   @Override
-  public CommonResponse<SectorsDto> getSectorsInfo(){
+  public CommonResponse<SectorsDto> getSectorsInfo() {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
@@ -56,10 +59,11 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
         "https://run.mocky.io/v3/9a1947cd-320d-4dad-855c-88c643353e24",
         HttpMethod.GET,
         request,
-        new ParameterizedTypeReference<>() {}
+        new ParameterizedTypeReference<>() {
+        }
     );
 
-    if(exchange.getStatusCode() != HttpStatus.OK){
+    if (exchange.getStatusCode() != HttpStatus.OK) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
 
@@ -68,11 +72,10 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
   // 모터 목록
   @Override
-  public CommonResponse<MotorsDto> getMotors(){
+  public CommonResponse<MotorsDto> getMotors() {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
@@ -80,17 +83,61 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
         "https://run.mocky.io/v3/01da6de5-fd42-41a9-b18c-740560273635",
         HttpMethod.GET,
         request,
-        new ParameterizedTypeReference<>() {}
+        new ParameterizedTypeReference<>() {
+        }
     );
 
-    if(exchange.getStatusCode() != HttpStatus.OK){
+    if (exchange.getStatusCode() != HttpStatus.OK) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
 
     return exchange.getBody();
   }
 
+  @Override
+  public CommonResponse<MotorDetailDto> getMotorDetail(Long motorId) {
+    HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
+    ResponseEntity<CommonResponse<MotorDetailDto>> exchange = restTemplate.exchange(
+        "https://run.mocky.io/v3/92a5e0c6-7f90-415c-b376-480097c32c3a",
+        HttpMethod.GET,
+        request,
+        new ParameterizedTypeReference<>() {
+        }
+    );
+
+    if (exchange.getStatusCode() != HttpStatus.OK) {
+      throw new ResponseStatusException(exchange.getStatusCode());
+    }
+
+    return exchange.getBody();
+
+  }
+
+  @Override
+  public CommonResponse<MotorScoresDto> getMotorScores(Long motorId) {
+    HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
+
+    ResponseEntity<CommonResponse<MotorScoresDto>> exchange = restTemplate.exchange(
+        "https://run.mocky.io/v3/caaf2018-171a-4c08-87f9-e7dac7fb4f1f",
+        HttpMethod.GET,
+        request,
+        new ParameterizedTypeReference<>() {
+        }
+    );
+    if (exchange.getStatusCode() != HttpStatus.OK) {
+      throw new ResponseStatusException(exchange.getStatusCode());
+    }
+
+    return exchange.getBody();
+
+  }
 
 
 }

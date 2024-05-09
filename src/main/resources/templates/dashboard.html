@@ -5,8 +5,9 @@
 <head>
   <meta charset="UTF-8">
   <title>dashboard</title>
-
   <div th:include="fixedTemplate/defaultCSS.html"></div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
+
 </head>
 <!-- END: Head-->
 
@@ -34,37 +35,31 @@
       <div class="col-xl-4 col-lg-12">
         <div class="card" style="height: 313.625px;">
           <div class="card-header">
-            <h4 class="card-title"><span id="Normal" class="text-success">Normal</span></h4>
+            <h4 class="card-title"><span id="Normal" class="text-success">Total</span></h4>
           </div>
           <div class="card-content">
-            <div class="card-body">
-
-            </div>
+            <h1 class="display-1 card-body" th:text="${motorOverview.getTotalMotorCount()}"></h1>
           </div>
         </div>
       </div>
       <div class="col-xl-4 col-lg-12">
         <div class="card" style="height: 313.625px;">
           <div class="card-header">
-            <h4 class="card-title"><span id="Caution" class="text-warning">Warning</span></h4>
+            <h4 class="card-title"><span id="Caution" class="text-warning">Normal</span></h4>
           </div>
           <div class="card-content">
-            <div class="card-body">
-
-            </div>
+            <h1 class="display-1 card-body" th:text="${motorOverview.getTotalMotorNormalCount()}"></h1>
           </div>
         </div>
       </div>
       <div class="col-xl-4 col-lg-12">
         <div class="card" style="height: 313.625px;">
           <div class="card-header">
-            <h4 class="card-title"><span id="Warning" class="text-danger">Danger</span></h4>
+            <h4 class="card-title"><span id="Warning" class="text-danger">Abnomaly</span></h4>
 
           </div>
           <div class="card-content">
-            <div class="card-body">
-
-            </div>
+            <h1 class="display-1 card-body" th:text="${motorOverview.getTotalMotorAbnomalCount()}"></h1>
           </div>
         </div>
       </div>
@@ -100,35 +95,20 @@
                     <tr>
                       <td class="text-truncate">총 모터 수</td>
                       <td class="text-truncate">
-                                                        <span>
-                                                            <i class="ft-arrow-down danger"></i> 5.15%</span>
+                        <span><i th:text ="${motorOverview.getTotalMotorCount()}"></i></span>
                       </td>
-
-
-
-
                     </tr>
                     <tr>
-                      <td class="text-truncate">동작중인 모터 수</td>
+                      <td class="text-truncate">등록 모터수</td>
                       <td class="text-truncate">
-                                                        <span>
-                                                            <i class="ft-arrow-down danger"></i> 5.15%</span>
+                        <span><i th:text ="${motorOverview.getTotalMotorConnectedCount()}"></i></span>
                       </td>
-
-
-
-
                     </tr>
                     <tr>
-                      <td class="text-truncate">동작이 멈춘 모터 수</td>
-
+                      <td class="text-truncate">미등록 모터수</td>
                       <td>
-                                                        <span>
-                                                            <i class="ft-arrow-down danger"></i> 5.15%</span>
+                        <span><i th:text ="${motorOverview.getTotalMotorDisConnectedCount()}"></i></span>
                       </td>
-
-
-
                     </tr>
 
                     </tbody>
@@ -159,93 +139,75 @@
       <!-- Statistics -->
       <div class="row">
         <!--section start-->
-        <div class="col-xl-4 col-lg-12 sectorSection" th:each="sector : ${sectorList}">
+        <div class="col-xl-4 col-lg-12 sectorSection" th:each="sector : ${sectorsInfo}">
           <div class="row">
             <div class="col-12">
+
               <div class="card pull-up"
-                   th:if="${sector.getId()}%3 == 1"
+                   th:if="${sector.getSectorId()}%3 == 1"
                    th:class="bg-gradient-directional-purple">
                 <div class="card-header" th:class="bg-gradient-directional-purple">
-                  <h4 class="card-title white" th:text="'SECTOR ' + ${sector.getId()}"></h4>
+                  <h4 class="card-title white" th:text="${sector.getSectorName()}"></h4>
                   <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
                 <div class="card-content collapse show" th:class="bg-gradient-directional-purple">
                   <div class="card-body">
-                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.getId()})}">
+<!--                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.value.getId()})}">-->
                       <div class="media d-flex align-items-center justify-content-center">
                       <div>
-                        <img src="../vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
+                        <img src="/vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
                       </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-xs-6">
-                        <h3 class="font-large-1 white normalRate_word">Normal Rate:</h3>
-                        <h3 class="font-large-2 white normalRate_value" th:text="${sector.getNormalPercentage()} +'%'"></h3>
-                      </div>
-                      <div class="col-xs-6">
-                        <h3 class="font-large-1 white runningRate_word">Running Rate:</h3>
-                        <h3 class="font-large-2 white runningRate_value" th:text="${sector.getRunningPercentage()} +'%'"></h3>
-                      </div>
+                        <div class="media-body text-right mt-1">
+                          <h6 class="mt-1"><span class="text-muted white">Normal Motors Percentge</span></h6>
+                          <h2 class="font-large-4 white" th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) / (sector.getNormalCount() + sector.getAnomalyCount()), 0, 2) + '%'}"></h2>
+                        </div>
                     </div>
                       </a>
                   </div>
                 </div>
               </div>
+
               <div class="card pull-up"
-                   th:if="${sector.getId()}%3 == 2"
+                   th:if="${sector.getSectorId()}%3 == 2"
                    th:class="bg-gradient-directional-primary">
                 <div class="card-header" th:class="bg-gradient-directional-primary">
-                  <h4 class="card-title white" th:text="'SECTOR ' + ${sector.getId()}"></h4>
+                  <h4 class="card-title white" th:text="${sector.getSectorName()}"></h4>
                   <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
                 <div class="card-content collapse show" th:class="bg-gradient-directional-primary">
                   <div class="card-body">
-                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.getId()})}">
+<!--                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.value.getId()})}">-->
                     <div class="media d-flex align-items-center justify-content-center">
                       <div>
-                        <img src="../vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
+                        <img src="/vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
                       </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-xs-6">
-                        <h3 class="font-large-1 white normalRate_word">Normal Rate:</h3>
-                        <h3 class="font-large-2 white normalRate_value" th:text="${sector.getNormalPercentage()} +'%'"></h3>
-                      </div>
-                      <div class="col-xs-6">
-                        <h3 class="font-large-1 white runningRate_word">Running Rate:</h3>
-                        <h3 class="font-large-2 white runningRate_value" th:text="${sector.getRunningPercentage()} +'%'"></h3>
+                      <div class="media-body text-right mt-1">
+                        <h6 class="mt-1"><span class="text-muted white">Normal Motors Percentge</span></h6>
+                        <h2 class="font-large-4 white" th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) / (sector.getNormalCount() + sector.getAnomalyCount()), 0, 2) + '%'}"></h2>
                       </div>
                     </div>
                     </a>
                   </div>
                 </div>
               </div>
+
               <div class="card pull-up"
-                   th:if="${sector.getId()}%3 == 0"
+                   th:if="${sector.getSectorId()}%3 == 0"
                    th:class="bg-gradient-directional-blue">
                 <div class="card-header" th:class="bg-gradient-directional-blue">
-                  <h4 class="card-title white" th:text="'SECTOR ' + ${sector.getId()}"></h4>
+                  <h4 class="card-title white" th:text="${sector.getSectorName()}"></h4>
                   <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
                 <div class="card-content collapse show" th:class="bg-gradient-directional-blue">
                   <div class="card-body">
-                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.getId()})}">
+<!--                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.value.getId()})}">-->
                     <div class="media d-flex align-items-center justify-content-center">
                       <div>
-                        <img src="../vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
+                        <img src="/vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
                       </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-xs-6">
-                        <h3 class="font-large-1 white normalRate_word">Normal Rate:</h3>
-                        <h3 class="font-large-2 white normalRate_value" th:text="${sector.getNormalPercentage()} +'%'"></h3>
-                      </div>
-                      <div class="col-xs-6">
-                        <h3 class="font-large-1 white runningRate_word">Running Rate:</h3>
-                        <h3 class="font-large-2 white runningRate_value" th:text="${sector.getRunningPercentage()} +'%'"></h3>
+                      <div class="media-body text-right mt-1">
+                        <h6 class="mt-1"><span class="text-muted white">Normal Motors Percentge</span></h6>
+                        <h2 class="font-large-4 white" th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) / (sector.getNormalCount() + sector.getAnomalyCount()), 0, 2) + '%'}"></h2>
                       </div>
                     </div>
                     </a>

@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-@Deprecated // common lib 이슈 해결되면 account api와 동일한 객체를 배포할 예정
+//@Deprecated // common lib 이슈 해결되면 account api와 동일한 객체를 배포할 예정
 public class UserLoginRequestDto {
   private String loginId;
   private String password;
