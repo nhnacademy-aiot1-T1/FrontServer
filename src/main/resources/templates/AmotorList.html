@@ -4,207 +4,277 @@
 
 <head>
   <div th:include="fixedTemplate/defaultCSS.html"></div>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
 </head>
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar" data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="content-detached-left-sidebar">
+<body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar"
+      data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue"
+      data-col="content-detached-left-sidebar">
 
-    <!-- BEGIN: Header-->
-    <div th:include="fixedTemplate/fixed-top.html"></div>
-    <!-- END: Header-->
-
-
-    <!-- BEGIN: Main Menu-->
-    <div th:include="fixedTemplate/side-navigation.html"></div>
-    <!-- END: Main Menu-->
-
-    <!-- BEGIN: Content-->
-    <!-- BEGIN: Content-->
-    <div class="app-content content">
-        <div class="content-wrapper">
-            <div class="content-wrapper-before"></div>
-            <div class="content-header row">
-                <div class="content-header-left col-md-4 col-12 mb-2">
-                    <h3 class="content-header-title">Motor list</h3>
-                </div>
-                <div class="content-header-right col-md-8 col-12">
-                    <div class="breadcrumbs-top float-md-right">
-                        <div class="breadcrumb-wrapper mr-1">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="../vertical-menu-template/index.html">DashBoard</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="#">Sector3</a>
-                                </li>
-                                <li class="breadcrumb-item active">Motor List
-                                </li>
-                            </ol>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="content-detached content-right">
-
-                <div class="content-body">
-                    <section class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-head">
-                                    <div class="card-header">
-                                        <h4 class="card-title">Sector3 Motor Status</h4>
+<!-- BEGIN: Header-->
+<div th:include="fixedTemplate/fixed-top.html"></div>
+<!-- END: Header-->
 
 
-                                        <div class="card-content collapse show">
-                                            <div class="card-body pt-300 pb-300">
-                                                <div class="row mb-1">
-                                                    <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                                                        <p class="blue-grey lighten-2 mb-0">Total Motors</p>
-                                                        <p class="font-medium-5 text-bold-400" th:text="${selectedSector.getMotorList().size()}" ></p>
-                                                    </div>
-                                                    <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                                                        <p class="blue-grey lighten-2 mb-0">Running</p>
-                                                        <p class="font-medium-5 text-bold-400" th:text="${selectedSector.getRunningMotorsNum()}"}></p>
-                                                    </div>
-                                                    <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                                                        <p class="blue-grey lighten-2 mb-0">Warning</p>
-                                                        <p class="font-medium-5 text-bold-400" th:text="${selectedSector.getWarningMotorsNum()}"></p>
-                                                    </div>
-                                                    <div class="col-6 col-sm-3 col-md-6 col-lg-3 text-center">
-                                                        <p class="blue-grey lighten-2 mb-0">Danger</p>
-                                                        <p class="font-medium-5 text-bold-400" th:text="${selectedSector.getDangerMotorsNum()}"></p>
-                                                    </div>
-                                                </div>
+<!-- BEGIN: Main Menu-->
+<div th:include="fixedTemplate/side-navigation.html"></div>
+<!-- END: Main Menu-->
 
-                                                <h6 class="text-bold-600"> Running Motors:
-                                                    <span th:text="${selectedSector.getRunningPercentage() + '%'}"></span>
-                                                </h6>
-                                                <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                                                    <div class="progress-bar bg-gradient-x-danger" role="progressbar" th:style="'width: ' + ${selectedSector.getRunningPercentage()} + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div class="media d-flex">
-                                                    <div class="align-self-center">
-                                                        <h6 class="text-bold-600 mt-2"> Manager:
-                                                            <span class="info">SangWoo Byun</span>
-                                                        </h6>
-                                                        <h6 class="text-bold-600 mt-1"> The Current TIme:
-                                                            <span class="blue-grey" th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm')}"></span>
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- 모터 리스트 박스 -->
-                                        <!-- 모터 시작-->
-                                        <div class="row">
-                                            <div class="col-2 motorsection" th:each="motor : ${selectedSector.getMotorList()}">
-                                                <div class="card pull-up"
-                                                     th:if="${motor.runningStatus == T(com.nhnacademy.databinding2.enumData.RunningStatus).ON}"
-                                                     th:class="'bg-gradient-directional-' + ${#strings.toLowerCase(motor.operatingStatus)}">
-                                                    <div class="card-header" th:class="'bg-gradient-directional-' + ${#strings.toLowerCase(motor.operatingStatus)}">
-                                                        <h4 class="card-title white" th:text="'Motor-' + ${motor.id}"></h4>
-                                                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                                                        <div class="heading-elements">
-                                                            <ul class="list-inline mb-0"></ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-content collapse show" th:class="'bg-gradient-directional-' + ${#strings.toLowerCase(motor.operatingStatus)}">
-                                                        <div class="card-body">
-                                                            <a th:href="@{/motorDetail/{sectorId}/{motorId}(sectorId=${selectedSector.id}, motorId=${motor.id})}">
-                                                                <div class="media d-flex align-items-center justify-content-center">
-                                                                    <div>
-                                                                        <img src="../vertical-menu-template/app-assets/images/icons/motoricon.png" alt="Your Image" class="img-fluid">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="media-body text-right mt-1">
-                                                                    <h3 class="font-large-0 white" th:text="${motor.operatingStatus}"></h3>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card pull-up"
-                                                     th:unless="${motor.runningStatus == T(com.nhnacademy.databinding2.enumData.RunningStatus).ON}"
-                                                     th:class="'bg-gradient-directional-grey-blue'">
-                                                    <div class="card-header" th:class="'bg-gradient-directional-grey-blue'">
-                                                        <h4 class="card-title white" th:text="'Motor-' + ${motor.id}"></h4>
-                                                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                                                        <div class="heading-elements">
-                                                            <ul class="list-inline mb-0"></ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-content collapse show" th:class="'bg-gradient-directional-grey-blue'">
-                                                        <div class="card-body">
-                                                            <a th:href="@{/motorDetail/{sectorId}/{motorId}(sectorId=${selectedSector.id}, motorId=${motor.id})}">
-                                                                <div class="media d-flex align-items-center justify-content-center">
-                                                                    <div>
-                                                                        <img src="../vertical-menu-template/app-assets/images/icons/motoricon.png" alt="Your Image" class="img-fluid">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="media-body text-right mt-1">
-                                                                    <h3
-                                                                        th:if="${motor.getOperatingStatus() == (T(com.nhnacademy.databinding2.enumData.OperatingStatus).DANGER)
-                                                                        or motor.getOperatingStatus() == (T(com.nhnacademy.databinding2.enumData.OperatingStatus).WARNING)}"
-                                                                        th:class="'font-large-0 bg-gradient-directional-'+${#strings.toLowerCase(motor.operatingStatus)}" th:text="${motor.operatingStatus}">
-                                                                    </h3>
-                                                                    <h3
-                                                                        th:unless="${motor.getOperatingStatus() == (T(com.nhnacademy.databinding2.enumData.OperatingStatus).DANGER)
-                                                                        or motor.getOperatingStatus() == (T(com.nhnacademy.databinding2.enumData.OperatingStatus).WARNING)}"
-                                                                        class="'font-large-0 white" th:text="${motor.operatingStatus}">
-                                                                    >
-                                                                    </h3>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            </div>
-                                        </div>
+<!-- BEGIN: Content-->
+<!-- BEGIN: Content-->
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-wrapper-before"></div>
+    <div class="content-header row">
+      <div class="content-header-left col-md-4 col-12 mb-2">
+        <h3 class="content-header-title">Motor list</h3>
+      </div>
 
 
 
-                                        <!-- 모터 끝-->
+      <div class="content-detached content-right">
 
-                                    <a class="heading-elements-toggle">
-                                            <i class="la la-ellipsis-h font-medium-3"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-body">
-                                    </div>
-                                </div>
+        <div class="content-body">
+          <section class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-head">
+                  <div class="card-header">
+                    <h4 class="card-title" id = sectorname>Motor Status</h4>
+
+
+                    <div class="card-content collapse show">
+                      <div class="card-body pt-300 pb-300">
+                        <div class="row mb-1">
+                          <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                            <p class="blue-grey lighten-2 mb-0">Total Motors</p>
+                            <th:p id="totalMotors" class="font-medium-5 text-bold-400"></th:p>
+                          </div>
+                          <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                            <p class="blue-grey lighten-2 mb-0">Normal Motors</p>
+                            <th:p id="normalMotors" class="font-medium-5 text-bold-400"></th:p>
+                          </div>
+                          <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                            <p class="blue-grey lighten-2 mb-0">Anomaly Motors</p>
+                            <th:p id="anomalyMotors" class="font-medium-5 text-bold-400"></th:p>
+                          </div>
+                          <div
+                              class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                            <div class="btn-group mr-1 mb-1 show">
+                              <!-- 섹터 드롭다운 -->
+                              <button type="button" class="btn btn-bg-gradient-x-blue-green dropdown-toggle sector-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true ">
+                                Sector
+                              </button>
+                              <div class="dropdown-menu show ">
+                                <button class="dropdown-item sector-button" data-sector-id="all">전체보기</button>
+                                <button class="dropdown-item sector-button"
+                                        th:each="sector : ${sectorInfo}"
+                                        type="button"
+                                        th:text="${sector.getSectorName()}"
+                                        th:data-sector-id="${sector.getSectorId()}"
+                                ></button> <!-- class 추가 -->
+                              </div>
                             </div>
+
+                          </div>
                         </div>
-                    </section>
+
+                        <h6 class="text-bold-600"> Success Motors:
+                          <!--                                                    <span th:text="${formattedSuccessRate + '%'}"></span>-->
+                        </h6>
+                        <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+                          <!--                                                    <div class="progress-bar bg-gradient-x-danger" role="progressbar" th:style="'width: ' + ${formattedSuccessRate} + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>-->
+                        </div>
+                        <div class="media d-flex">
+                          <div class="align-self-center">
+                            <h6 class="text-bold-600 mt-2"> Manager:
+                              <span class="info">SangWoo Byun</span>
+                            </h6>
+                            <h6 class="text-bold-600 mt-1"> The Current TIme:
+                              <span class="blue-grey"
+                                    th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm')}"></span>
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <!-- 모터 리스트 박스 -->
+                    <!-- 모터 시작-->
+                    <div class="container">
+                      <div class="row">
+                        <div th:each="motor : ${motors}" th:if="${motor.getConnect() == 'T'}" class="motorbox col-2" th:data-sector-id="${motor.getSectorId()}" th:data-motor-id="${motor.getMotorId()}" onclick="goToMotorDetail(this)">
+                          <div
+                              class="motorsection">
+                            <div th:if="${motor.getStatus() =='normal'}"
+                                 class= "card pull-up bg-gradient-directional-success">
+                              <div  class= "card pull-up bg-gradient-directional-success">
+                                <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
+                                <a class="heading-elements-toggle"><i
+                                    class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                  <ul class="list-inline mb-0"></ul>
+                                </div>
+                              </div>
+                              <div  class= "card pull-up bg-gradient-directional-success">
+                                <div class="card-body">
+                                  <div class="media d-flex align-items-center justify-content-center">
+                                    <div>
+                                      <img
+                                          src="/vertical-menu-template/app-assets/images/icons/motoricon.png"
+                                          alt="Your Image" class="img-fluid">
+                                    </div>
+                                  </div>
+                                  <div class="media-body text-right mt-1">
+                                    <h3 class="font-large-0 white" th:text="${motor.getStatus()}"></h3>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div th:if="${motor.getStatus() =='warning'}"
+                                 class= "card pull-up bg-gradient-directional-warning">
+                              <div  class= "card pull-up bg-gradient-directional-warning">
+                                <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
+                                <a class="heading-elements-toggle"><i
+                                    class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                  <ul class="list-inline mb-0"></ul>
+                                </div>
+                              </div>
+                              <div  class= "card pull-up bg-gradient-directional-warning">
+                                <div class="card-body">
+                                  <div class="media d-flex align-items-center justify-content-center">
+                                    <div>
+                                      <img
+                                          src="/vertical-menu-template/app-assets/images/icons/motoricon.png"
+                                          alt="Your Image" class="img-fluid">
+                                    </div>
+                                  </div>
+                                  <div class="media-body text-right mt-1">
+                                    <h3 class="font-large-0 white" th:text="${motor.getStatus()}"></h3>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <br>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 모터 끝-->
+                  </div>
                 </div>
+                <div class="card-content">
+                  <div class="card-body">
+                  </div>
+                </div>
+              </div>
             </div>
+          </section>
         </div>
+      </div>
     </div>
 
+  </div>
+  <div class="content-wrapper">
 
-    <!-- END: Content-->
+  </div>
+
+  <!-- END: Content-->
 
 
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light navbar-border navbar-shadow">
-        <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">2019 &copy; Copyright <a class="text-bold-800 grey darken-2" href="https://themeselection.com" target="_blank">ThemeSelection</a></span>
-            <ul class="list-inline float-md-right d-block d-md-inline-blockd-none d-lg-block mb-0">
-                <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/" target="_blank"> More themes</a></li>
-                <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/support" target="_blank"> Support</a></li>
-            </ul>
-        </div>
-    </footer>
-    <!-- END: Footer-->
-    <div th:include="fixedTemplate/defaultJS.html"></div>
-
+  <div th:include="fixedTemplate/defaultJS.html"></div>
+</div>
 </body>
 <!-- END: Body-->
 
 </html>
+
+<script th:inline="javascript" type="text/javascript">
+  // 페이지 로딩 시 전체 섹터의 개수 합산하여 출력
+  $(document).ready(function() {
+    var motorInfoOverview = [[${motorInfoOverview}]]; // 서버에서 받아온 섹터 정보
+    var totalNormalMotors = motorInfoOverview.totalMotorNormalCount;
+    var totalAnomalyMotors = motorInfoOverview.totalMotorAbnomalCount;
+    var totalMotors = motorInfoOverview.totalMotorCount;
+    var sectorName = 'Total Motor Status';
+
+    $('#totalMotors').text(totalMotors);
+    $('#normalMotors').text(totalNormalMotors);
+    $('#anomalyMotors').text(totalAnomalyMotors);
+    $('#sectorname').text(sectorName);
+
+  });
+
+  // 선택한 구역의 ID를 가져와서 서버로 전달하는 함수
+  function selectSector(sectorId) {
+    var motorElements = $('.motorbox');
+
+    if (sectorId === 'all') {
+      // 모든 모터 요소 표시
+      motorElements.show();
+
+      // motorInfoOverview에서 데이터 꺼내서 설정
+      var motorInfoOverview = [[${motorInfoOverview}]];
+      var totalNormalMotors = motorInfoOverview.totalMotorNormalCount;
+      var totalAnomalyMotors = motorInfoOverview.totalMotorAbnomalCount;
+      var totalMotors = motorInfoOverview.totalMotorCount;
+      var sectorName = 'Total Motor Status';
+
+
+      $('#totalMotors').text(totalMotors);
+      $('#normalMotors').text(totalNormalMotors);
+      $('#anomalyMotors').text(totalAnomalyMotors);
+      $('#sectorname').text(sectorName);
+
+    } else {
+      // 모든 모터 요소 숨기기
+      motorElements.hide();
+
+      // 선택한 섹터의 모터 요소만 표시
+      var selectedSectorMotors = $('.motorbox[data-sector-id="' + sectorId + '"]');
+      selectedSectorMotors.show();
+
+      // 선택한 섹터의 total motors, normal motors, anomaly motors 개수 업데이트
+      var sector = getSectorById(sectorId);
+      $('#totalMotors').text(sector.normalCount + sector.anomalyCount);
+      $('#normalMotors').text(sector.normalCount);
+      $('#anomalyMotors').text(sector.anomalyCount);
+      $('#sectorname').text(sector.sectorName+' Motor Status');
+
+    }
+  }
+
+  // 섹터 ID로 섹터 정보를 가져오는 함수
+  function getSectorById(sectorId) {
+    var sectors = [[${sectorInfo}]]; // 서버에서 받아온 섹터 정보
+    for (var i = 0; i < sectors.length; i++) {
+      if (sectors[i].sectorId == sectorId) {
+        return sectors[i];
+      }
+    }
+    return null;
+  }
+
+  // jQuery를 사용하여 드롭다운 메뉴 클릭 이벤트 처리
+  $(document).on('click', '.dropdown-item', function() {
+    var sectorId = $(this).attr('data-sector-id');
+    selectSector(sectorId);
+  });
+
+</script>
+
+<script th:inline="javascript" type="text/javascript">
+  // 모터 상세 페이지로 이동하는 함수
+  function goToMotorDetail(element) {
+    var motorId = element.getAttribute('data-motor-id');
+    window.location.href = '/SectorDetail/MotorDetail?motorId=' + motorId;
+  }
+
+  // 기존 코드...
+</script>

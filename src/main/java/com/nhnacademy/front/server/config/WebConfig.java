@@ -2,7 +2,6 @@ package com.nhnacademy.front.server.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.nhnacademy.front.server.interceptor.RestTemplateInterceptor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
+//
 //    @Bean
 //    @LoadBalanced
 //    public RestTemplate restTemplate(RestTemplateBuilder builder) {

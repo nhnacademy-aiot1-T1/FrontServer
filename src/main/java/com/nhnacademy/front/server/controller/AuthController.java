@@ -41,95 +41,103 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private static final String LOGIN_PAGE = "/login";
-    private static final String INDEX_PAGE = "/home";
-    private static final String REDIRECT = "redirect:";
+  private static final String LOGIN_PAGE = "/login";
+  private static final String INDEX_PAGE = "/home";
+  private static final String REDIRECT = "redirect:";
 
-    private final AuthAdapter authAdapter;
-    private final RestTemplate restTemplate;
+  private final AuthAdapter authAdapter;
+  private final RestTemplate restTemplate;
 
 
-    /**
-     * 해당 request 와 Uri가 오면 해당 controller을 호출합니다
-     *
-     * @return 로그인 메인 페이지
-     */
-    @GetMapping("/login")
-    public String showLoginForm(HttpServletRequest request) {
+  /**
+   * 해당 request 와 Uri가 오면 해당 controller을 호출합니다
+   *
+   * @return 로그인 메인 페이지
+   */
+  @GetMapping("/login")
+  public String showLoginForm(HttpServletRequest request) {
 
-        if (request.getCookies() == null) return LOGIN_PAGE;
-
-        // todo, util로 빼기.
-        Optional<Cookie> token = Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals("authorization"))
-                .findFirst();
-
-        return (token.isEmpty()) ? LOGIN_PAGE : INDEX_PAGE;
+    if (request.getCookies() == null) {
+      return LOGIN_PAGE;
     }
 
+    // todo, util로 빼기.
+    Optional<Cookie> token = Arrays.stream(request.getCookies())
+        .filter(cookie -> cookie.getName().equals("authorization"))
+        .findFirst();
 
-    /**
-     * 로그인 인증 로직입니다 성공하면 메인으로 실패시 다시 로그인 화면을 redirect합니다!
-     *
-     * @param req                유저의 IPAddress 정보를 가지고 오기 위한 request입니다!
-     * @param res                쿠키에 발급받은 토큰을 저장하기 위한 response입니다!
-     * @param redirectAttributes 에러 발생시 flash 로 정보를 넘겨주기 위한 attribute입니다!
-     * @return 성공하면 메인페이지로 실패하면 로그인 페이지로 반환합니다!
-     */
-    @PostMapping("/login")
-    public String doLogin(@ModelAttribute UserLoginRequestDto userLoginRequestDto,
-                          HttpServletRequest req,
-                          HttpServletResponse res,
-                          RedirectAttributes redirectAttributes) {
+    return (token.isEmpty()) ? LOGIN_PAGE : INDEX_PAGE;
+  }
 
-//        String userAddress = req.getHeader("x-forwarded-for");
-        String userAddress = "192.168.0.1"; // todo, test용 코드, 지워야 함.
-//        String token = authAdapter.login(userLoginRequestDto, userAddress).getAccessToken();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-USER-IP", "userIpAddress");
-        HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto, headers);
-        ResponseEntity<CommonResponse<LoginResponseDto>> token = restTemplate.exchange("https://run.mocky.io/v3/af37bcbc-09d6-44de-92f8-87fb1e3a7185", HttpMethod.POST, requestEntity, new ParameterizedTypeReference<>() {
-        });
 
-        log.info(token.getBody().getData().getAccessToken());
+  /**
+   * 로그인 인증 로직입니다 성공하면 메인으로 실패시 다시 로그인 화면을 redirect합니다!
+   *
+   * @param req                유저의 IPAddress 정보를 가지고 오기 위한 request입니다!
+   * @param res                쿠키에 발급받은 토큰을 저장하기 위한 response입니다!
+   * @param redirectAttributes 에러 발생시 flash 로 정보를 넘겨주기 위한 attribute입니다!
+   * @return 성공하면 메인페이지로 실패하면 로그인 페이지로 반환합니다!
+   */
+  // doLogin 메소드 수정
+  @PostMapping("/login")
+  public String doLogin(@ModelAttribute UserLoginRequestDto userLoginRequestDto,
+      HttpServletRequest req,
+      HttpServletResponse res,
+      RedirectAttributes redirectAttributes) {
 
-        if (token == null) {
-            redirectAttributes.addFlashAttribute("Error", "do not match Id or Password.");
-            return REDIRECT + LOGIN_PAGE;
+    String userAddress = "192.168.0.1";
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("X-USER-IP", "userIpAddress");
+    HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto, headers);
+    ResponseEntity<CommonResponse<LoginResponseDto>> responseEntity = restTemplate.exchange(
+        "https://run.mocky.io/v3/ab7b1ca2-fb1e-4372-8011-cc71f4872bfe",
+        HttpMethod.POST,
+        requestEntity,
+        new ParameterizedTypeReference<CommonResponse<LoginResponseDto>>() {
         }
+    );
 
-        Cookie cookie = new Cookie("Authorization", token.getBody().getData().getAccessToken());
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        res.addCookie(cookie);
+    LoginResponseDto loginResponse = responseEntity.getBody().getData();
+    String accessToken = loginResponse.getAccessToken();
 
-        return REDIRECT + INDEX_PAGE;
+    if (accessToken == null) {
+      redirectAttributes.addFlashAttribute("Error", "do not match Id or Password.");
+      return REDIRECT + LOGIN_PAGE;
     }
 
-    /**
-     * 유저가 로그아웃 버튼을 눌렀을 때 호출되는 controller입니다!
-     *
-     * @param token              유저의 Cookie에서 authorization 쿠키를 가져옵니다!
-     * @param redirectAttributes 에러 발생시 flash 로 정보를 넘겨주기 위한 attribute입니다!
-     * @return 현재 둘 다 로그인 화면을 반환하지만 실패시 에러에 대한 정보를 flash 로 담아줍니다!
-     */
-    @PostMapping("/logout")
-    public String doLogout(@CookieValue(value = "Authorization", required = false) String token, RedirectAttributes redirectAttributes) {
-        if (token == null || token.isEmpty()) { // logout시 토큰이 없으면 문제가 되는가 ? -
-            log.info("토큰이 없거나 비어있음 ");
-            throw new NotFoundTokenException("토큰이 없거나 비어있음!");
-        }
+    Cookie cookie = new Cookie("Authorization", accessToken);
+    cookie.setHttpOnly(true);
+    cookie.setSecure(true);
+    res.addCookie(cookie);
 
-        authAdapter.logout(token);
-        redirectAttributes.addFlashAttribute("State", "success");
+    return REDIRECT + INDEX_PAGE;
+  }
 
-        return REDIRECT + LOGIN_PAGE;
+  /**
+   * 유저가 로그아웃 버튼을 눌렀을 때 호출되는 controller입니다!
+   *
+   * @param token              유저의 Cookie에서 authorization 쿠키를 가져옵니다!
+   * @param redirectAttributes 에러 발생시 flash 로 정보를 넘겨주기 위한 attribute입니다!
+   * @return 현재 둘 다 로그인 화면을 반환하지만 실패시 에러에 대한 정보를 flash 로 담아줍니다!
+   */
+  @PostMapping("/logout")
+  public String doLogout(@CookieValue(value = "Authorization", required = false) String token,
+      RedirectAttributes redirectAttributes) {
+    if (token == null || token.isEmpty()) { // logout시 토큰이 없으면 문제가 되는가 ? -
+      log.info("토큰이 없거나 비어있음 ");
+      throw new NotFoundTokenException("토큰이 없거나 비어있음!");
     }
 
-    // todo, move to page controller.
-    @GetMapping("/")
-    public String temp() {
-        return "home";
+    authAdapter.logout(token);
+    redirectAttributes.addFlashAttribute("State", "success");
 
-    }
+    return REDIRECT + LOGIN_PAGE;
+  }
+
+  // todo, move to page controller.
+  @GetMapping("/")
+  public String temp() {
+    return "home";
+
+  }
 }
