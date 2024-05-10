@@ -1,4 +1,4 @@
-package com.nhnacademy.front.server.dto;
+package com.nhnacademy.front.server.dto.motor;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.List;

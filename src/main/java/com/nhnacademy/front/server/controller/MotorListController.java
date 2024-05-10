@@ -1,7 +1,7 @@
 package com.nhnacademy.front.server.controller;
 
-import com.nhnacademy.front.server.dto.MotorDto;
-import com.nhnacademy.front.server.dto.MotorInfoOverviewDto;
+import com.nhnacademy.front.server.dto.motor.MotorDto;
+import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
 import com.nhnacademy.front.server.dto.SectorDto;
 import com.nhnacademy.front.server.service.MotorService;
 import com.nhnacademy.front.server.service.SectorService;
@@ -27,13 +27,11 @@ public class MotorListController {
     List<SectorDto> sectorsInfo = sectorservice.getSectorsInfo().getSectors();
     MotorInfoOverviewDto motorInfoOverviewDto = motorService.getMotorOverview();
 
-
     model.addAttribute("sectorInfo", sectorsInfo);
     model.addAttribute("motors", motors);
     model.addAttribute("motorInfoOverview", motorInfoOverviewDto);
     return "AmotorList";
   }
-
 
 
 }

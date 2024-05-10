@@ -1,12 +1,10 @@
 package com.nhnacademy.front.server.controller;
 
-import com.nhnacademy.front.server.dto.MotorDetailDto;
-import com.nhnacademy.front.server.dto.MotorDto;
-import com.nhnacademy.front.server.dto.MotorScoreDto;
-import com.nhnacademy.front.server.dto.MotorScoresDto;
-import com.nhnacademy.front.server.dto.MotorsDto;
+import com.nhnacademy.front.server.dto.motor.MotorDto;
+import com.nhnacademy.front.server.dto.motorScore.MotorScoreDto;
+import com.nhnacademy.front.server.dto.motorScore.MotorScoresDto;
 import com.nhnacademy.front.server.dto.SectorDto;
-import com.nhnacademy.front.server.dto.SensorDto;
+import com.nhnacademy.front.server.dto.motorDetail.SensorDto;
 import com.nhnacademy.front.server.service.MotorService;
 import com.nhnacademy.front.server.service.SectorService;
 import java.util.List;

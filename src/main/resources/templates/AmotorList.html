@@ -34,7 +34,6 @@
       </div>
 
 
-
       <div class="content-detached content-right">
 
         <div class="content-body">
@@ -43,21 +42,24 @@
               <div class="card">
                 <div class="card-head">
                   <div class="card-header">
-                    <h4 class="card-title" id = sectorname>Motor Status</h4>
+                    <h4 class="card-title" id=sectorname>Motor Status</h4>
 
 
                     <div class="card-content collapse show">
                       <div class="card-body pt-300 pb-300">
                         <div class="row mb-1">
-                          <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                          <div
+                              class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
                             <p class="blue-grey lighten-2 mb-0">Total Motors</p>
                             <th:p id="totalMotors" class="font-medium-5 text-bold-400"></th:p>
                           </div>
-                          <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                          <div
+                              class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
                             <p class="blue-grey lighten-2 mb-0">Normal Motors</p>
                             <th:p id="normalMotors" class="font-medium-5 text-bold-400"></th:p>
                           </div>
-                          <div class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                          <div
+                              class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
                             <p class="blue-grey lighten-2 mb-0">Anomaly Motors</p>
                             <th:p id="anomalyMotors" class="font-medium-5 text-bold-400"></th:p>
                           </div>
@@ -65,11 +67,16 @@
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
                             <div class="btn-group mr-1 mb-1 show">
                               <!-- 섹터 드롭다운 -->
-                              <button type="button" class="btn btn-bg-gradient-x-blue-green dropdown-toggle sector-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true ">
+                              <button type="button"
+                                      class="btn btn-bg-gradient-x-blue-green dropdown-toggle sector-button"
+                                      data-toggle="dropdown" aria-haspopup="true"
+                                      aria-expanded="true ">
                                 Sector
                               </button>
                               <div class="dropdown-menu show ">
-                                <button class="dropdown-item sector-button" data-sector-id="all">전체보기</button>
+                                <button class="dropdown-item sector-button" data-sector-id="all">
+                                  전체보기
+                                </button>
                                 <button class="dropdown-item sector-button"
                                         th:each="sector : ${sectorInfo}"
                                         type="button"
@@ -107,12 +114,15 @@
                     <!-- 모터 시작-->
                     <div class="container">
                       <div class="row">
-                        <div th:each="motor : ${motors}" th:if="${motor.getConnect() == 'T'}" class="motorbox col-2" th:data-sector-id="${motor.getSectorId()}" th:data-motor-id="${motor.getMotorId()}" onclick="goToMotorDetail(this)">
+                        <div th:each="motor : ${motors}" th:if="${motor.getConnect() == 'T'}"
+                             class="motorbox col-2" th:data-sector-id="${motor.getSectorId()}"
+                             th:data-motor-id="${motor.getMotorId()}"
+                             onclick="goToMotorDetail(this)">
                           <div
                               class="motorsection">
                             <div th:if="${motor.getStatus() =='normal'}"
-                                 class= "card pull-up bg-gradient-directional-success">
-                              <div  class= "card pull-up bg-gradient-directional-success">
+                                 class="card pull-up bg-gradient-directional-success">
+                              <div class="card pull-up bg-gradient-directional-success">
                                 <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
                                 <a class="heading-elements-toggle"><i
                                     class="la la-ellipsis-v font-medium-3"></i></a>
@@ -120,9 +130,10 @@
                                   <ul class="list-inline mb-0"></ul>
                                 </div>
                               </div>
-                              <div  class= "card pull-up bg-gradient-directional-success">
+                              <div class="card pull-up bg-gradient-directional-success">
                                 <div class="card-body">
-                                  <div class="media d-flex align-items-center justify-content-center">
+                                  <div
+                                      class="media d-flex align-items-center justify-content-center">
                                     <div>
                                       <img
                                           src="/vertical-menu-template/app-assets/images/icons/motoricon.png"
@@ -130,14 +141,15 @@
                                     </div>
                                   </div>
                                   <div class="media-body text-right mt-1">
-                                    <h3 class="font-large-0 white" th:text="${motor.getStatus()}"></h3>
+                                    <h3 class="font-large-0 white"
+                                        th:text="${motor.getStatus()}"></h3>
                                   </div>
                                 </div>
                               </div>
                             </div>
                             <div th:if="${motor.getStatus() =='warning'}"
-                                 class= "card pull-up bg-gradient-directional-warning">
-                              <div  class= "card pull-up bg-gradient-directional-warning">
+                                 class="card pull-up bg-gradient-directional-warning">
+                              <div class="card pull-up bg-gradient-directional-warning">
                                 <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
                                 <a class="heading-elements-toggle"><i
                                     class="la la-ellipsis-v font-medium-3"></i></a>
@@ -145,9 +157,10 @@
                                   <ul class="list-inline mb-0"></ul>
                                 </div>
                               </div>
-                              <div  class= "card pull-up bg-gradient-directional-warning">
+                              <div class="card pull-up bg-gradient-directional-warning">
                                 <div class="card-body">
-                                  <div class="media d-flex align-items-center justify-content-center">
+                                  <div
+                                      class="media d-flex align-items-center justify-content-center">
                                     <div>
                                       <img
                                           src="/vertical-menu-template/app-assets/images/icons/motoricon.png"
@@ -155,7 +168,8 @@
                                     </div>
                                   </div>
                                   <div class="media-body text-right mt-1">
-                                    <h3 class="font-large-0 white" th:text="${motor.getStatus()}"></h3>
+                                    <h3 class="font-large-0 white"
+                                        th:text="${motor.getStatus()}"></h3>
                                   </div>
                                 </div>
                               </div>
@@ -189,15 +203,17 @@
 
 
   <div th:include="fixedTemplate/defaultJS.html"></div>
+
 </div>
 </body>
 <!-- END: Body-->
+
 
 </html>
 
 <script th:inline="javascript" type="text/javascript">
   // 페이지 로딩 시 전체 섹터의 개수 합산하여 출력
-  $(document).ready(function() {
+  $(document).ready(function () {
     var motorInfoOverview = [[${motorInfoOverview}]]; // 서버에서 받아온 섹터 정보
     var totalNormalMotors = motorInfoOverview.totalMotorNormalCount;
     var totalAnomalyMotors = motorInfoOverview.totalMotorAbnomalCount;
@@ -226,7 +242,6 @@
       var totalMotors = motorInfoOverview.totalMotorCount;
       var sectorName = 'Total Motor Status';
 
-
       $('#totalMotors').text(totalMotors);
       $('#normalMotors').text(totalNormalMotors);
       $('#anomalyMotors').text(totalAnomalyMotors);
@@ -245,7 +260,7 @@
       $('#totalMotors').text(sector.normalCount + sector.anomalyCount);
       $('#normalMotors').text(sector.normalCount);
       $('#anomalyMotors').text(sector.anomalyCount);
-      $('#sectorname').text(sector.sectorName+' Motor Status');
+      $('#sectorname').text(sector.sectorName + ' Motor Status');
 
     }
   }
@@ -262,7 +277,7 @@
   }
 
   // jQuery를 사용하여 드롭다운 메뉴 클릭 이벤트 처리
-  $(document).on('click', '.dropdown-item', function() {
+  $(document).on('click', '.dropdown-item', function () {
     var sectorId = $(this).attr('data-sector-id');
     selectSector(sectorId);
   });

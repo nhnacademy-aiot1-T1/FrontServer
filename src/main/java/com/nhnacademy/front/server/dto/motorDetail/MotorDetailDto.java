@@ -1,4 +1,4 @@
-package com.nhnacademy.front.server.dto;
+package com.nhnacademy.front.server.dto.motorDetail;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
