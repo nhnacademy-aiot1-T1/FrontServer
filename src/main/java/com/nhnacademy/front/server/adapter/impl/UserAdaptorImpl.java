@@ -23,14 +23,15 @@ public class UserAdaptorImpl implements UserAdaptor {
   private final RestTemplate restTemplate;
 
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON;
-  private static final String GET_URL = "https://run.mocky.io/v3/33acb19b-6557-44f6-914c-4a8ef12b0fa4";
+  private static final String GET_USER_DETAIL_URL = "https://run.mocky.io/v3/33acb19b-6557-44f6-914c-4a8ef12b0fa4";
+  private static final String POST_USER_DETAIL_URL = "";
 
   @Override
   public CommonResponse<UserDetailDto> getUserDetail(Long userId) {
     HttpEntity<String> request = setupHttpHeaders();
 
     ResponseEntity<CommonResponse<UserDetailDto>> exchange = restTemplate.exchange(
-        GET_URL,
+        GET_USER_DETAIL_URL,
         HttpMethod.GET,
         request,
         new ParameterizedTypeReference<>() {
@@ -47,7 +48,7 @@ public class UserAdaptorImpl implements UserAdaptor {
     HttpEntity<String> request = setupHttpHeaders();
 
     ResponseEntity<CommonResponse<UserDetailDto>> exchange = restTemplate.exchange(
-        "",
+        POST_USER_DETAIL_URL,
         HttpMethod.POST,
         request,
         new ParameterizedTypeReference<>() {
