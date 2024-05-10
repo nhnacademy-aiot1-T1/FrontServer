@@ -1,4 +1,4 @@
-package com.nhnacademy.front.server.dto;
+package com.nhnacademy.front.server.dto.motorScore;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;

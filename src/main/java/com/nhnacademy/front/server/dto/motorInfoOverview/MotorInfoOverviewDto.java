@@ -1,9 +1,7 @@
-package com.nhnacademy.front.server.dto;
+package com.nhnacademy.front.server.dto.motorInfoOverview;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
 @Getter

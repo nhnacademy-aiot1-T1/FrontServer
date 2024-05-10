@@ -1,7 +1,6 @@
-package com.nhnacademy.front.server.dto;
+package com.nhnacademy.front.server.dto.motor;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

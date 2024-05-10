@@ -1,6 +1,6 @@
 package com.nhnacademy.front.server.controller;
 
-import com.nhnacademy.front.server.dto.MotorInfoOverviewDto;
+import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
 import com.nhnacademy.front.server.dto.SectorDto;
 import com.nhnacademy.front.server.service.MotorService;
 import com.nhnacademy.front.server.service.SectorService;
@@ -19,7 +19,7 @@ public class DashBoardController {
   private final SectorService sectorService;
 
   @GetMapping("/home")
-  public String home(Model model){
+  public String home(Model model) {
     MotorInfoOverviewDto motorOverviewDTO = motorService.getMotorOverview();
     List<SectorDto> sectorsInfo = sectorService.getSectorsInfo().getSectors();
 
