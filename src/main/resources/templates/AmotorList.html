@@ -90,10 +90,10 @@
                         </div>
 
                         <h6 class="text-bold-600"> Success Motors:
-                          <!--                                                    <span th:text="${formattedSuccessRate + '%'}"></span>-->
+                          <span id="sectorPercent"></span>
                         </h6>
                         <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                          <!--                                                    <div class="progress-bar bg-gradient-x-danger" role="progressbar" th:style="'width: ' + ${formattedSuccessRate} + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>-->
+                          <!--                                                                              <div class="progress-bar bg-gradient-x-danger" role="progressbar" th:style="'width: ' + ${formattedSuccessRate} + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>-->
                         </div>
                         <div class="media d-flex">
                           <div class="align-self-center">
@@ -114,12 +114,11 @@
                     <!-- 모터 시작-->
                     <div class="container">
                       <div class="row">
-                        <div th:each="motor : ${motors}" th:if="${motor.getConnect() == 'T'}"
+                        <div th:each="motor : ${motors}"
                              class="motorbox col-2" th:data-sector-id="${motor.getSectorId()}"
                              th:data-motor-id="${motor.getMotorId()}"
                              onclick="goToMotorDetail(this)">
-                          <div
-                              class="motorsection">
+                          <div class="motorsection" th:if="${motor.getConnect()=='T'}">
                             <div th:if="${motor.getStatus() =='normal'}"
                                  class="card pull-up bg-gradient-directional-success">
                               <div class="card pull-up bg-gradient-directional-success">
@@ -158,6 +157,36 @@
                                 </div>
                               </div>
                               <div class="card pull-up bg-gradient-directional-warning">
+                                <div class="card-body">
+                                  <div
+                                      class="media d-flex align-items-center justify-content-center">
+                                    <div>
+                                      <img
+                                          src="/vertical-menu-template/app-assets/images/icons/motoricon.png"
+                                          alt="Your Image" class="img-fluid">
+                                    </div>
+                                  </div>
+                                  <div class="media-body text-right mt-1">
+                                    <h3 class="font-large-0 white"
+                                        th:text="${motor.getStatus()}"></h3>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <br>
+                          </div>
+                          <div class="motorsection" th:if="${motor.getConnect()=='F'}">
+                            <div
+                                class="card pull-up bg-gradient-directional-blue-grey">
+                              <div class="card pull-up bg-gradient-directional-blue-grey">
+                                <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
+                                <a class="heading-elements-toggle"><i
+                                    class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                  <ul class="list-inline mb-0"></ul>
+                                </div>
+                              </div>
+                              <div class="card pull-up bg-gradient-directional-blue-grey">
                                 <div class="card-body">
                                   <div
                                       class="media d-flex align-items-center justify-content-center">
@@ -261,6 +290,9 @@
       $('#normalMotors').text(sector.normalCount);
       $('#anomalyMotors').text(sector.anomalyCount);
       $('#sectorname').text(sector.sectorName + ' Motor Status');
+      // var normalMotorsPercent = calculatePercentage(sector.normalCount,
+      //     sector.normalCount + sector.anomalyCount);
+      // $('#sectorPercent').text('Success Motors: ' + normalMotorsPercent.toFixed(2) + '%');
 
     }
   }
@@ -274,6 +306,10 @@
       }
     }
     return null;
+  }
+
+  function calculatePercentage(part, whole) {
+    return (part / whole) * 100;
   }
 
   // jQuery를 사용하여 드롭다운 메뉴 클릭 이벤트 처리
