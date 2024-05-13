@@ -15,13 +15,8 @@ public class SideNaviController {
   }
 
   @GetMapping("/controllog")
-  public String controllog() {
+  public String controlLog() {
     return "controlLog";
-  }
-
-  @GetMapping("/mypage")
-  public String useredit() {
-    return "users-edit";
   }
 
 
