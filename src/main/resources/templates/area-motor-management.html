@@ -9,7 +9,9 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar" data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="content-detached-left-sidebar">
+<body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar"
+      data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue"
+      data-col="content-detached-left-sidebar">
 
 
 <!-- BEGIN: Header-->
@@ -26,7 +28,9 @@
     <div class="content-detached content-right">
       <div class="content-body">
         <div class="col-sm-12">
-          <button id="toggleMotorForm" class="btn btn-primary mb-2"><i class="ft-plus"></i>&nbsp;모터 추가</button>
+          <button id="toggleMotorForm" class="btn btn-primary mb-2"><i class="ft-plus"></i>&nbsp;모터
+            추가
+          </button>
           <button id="deleteSelected" class="btn btn-danger mb-2">선택 삭제</button>
           <div id="motorForm" class="p-2" style="display:none;">
             <div class="row align-items-center">
@@ -39,7 +43,8 @@
                 </select>
               </div>
               <div class="col-md-3">
-                <input type="text" id="motorName" class="form-control" placeholder="Enter motor name">
+                <input type="text" id="motorName" class="form-control"
+                       placeholder="Enter motor name">
               </div>
               <div class="col-md-1">
                 <button id="addMotor" class="btn btn-success">추가</button>
@@ -64,7 +69,6 @@
     </div>
 
     <!-- 구역관리 -->
-    <div class="sidebar-detached sidebar-left sidebar-sticky">
       <div class="sidebar">
         <button id="addArea" class="btn btn-primary mb-2"><i class="ft-plus"></i>&nbsp;
           구역 추가
@@ -72,8 +76,6 @@
         <hr style="border: 0">
 
         <!-- 구역 List Group -->
-        <div>
-          <ul class="list-group mt-2" id="areaList">
             <li id="newAreaInput" class="list-group-item dropdown-menu p-2" style="display:none;">
               <input type="text" class="form-control" id="newAreaName"
                      placeholder="Enter new area name">
@@ -82,32 +84,33 @@
                 확인
               </button>
             </li>
-<!--            <li class="list-group-item">-->
-<!--              <a href="#">구역 A</a>-->
-<!--              <button class="btn btn-outline-danger  btn-sm delete-area float-right" type="button">-->
-<!--                x-->
-<!--              </button>-->
-<!--            </li>-->
-<!--            <li class="list-group-item">-->
-<!--              <a href="#">구역 B</a>-->
-<!--              <button class="btn btn-outline-danger  btn-sm delete-area float-right" type="button">-->
-<!--                x-->
-<!--              </button>-->
-<!--            </li>-->
-<!--            <li class="list-group-item">-->
-<!--              <a href="#">구역 C</a>-->
-<!--              <button class="btn btn-outline-danger  btn-sm delete-area float-right" type="button">-->
-<!--                x-->
-<!--              </button>-->
-<!--            </li>-->
-<!--            <li class="list-group-item">-->
-<!--              <a href="#">구역 D</a>-->
-<!--              <button class="btn btn-outline-danger  btn-sm delete-area float-right" type="button">-->
-<!--                x-->
-<!--              </button>-->
-<!--            </li>-->
-          </ul>
-        </div>
+
+            <div class="col-xl-8 col-lg-6 col-md-12">
+              <h5 class="card-title text-bold-700 my-2">Registered Sector</h5>
+              <div class="card">
+                <div class="card-content">
+                  <div id="recent-projects" class="media-list position-relative">
+                    <div class="table-responsive">
+                      <table class="table table-padded table-xl mb-0" id="recent-project-table">
+                        <tbody>
+                        <tr>
+                          <td class="text-truncate align-middle">
+                            <a href="#">전체</a>
+                          </td>
+                        </tr>
+                        </tbody>
+                        <tbody th:each= "sector:${sectors}">
+                        <tr>
+                          <td class="text-truncate align-middle">
+                            <a href="#" th:text="${sector.sectorName}"></a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
         <!-- /구역 List group -->
 
       </div>
@@ -115,28 +118,30 @@
     <!--/ 구역관리 -->
 
   </div>
-</div>
 <!-- END: Content-->
 
 <!-- BEGIN: Vendor JS-->
-<script src="../vertical-menu-template/app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
+<script src="/vertical-menu-template/app-assets/vendors/js/vendors.min.js"
+        type="text/javascript"></script>
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
-<script type="text/javascript" src="../vertical-menu-template/app-assets/vendors/js/ui/jquery.sticky.js"></script>
-<script src="../vertical-menu-template/app-assets/vendors/js/tables/datatable/datatables.min.js"
+<script type="text/javascript"
+        src="/vertical-menu-template/app-assets/vendors/js/ui/jquery.sticky.js"></script>
+<script src="/vertical-menu-template/app-assets/vendors/js/tables/datatable/datatables.min.js"
         type="text/javascript"></script>
-<script src="../vertical-menu-template/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"
-        type="text/javascript"></script>
+<script
+    src="/vertical-menu-template/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"
+    type="text/javascript"></script>
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
-<script src="../vertical-menu-template/app-assets/js/core/app.js" type="text/javascript"></script>
+<script src="/vertical-menu-template/app-assets/js/core/app.js" type="text/javascript"></script>
 <!-- END: Theme JS-->
 
 <!-- BEGIN: Page JS-->
 <script type="text/javascript"
-        src="../vertical-menu-template/app-assets/js/scripts/pages/sk-content-sidebar.js"></script>
+        src="/vertical-menu-template/app-assets/js/scripts/pages/sk-content-sidebar.js"></script>
 <!-- END: Page JS-->
 
 <script>
@@ -189,7 +194,7 @@
       $.ajax({
         url: '/addSector',
         type: 'POST',
-        data: { areaName: areaName },
+        data: {areaName: areaName},
         success: function (response) {
           // 섹터 추가에 성공한 경우, 서버로부터 반환된 데이터를 기반으로 클라이언트 측에서 리스트에 섹터를 추가합니다.
           // 이 예제에서는 간단하게 새로운 섹터를 리스트에 동적으로 추가하는 방법을 사용합니다.
@@ -220,7 +225,8 @@
     if (isDuplicate) {
       alert('동일한 구역에 같은 이름의 모터가 이미 존재합니다.');
     } else if (motorName.trim() != "" && motorArea != "") {
-      $('#motorTableBody').append(`<tr><td class="checkbox-column"><input type="checkbox" class="delete-checkbox"></td><td>${motorName}</td><td>${motorArea}</td></tr>`);
+      $('#motorTableBody').append(
+          `<tr><td class="checkbox-column"><input type="checkbox" class="delete-checkbox"></td><td>${motorName}</td><td>${motorArea}</td></tr>`);
       $('#motorName').val('');
       $('#motorArea').val('구역 A'); // Reset to default or first area
     } else {

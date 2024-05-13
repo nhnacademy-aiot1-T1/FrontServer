@@ -7,7 +7,37 @@
   <title>dashboard</title>
   <div th:include="fixedTemplate/defaultCSS.html"></div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
+  <!-- BEGIN: Vendor CSS-->
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/vendors/css/vendors.min.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/vendors/css/charts/chartist.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/vendors/css/charts/chartist-plugin-tooltip.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/vendors/css/forms/icheck/icheck.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/vendors/css/forms/icheck/custom.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/vendors/css/timeline/vertical-timeline.css">
+  <!-- END: Vendor CSS-->
 
+  <!-- BEGIN: Theme CSS-->
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/css/bootstrap-extended.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/css/colors.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/css/components.css">
+  <!-- END: Theme CSS-->
+
+  <!-- BEGIN: Page CSS-->
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/css/core/menu/menu-types/vertical-menu.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/css/core/colors/palette-gradient.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/css/core/colors/palette-gradient.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/fonts/simple-line-icons/style.min.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/css/pages/chat-application.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/css/pages/advanced-cards.css">
+  <!-- END: Page CSS-->
+
+  <!-- BEGIN: Custom CSS-->
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/assets/css/style.css">
+  <!-- END: Custom CSS-->
 </head>
 <!-- END: Head-->
 
@@ -33,200 +63,287 @@
     <!--/ Task & Quarterly Sales -->
     <div class="row">
       <div class="col-xl-4 col-lg-12">
-        <div class="card" style="height: 313.625px;">
-          <div class="card-header">
-            <h4 class="card-title"><span id="Normal" class="text-success">Total</span></h4>
+        <div class="card">
+          <div class="card-header ">
+            <!-- <h4 class="card-title">New Customers</h4> -->
+            <a class="heading-elements-toggle">
+              <i class="la la-ellipsis-v font-medium-3"></i>
+            </a>
+            <div class="heading-elements">
+              <ul class="list-inline mb-0">
+                <li>
+                  <a data-action="reload">
+                    <i class="ft-rotate-cw"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
+          <!--여기가 대시보드 위에-->
           <div class="card-content">
-            <h1 class="display-1 card-body" th:text="${motorOverview.getTotalMotorCount()}"></h1>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-12">
-        <div class="card" style="height: 313.625px;">
-          <div class="card-header">
-            <h4 class="card-title"><span id="Caution" class="text-warning">Normal</span></h4>
-          </div>
-          <div class="card-content">
-            <h1 class="display-1 card-body" th:text="${motorOverview.getTotalMotorNormalCount()}"></h1>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-12">
-        <div class="card" style="height: 313.625px;">
-          <div class="card-header">
-            <h4 class="card-title"><span id="Warning" class="text-danger">Abnomaly</span></h4>
-
-          </div>
-          <div class="card-content">
-            <h1 class="display-1 card-body" th:text="${motorOverview.getTotalMotorAbnomalCount()}"></h1>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="content-body">
-      <!-- Chart -->
-
-      <!-- Chart -->
-      <!-- eCommerce statistic -->
-
-      <!--/ eCommerce statistic -->
-      <!-- Product Summary and Chat -->
-      <div class="row match-height">
-        <div class="col-xl-4 col-lg-12">
-          <h5 class="card-title text-bold-700 my-2">Product Summary</h5>
-          <div class="card" style="height: 313.625px;">
-            <div class="card-content">
-              <div id="product-summary" class="media-list position-relative">
-                <div class="table-responsive">
-                  <table class="table table-padded table-xl mb-0" id="product-summary-table">
-                    <thead>
-                    <tr>
-                      <th class="border-top-0">motor list</th>
-                      <th class="border-top-0">count</th>
-
-
-
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                      <td class="text-truncate">총 모터 수</td>
-                      <td class="text-truncate">
-                        <span><i th:text ="${motorOverview.getTotalMotorCount()}"></i></span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-truncate">등록 모터수</td>
-                      <td class="text-truncate">
-                        <span><i th:text ="${motorOverview.getTotalMotorConnectedCount()}"></i></span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-truncate">미등록 모터수</td>
-                      <td>
-                        <span><i th:text ="${motorOverview.getTotalMotorDisConnectedCount()}"></i></span>
-                      </td>
-                    </tr>
-
-                    </tbody>
-                  </table>
-                </div>
+            <div class="card-body text-center">
+              <div class="card-header pt-0 pb-0">
+                <p class="info darken-2">Total Motors</p>
+                <h3 class="display-4 blue-grey lighten-1" th:text="${motorOverview.getTotalMotorCount()}"></h3>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-8 col-lg-12">
-          <h5 class="card-title text-bold-700 my-2">Action log</h5>
-          <div class="card" style="height: 313.625px;">
-            <div class="card-header">
-              <h4 class="Action log">Action log</h4>
-            </div>
-            <div class="card-content">
-              <div class="card-body">
-                <div class="col-12 timeline-left" id="activity">
-
-                </div>
+              <div class="card-content">
+                <ul class="list-inline clearfix mt-2">
+                  <li>
+                    <h1 class="blue-grey lighten-1 text-bold-400">&nbsp;</h1>
+                    <span class="info darken-2">
+                                                        <i class="ft-airplay"></i> Motors Registerd</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!--/ Task & Quarterly Sales -->
 
-      <!-- Statistics -->
-      <div class="row">
-        <!--section start-->
-        <div class="col-xl-4 col-lg-12 sectorSection" th:each="sector : ${sectorsInfo}">
-          <div class="row">
-            <div class="col-12">
+      <div class="col-xl-4 col-lg-12">
+        <div class="card">
+          <div class="card-header ">
+            <!-- <h4 class="card-title">New Customers</h4> -->
+            <a class="heading-elements-toggle">
+              <i class="la la-ellipsis-v font-medium-3"></i>
+            </a>
+            <div class="heading-elements">
+              <ul class="list-inline mb-0">
+                <li>
+                  <a data-action="reload">
+                    <i class="ft-rotate-cw"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!--여기가 대시보드 위에-->
+          <div class="card-content">
+            <div class="card-body text-center">
+              <div class="card-header pt-0 pb-0">
+                <p class="warning darken-2">Anomaly Motors</p>
+                <h3 class="display-4 blue-grey lighten-1" th:text="${motorOverview.getTotalMotorAbnomalCount()}"></h3>
+              </div>
+              <div class="card-content">
+                <ul class="list-inline clearfix mt-2">
+                  <li>
+                    <h1 class="blue-grey lighten-1 text-bold-400" th:text="${#numbers.formatDecimal((motorOverview.getTotalMotorAbnomalCount() * 100.0) / (motorOverview.getTotalMotorCount()), 0, 2) + '%'}"></h1>
+                    <span class="warning darken-2">
+                                                        <i class="ft-airplay"></i> Anomaly Motors Percentage</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-              <div class="card pull-up"
-                   th:if="${sector.getSectorId()}%3 == 1"
-                   th:class="bg-gradient-directional-purple">
-                <div class="card-header" th:class="bg-gradient-directional-purple">
-                  <h4 class="card-title white" th:text="${sector.getSectorName()}"></h4>
-                  <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+      <div class="col-xl-4 col-lg-12">
+        <div class="card">
+          <div class="card-header ">
+            <!-- <h4 class="card-title">New Customers</h4> -->
+            <a class="heading-elements-toggle">
+              <i class="la la-ellipsis-v font-medium-3"></i>
+            </a>
+            <div class="heading-elements">
+              <ul class="list-inline mb-0">
+                <li>
+                  <a data-action="reload">
+                    <i class="ft-rotate-cw"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!--여기가 대시보드 위에-->
+          <div class="card-content">
+            <div class="card-body text-center">
+              <div class="card-header pt-0 pb-0">
+                <p class="danger darken-2">Running Motors</p>
+                <h3 class="display-4 blue-grey lighten-1" th:text="${motorOverview.getTotalMotorConnectedCount()}"></h3>
+              </div>
+              <div class="card-content">
+                <ul class="list-inline clearfix mt-2">
+                  <li>
+                    <h1 class="blue-grey lighten-1 text-bold-400" th:text="${#numbers.formatDecimal((motorOverview.getTotalMotorConnectedCount * 100.0) / (motorOverview.getTotalMotorCount()), 0, 2) + '%'}"></h1>
+                    <span class="danger darken-2">
+                                                        <i class="ft-airplay"></i> Running Motors Percentage</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-body">
+        <!-- Chart -->
+
+        <!-- Chart -->
+        <!-- eCommerce statistic -->
+
+        <!--/ eCommerce statistic -->
+        <!-- Product Summary and Chat -->
+        <div class="row match-height">
+          <div class="col-xl-4 col-lg-12">
+            <h5 class="card-title text-bold-700 my-2">Product Summary</h5>
+            <div class="card" style="height: 313.625px;">
+              <div class="card-content">
+                <div id="product-summary" class="media-list position-relative">
+                  <div class="table-responsive">
+                    <table class="table table-padded table-xl mb-0" id="product-summary-table">
+                      <thead>
+                      <tr>
+                        <th class="border-top-0">motor list</th>
+                        <th class="border-top-0">count</th>
+
+
+
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td class="text-truncate">총 모터 수</td>
+                        <td class="text-truncate">
+                          <span><i th:text ="${motorOverview.getTotalMotorCount()}"></i></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-truncate">등록 모터수</td>
+                        <td class="text-truncate">
+                          <span><i th:text ="${motorOverview.getTotalMotorConnectedCount()}"></i></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-truncate">미등록 모터수</td>
+                        <td>
+                          <span><i th:text ="${motorOverview.getTotalMotorDisConnectedCount()}"></i></span>
+                        </td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div class="card-content collapse show" th:class="bg-gradient-directional-purple">
-                  <div class="card-body">
-<!--                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.value.getId()})}">-->
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-8 col-lg-12">
+            <h5 class="card-title text-bold-700 my-2">Action log</h5>
+            <div class="card" style="height: 313.625px;">
+              <div class="card-header">
+                <h4 class="Action log">Action log</h4>
+              </div>
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="col-12 timeline-left" id="activity">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--/ Task & Quarterly Sales -->
+
+        <!-- Statistics -->
+        <div class="row">
+          <!--section start-->
+          <div class="col-xl-4 col-lg-12 sectorSection" th:each="sector : ${sectorsInfo}">
+            <div class="row">
+              <div class="col-12">
+
+                <div class="card pull-up"
+                     th:if="${sector.getSectorId()}%3 == 1"
+                     th:class="bg-gradient-directional-purple">
+                  <div class="card-header" th:class="bg-gradient-directional-purple">
+                    <h4 class="card-title white" th:text="${sector.getSectorName()}"></h4>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                  </div>
+                  <div class="card-content collapse show" th:class="bg-gradient-directional-purple">
+                    <div class="card-body">
+                      <!--                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.value.getId()})}">-->
                       <div class="media d-flex align-items-center justify-content-center">
-                      <div>
-                        <img src="/vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
-                      </div>
+                        <div>
+                          <img src="/vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
+                        </div>
                         <div class="media-body text-right mt-1">
                           <h6 class="mt-1"><span class="text-muted white">Normal Motors Percentge</span></h6>
                           <h2 class="font-large-4 white" th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) / (sector.getNormalCount() + sector.getAnomalyCount()), 0, 2) + '%'}"></h2>
                         </div>
-                    </div>
+                      </div>
                       </a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card pull-up"
-                   th:if="${sector.getSectorId()}%3 == 2"
-                   th:class="bg-gradient-directional-primary">
-                <div class="card-header" th:class="bg-gradient-directional-primary">
-                  <h4 class="card-title white" th:text="${sector.getSectorName()}"></h4>
-                  <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                </div>
-                <div class="card-content collapse show" th:class="bg-gradient-directional-primary">
-                  <div class="card-body">
-<!--                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.value.getId()})}">-->
-                    <div class="media d-flex align-items-center justify-content-center">
-                      <div>
-                        <img src="/vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
-                      </div>
-                      <div class="media-body text-right mt-1">
-                        <h6 class="mt-1"><span class="text-muted white">Normal Motors Percentge</span></h6>
-                        <h2 class="font-large-4 white" th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) / (sector.getNormalCount() + sector.getAnomalyCount()), 0, 2) + '%'}"></h2>
-                      </div>
                     </div>
-                    </a>
                   </div>
                 </div>
-              </div>
 
-              <div class="card pull-up"
-                   th:if="${sector.getSectorId()}%3 == 0"
-                   th:class="bg-gradient-directional-blue">
-                <div class="card-header" th:class="bg-gradient-directional-blue">
-                  <h4 class="card-title white" th:text="${sector.getSectorName()}"></h4>
-                  <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                </div>
-                <div class="card-content collapse show" th:class="bg-gradient-directional-blue">
-                  <div class="card-body">
-<!--                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.value.getId()})}">-->
-                    <div class="media d-flex align-items-center justify-content-center">
-                      <div>
-                        <img src="/vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
+                <div class="card pull-up"
+                     th:if="${sector.getSectorId()}%3 == 2"
+                     th:class="bg-gradient-directional-primary">
+                  <div class="card-header" th:class="bg-gradient-directional-primary">
+                    <h4 class="card-title white" th:text="${sector.getSectorName()}"></h4>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                  </div>
+                  <div class="card-content collapse show" th:class="bg-gradient-directional-primary">
+                    <div class="card-body">
+                      <!--                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.value.getId()})}">-->
+                      <div class="media d-flex align-items-center justify-content-center">
+                        <div>
+                          <img src="/vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
+                        </div>
+                        <div class="media-body text-right mt-1">
+                          <h6 class="mt-1"><span class="text-muted white">Normal Motors Percentge</span></h6>
+                          <h2 class="font-large-4 white" th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) / (sector.getNormalCount() + sector.getAnomalyCount()), 0, 2) + '%'}"></h2>
+                        </div>
                       </div>
-                      <div class="media-body text-right mt-1">
-                        <h6 class="mt-1"><span class="text-muted white">Normal Motors Percentge</span></h6>
-                        <h2 class="font-large-4 white" th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) / (sector.getNormalCount() + sector.getAnomalyCount()), 0, 2) + '%'}"></h2>
-                      </div>
+                      </a>
                     </div>
-                    </a>
                   </div>
                 </div>
-              </div>
 
+                <div class="card pull-up"
+                     th:if="${sector.getSectorId()}%3 == 0"
+                     th:class="bg-gradient-directional-blue">
+                  <div class="card-header" th:class="bg-gradient-directional-blue">
+                    <h4 class="card-title white" th:text="${sector.getSectorName()}"></h4>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                  </div>
+                  <div class="card-content collapse show" th:class="bg-gradient-directional-blue">
+                    <div class="card-body">
+                      <!--                    <a th:href="@{/sectorDetail/{sectorId}(sectorId=${sector.value.getId()})}">-->
+                      <div class="media d-flex align-items-center justify-content-center">
+                        <div>
+                          <img src="/vertical-menu-template/sectorIcon.png" alt="Your Image" class="sectorIcon">
+                        </div>
+                        <div class="media-body text-right mt-1">
+                          <h6 class="mt-1"><span class="text-muted white">Normal Motors Percentge</span></h6>
+                          <h2 class="font-large-4 white" th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) / (sector.getNormalCount() + sector.getAnomalyCount()), 0, 2) + '%'}"></h2>
+                        </div>
+                      </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
+          <br>
+          <!--section end-->
         </div>
-        <br>
-        <!--section end-->
+        <!--/ Statistics -->
       </div>
-      <!--/ Statistics -->
     </div>
   </div>
+
+  <div th:include="fixedTemplate/defaultJS.html"></div>
+
+
+<!-- END: Body-->
 </div>
-
-
+</body>
+</html>
 <script>
   (function() {
     var ws = new WebSocket('ws://' + window.location.host +
@@ -372,11 +489,22 @@
     };
   })();
 </script>
-<!-- END: Content-->
+<!-- BEGIN: Vendor JS-->
+<script src="/vertical-menu-template/app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
+<!-- BEGIN Vendor JS-->
 
-<div th:include="fixedTemplate/defaultJS.html"></div>
+<!-- BEGIN: Page Vendor JS-->
+<script src="/vertical-menu-template/app-assets/vendors/js/charts/chartist.min.js" type="text/javascript"></script>
+<script src="/vertical-menu-template/app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js"
+        type="text/javascript"></script>
+<script src="/vertical-menu-template/app-assets/vendors/js/forms/icheck/icheck.min.js" type="text/javascript"></script>
+<!-- END: Page Vendor JS-->
 
-</body>
-<!-- END: Body-->
+<!-- BEGIN: Theme JS-->
+<script src="/vertical-menu-template/app-assets/js/core/app-menu.js" type="text/javascript"></script>
+<script src="/vertical-menu-template/app-assets/js/core/app.js" type="text/javascript"></script>
+<!-- END: Theme JS-->
 
-</html>
+<!-- BEGIN: Page JS-->
+<script src="/vertical-menu-template/app-assets/js/scripts/cards/card-advanced.js" type="text/javascript"></script>
+<!-- END: Page JS-->

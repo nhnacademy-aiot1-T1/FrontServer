@@ -89,6 +89,11 @@
                       <p class="font-medium-5 text-bold-400" id="motorBelong"></p>
                     </div>
                     <div
+                        class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
+                      <p class="blue-grey lighten-2 mb-0">Power</p>
+                      <p class="font-medium-5 text-bold-400" id="motorPower"></p>
+                    </div>
+                    <div
                         class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center"
                         th:each=" sensor :${sensorList}">
                       <p class="blue-grey lighten-2 mb-0" th:text="${sensor.getSensorType()}"></p>
@@ -168,6 +173,7 @@
 
 <script th:inline="javascript" type="text/javascript">
 
+
   var motorScore = [[${motorScores}]];
 
   $(document).ready(function () {
@@ -177,13 +183,14 @@
 
     var motorname = getMotorById(urlParms.get('motorId')).motorName;
     var motorStatus = getMotorById(urlParms.get('motorId')).status;
-    var motorBelong = getMotorById(urlParms.get('motorId')).sectorId; //TODO 나중에 getSectorById 만들어서 sectorId 대신 sectorName 가져오게 해보자
+    var motorBelong = getMotorById(urlParms.get('motorId')).sectorId;
+    var motorPower = getOnOffInfo(urlParms.get('motorId'));
     var sectorName = getSectorById(motorBelong).sectorName;
 
     $('#motorname').text(motorname);
     $('#motorStatus').text(motorStatus);
     $('#motorBelong').text(sectorName);
-
+    $('#motorPower').text(motorPower);
   });
 
   // 모터 ID로 모터 기본 정보를 가져오는 함수
@@ -206,6 +213,17 @@
       }
     }
     return null;
+  }
+
+  function getOnOffInfo(motorId) {
+    var motorPower = getMotorById(motorId).connect;
+
+    if (motorPower == 'T') {
+      return 'ON';
+    } else {
+      return 'OFF';
+    }
+
   }
 
   // 그래프를 그려주기위한 자바스크립트 요소들
@@ -259,6 +277,10 @@
           scaleLabel: {
             display: true,
             labelString: 'Score'
+          },
+          ticks: {
+            min: 0,  // y축 최소값
+            max: 100  // y축 최대값
           }
         }]
       },
@@ -276,7 +298,7 @@
           label: "Motor Score",
           data: motorScore.map(score => score.score),
           lineTension: 0,
-          fill: false,
+          fill: true,
           borderColor: "#1E90FF",
           pointBorderColor: "#1E90FF",
           pointBackgroundColor: "#FFF",
@@ -298,6 +320,7 @@
 
     // Create the chart
     var lineChart = new Chart(ctx, config);
+
   });
 </script>
 <!-- BEGIN: Page JS-->
