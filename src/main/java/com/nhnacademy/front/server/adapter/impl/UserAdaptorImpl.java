@@ -29,6 +29,7 @@ public class UserAdaptorImpl implements UserAdaptor {
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON;
   private static final String GET_USER_DETAIL_URL = "https://run.mocky.io/v3/1dc226c9-8189-49ef-8bbe-28616b6d2f1f";
   private static final String POST_USER_DETAIL_URL = "https://run.mocky.io/v3/cfd28bcd-01f2-4de3-9db2-53253d403a71";
+  private static final String DELETE_USER_DETAIL_URL = "";
   private static final String JSON_PARSING_ERROR_MESSAGE = "JSON parsing error";
 
   @Override
@@ -63,10 +64,11 @@ public class UserAdaptorImpl implements UserAdaptor {
 
     ResponseEntity<CommonResponse<UserDetailDto>> exchange;
     try {
-      exchange = restTemplateExchange( POST_USER_DETAIL_URL, HttpMethod.POST, request);
+      exchange = restTemplateExchange(POST_USER_DETAIL_URL, HttpMethod.POST, request);
     } catch (ResponseStatusException e) {
-      log.error("RestTemplate exchange error :{}",e.getMessage());
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while posting user detail");
+      log.error("RestTemplate exchange error :{}", e.getMessage());
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+          "Error occurred while posting user detail");
     }
 
     log.info("it is :{}", exchange.getBody());
@@ -74,6 +76,22 @@ public class UserAdaptorImpl implements UserAdaptor {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
     return exchange.getBody();
+  }
+
+  @Override
+  public CommonResponse<UserDetailDto> deleteUserDetail(Long id) {
+    HttpHeaders headers = setupHttpHeaders();
+    HttpEntity<String> request = new HttpEntity<>(headers);
+
+    ResponseEntity<CommonResponse<UserDetailDto>> exchange = restTemplateExchange(
+        DELETE_USER_DETAIL_URL, HttpMethod.DELETE, request);
+
+    if (!exchange.getStatusCode().equals(HttpStatus.OK)) {
+      throw new ResponseStatusException(exchange.getStatusCode());
+    }
+
+    return exchange.getBody();
+
   }
 
   private HttpHeaders setupHttpHeaders() {
