@@ -8,4 +8,6 @@ public interface UserAdaptor {
   CommonResponse<UserDetailDto> getUserDetail(Long id);
 
   CommonResponse<UserDetailDto> updateUserDetail(Long id, UserDetailDto userDetailDto);
+  
+  CommonResponse<UserDetailDto> deleteUserDetail(Long id);
 }
