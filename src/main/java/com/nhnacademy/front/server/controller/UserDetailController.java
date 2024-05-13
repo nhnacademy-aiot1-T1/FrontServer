@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,5 +45,12 @@ public class UserDetailController {
     log.info(" is :{}", updateUser);
 
     return "users-edit";
+  }
+
+  @DeleteMapping("/user/delete")
+  public String deleteUserDetail(@RequestParam(value = "id", required = false) Long id) {
+    userService.deleteUserDetail(id);
+
+    return "pages/auth/login";
   }
 }
