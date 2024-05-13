@@ -13,6 +13,10 @@ public class UserService {
 
   public UserDetailDto getUserDetail(Long userId) {
     return userAdaptor.getUserDetail(userId).getData();
-    }
+  }
+
+  public UserDetailDto updateUserDetail(Long id, UserDetailDto userDetailDto) {
+    return userAdaptor.updateUserDetail(id, userDetailDto).getData();
+  }
 
 }
