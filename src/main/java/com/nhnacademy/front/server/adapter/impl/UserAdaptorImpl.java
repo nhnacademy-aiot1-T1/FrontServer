@@ -41,7 +41,7 @@ public class UserAdaptorImpl implements UserAdaptor {
         GET_USER_DETAIL_URL, HttpMethod.GET, request);
 
     log.error("it is :{}", exchange.getBody());
-    if (isStatusOk(exchange)) {
+    if (isStatusNotOk(exchange)) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
     return exchange.getBody();
@@ -72,7 +72,7 @@ public class UserAdaptorImpl implements UserAdaptor {
     }
 
     log.info("it is :{}", exchange.getBody());
-    if (isStatusOk(exchange)) {
+    if (isStatusNotOk(exchange)) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
     return exchange.getBody();
@@ -86,7 +86,7 @@ public class UserAdaptorImpl implements UserAdaptor {
     ResponseEntity<CommonResponse<UserDetailDto>> exchange = restTemplateExchange(
         DELETE_USER_DETAIL_URL, HttpMethod.DELETE, request);
 
-    if (isStatusOk(exchange)) {
+    if (isStatusNotOk(exchange)) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
 
@@ -112,7 +112,7 @@ public class UserAdaptorImpl implements UserAdaptor {
         });
   }
 
-  private boolean isStatusOk(ResponseEntity<CommonResponse<UserDetailDto>> response) {
+  private boolean isStatusNotOk(ResponseEntity<CommonResponse<UserDetailDto>> response) {
     return !response.getStatusCode().equals(HttpStatus.OK);
   }
 }
