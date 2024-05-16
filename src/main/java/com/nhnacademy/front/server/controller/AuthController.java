@@ -15,6 +15,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
+@RequestMapping("auth")
 @Slf4j
 @RequiredArgsConstructor
 public class AuthController {
