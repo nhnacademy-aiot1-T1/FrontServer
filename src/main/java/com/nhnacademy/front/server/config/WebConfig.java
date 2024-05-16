@@ -2,7 +2,7 @@ package com.nhnacademy.front.server.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.nhnacademy.front.server.interceptor.RestTemplateInterceptor;
+import com.nhnacademy.front.server.interceptor.AuthorizationInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -30,7 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .setReadTimeout(Duration.ofSeconds(5))
             .build();
 
-        restTemplate.setInterceptors(List.of(new RestTemplateInterceptor()));
+        restTemplate.setInterceptors(List.of(new AuthorizationInterceptor()));
 
         return restTemplate;
     }
@@ -56,7 +56,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(deviceResolverHandlerInterceptor())
-                .excludePathPatterns("/plugins/**", "/dist/**");
+        registry.addInterceptor(deviceResolverHandlerInterceptor());
     }
 }
