@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
  * @version 1.0
  */
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
-@Deprecated // common lib 이슈 해결되면 account api와 동일한 객체를 배포할 예정
 public class RegisterRequestDto {
   private String userId;
   private String password;
