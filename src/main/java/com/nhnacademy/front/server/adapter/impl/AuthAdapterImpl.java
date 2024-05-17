@@ -2,11 +2,12 @@ package com.nhnacademy.front.server.adapter.impl;
 
 import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.adapter.AuthAdapter;
-import com.nhnacademy.front.server.dto.LoginResponseDto;
-import com.nhnacademy.front.server.dto.UserLoginRequestDto;
+import com.nhnacademy.front.server.dto.*;
 import com.nhnacademy.front.server.dto.register.RegisterRequestDto;
 import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
+import com.nhnacademy.front.server.exception.UnauthorizedException;
+import com.nhnacademy.front.server.enums.OauthType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,15 +21,13 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthAdapterImpl implements AuthAdapter {
-
     private static final String TOKEN_TYPE = "Bearer";
 
     private final RestTemplate restTemplate;
 
     @Override
-    public LoginResponseDto login(UserLoginRequestDto requestDto, String userIpAddress) {
+    public CommonResponse<LoginResponseDto> login(UserLoginRequestDto requestDto) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-USER-IP", userIpAddress);
         HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(requestDto, headers);
 
         ResponseEntity<CommonResponse<LoginResponseDto>> response = restTemplate.exchange(
@@ -39,23 +38,56 @@ public class AuthAdapterImpl implements AuthAdapter {
                 }
         );
 
-        // todo, common type으로 들어오는 걸로 알고 있음, 테스트 하고 수정해야 함.
+        if (!response.getStatusCode().equals(HttpStatus.OK)) {
+            throw new LoginFailedException("로그인에 실패했습니다.");
+        }
 
-        return Objects.requireNonNull(response.getBody()).dataOrElseThrow(() -> new LoginFailedException("로그인 실패"));
+        return response.getBody();
+    }
+
+    /**
+     * payco를 이용한 oauth 로그인을 합니다.
+     */
+    @Override
+    public CommonResponse<LoginResponseDto> oauthLogin(String authCode) {
+        OauthLoginRequestDto oauthLoginRequestDto = new OauthLoginRequestDto(OauthType.PAYCO, authCode);
+
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<OauthLoginRequestDto> requestEntity = new HttpEntity<>(oauthLoginRequestDto, headers);
+
+        ResponseEntity<CommonResponse<LoginResponseDto>> response = restTemplate.exchange(
+                "http://GATEWAY-SERVICE/api/auth/oauth-login",
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        if (!response.getStatusCode().equals(HttpStatus.OK)) {
+            throw new LoginFailedException("로그인에 실패했습니다.");
+        }
+
+        return response.getBody();
     }
 
     @Override
     public void logout(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
         String authorization = String.format("%s %s", TOKEN_TYPE, accessToken);
+        headers.add("Authorization", authorization);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(authorization, headers);
-        restTemplate.exchange(
+        HttpEntity<LogoutRequest> requestEntity = new HttpEntity<>(new LogoutRequest(accessToken), headers);
+        ResponseEntity<CommonResponse<String>> response = restTemplate.exchange(
                 "http://GATEWAY-SERVICE/api/auth/logout",
                 HttpMethod.POST,
                 requestEntity,
-                Void.class // todo, test : void?
+                new ParameterizedTypeReference<>() {
+                }
         );
+
+        if (!response.getStatusCode().equals(HttpStatus.OK)) {
+            log.error("response code : {}, cause : {}", response.getStatusCode(), Objects.requireNonNull(response.getBody()).getMessage());
+        }
     }
 
     @Override
@@ -64,7 +96,7 @@ public class AuthAdapterImpl implements AuthAdapter {
         HttpEntity<RegisterRequestDto> requestEntity = new HttpEntity<>(registerRequestDto, headers);
 
         ResponseEntity<CommonResponse<LoginResponseDto>> response = restTemplate.exchange(
-                "http://GATEWAY-SERVICE/api/users",
+                "http://GATEWAY-SERVICE/api/account/users",
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
@@ -72,31 +104,34 @@ public class AuthAdapterImpl implements AuthAdapter {
         );
 
         if (!response.getStatusCode().equals(HttpStatus.CREATED)) {
-            String message = response.getBody().getMessage();
+            String message = Objects.requireNonNull(response.getBody()).getMessage();
 
+            log.error(message);
             throw new RegisterFailException(message);
         }
     }
 
-//    @Override
-    public void a() {
-
-    }
-
     @Override
-    public void requestTokenRefresh(String token, String address) {
+    public CommonResponse<String> requestTokenRefresh(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-USER-IP", address);
 
-        String authorization = String.format("%s %s", TOKEN_TYPE, address);
-        HttpEntity<String> requestEntity = new HttpEntity<>(authorization, headers);
+        String authorization = accessToken; // String.format("%s %s", TOKEN_TYPE, accessToken);
+        HttpEntity<TokenRefreshRequest> requestEntity = new HttpEntity<>(new TokenRefreshRequest(authorization), headers);
 
-        var res = restTemplate.exchange(
-                "http://GATEWAY-SERVICE/api/regenerate",
+        ResponseEntity<CommonResponse<String>> response = restTemplate.exchange(
+                "http://GATEWAY-SERVICE/api/auth/reissue",
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 }
         );
+
+        if (!response.getStatusCode().equals(HttpStatus.OK)) {
+            String message = Objects.requireNonNull(response.getBody()).getMessage();
+
+            throw new UnauthorizedException(message);
+        }
+
+        return response.getBody();
     }
 }
