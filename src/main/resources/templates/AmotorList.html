@@ -4,7 +4,44 @@
 
 <head>
   <div th:include="fixedTemplate/defaultCSS.html"></div>
+  <!-- BEGIN: Vendor CSS-->
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/vendors/css/vendors.amin.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/vendors/css/charts/chartist.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/vendors/css/charts/chartist-plugin-tooltip.css">
+  <!-- END: Vendor CSS-->
+
+  <!-- BEGIN: Theme CSS-->
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/css/bootstrap-extended.css">
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/app-assets/css/colors.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/css/components.css">
+  <!-- END: Theme CSS-->
+
+  <!-- BEGIN: Page CSS-->
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/css/core/menu/menu-types/vertical-menu.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/css/core/colors/palette-gradient.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/css/core/colors/palette-gradient.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/css/pages/chat-application.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/css/pages/dashboard-analytics.css">
+  <!-- END: Page CSS-->
+
+  <!-- BEGIN: Custom CSS-->
+  <link rel="stylesheet" type="text/css" href="/vertical-menu-template/assets/css/style.css">
+  <!-- END: Custom CSS-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <!-- END: Head-->
 
@@ -65,35 +102,45 @@
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <div class="btn-group mr-1 mb-1 show">
-                              <!-- 섹터 드롭다운 -->
+                            <!-- 섹터 드롭다운 -->
+                            <div class="btn-group mr-1 mb-1">
                               <button type="button"
-                                      class="btn btn-bg-gradient-x-blue-green dropdown-toggle sector-button"
+                                      class="btn btn-bg-gradient-x-blue-green dropdown-toggle"
                                       data-toggle="dropdown" aria-haspopup="true"
-                                      aria-expanded="true ">
+                                      aria-expanded="false">
                                 Sector
                               </button>
-                              <div class="dropdown-menu show ">
-                                <button class="dropdown-item sector-button" data-sector-id="all">
+                              <div class="dropdown-menu">
+                                <button class="dropdown-item" data-sector-id="all">
                                   전체보기
                                 </button>
-                                <button class="dropdown-item sector-button"
+                                <button class="dropdown-item"
                                         th:each="sector : ${sectorInfo}"
                                         type="button"
                                         th:text="${sector.getSectorName()}"
                                         th:data-sector-id="${sector.getSectorId()}"
-                                ></button> <!-- class 추가 -->
+                                ></button>
                               </div>
                             </div>
-
                           </div>
                         </div>
 
-                        <h6 class="text-bold-600"> Success Motors:
+                        <h6 class="text-bold-600"> Normal Motors:
                           <span id="sectorPercent"></span>
                         </h6>
                         <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                          <!--                                                                              <div class="progress-bar bg-gradient-x-danger" role="progressbar" th:style="'width: ' + ${formattedSuccessRate} + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>-->
+                          <div id="progressBar" class="progress-bar bg-gradient-x-success"
+                               role="progressbar" style="width: 0%" aria-valuenow="0"
+                               aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <br>
+                        <h6 class="text-bold-600"> Running Motors:
+                          <span id="sectorPercent1"></span>
+                        </h6>
+                        <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+                          <div id="progressBar1" class="progress-bar bg-gradient-x-success"
+                               role="progressbar" style="width: 0%" aria-valuenow="0"
+                               aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div class="media d-flex">
                           <div class="align-self-center">
@@ -123,11 +170,6 @@
                                  class="card pull-up bg-gradient-directional-success">
                               <div class="card pull-up bg-gradient-directional-success">
                                 <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
-                                <a class="heading-elements-toggle"><i
-                                    class="la la-ellipsis-v font-medium-3"></i></a>
-                                <div class="heading-elements">
-                                  <ul class="list-inline mb-0"></ul>
-                                </div>
                               </div>
                               <div class="card pull-up bg-gradient-directional-success">
                                 <div class="card-body">
@@ -205,7 +247,6 @@
                             </div>
                             <br>
                           </div>
-
                         </div>
                       </div>
                     </div>
@@ -247,12 +288,27 @@
     var totalNormalMotors = motorInfoOverview.totalMotorNormalCount;
     var totalAnomalyMotors = motorInfoOverview.totalMotorAbnomalCount;
     var totalMotors = motorInfoOverview.totalMotorCount;
+    var totalRunningMotors = motorInfoOverview.totalMotorConnectedCount;
     var sectorName = 'Total Motor Status';
 
     $('#totalMotors').text(totalMotors);
     $('#normalMotors').text(totalNormalMotors);
     $('#anomalyMotors').text(totalAnomalyMotors);
     $('#sectorname').text(sectorName);
+
+    // 전체 모터의 normal motor 퍼센트 계산 및 표시
+    var totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+    $('#sectorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
+    // 전체 모터의 normal motor 퍼센트를 progress bar에 적용
+    $('#progressBar').css('width', totalNormalMotorPercent + '%').attr('aria-valuenow',
+        totalNormalMotorPercent);
+
+    // 전체 모터의 running motor 퍼센트 계산 및 표시
+    var totalRunningMotorPercent = (totalRunningMotors / totalMotors) * 100;
+    $('#sectorPercent1').text(totalRunningMotorPercent.toFixed(2) + '%');
+    // 전체 모터의 running motor 퍼센트를 progress bar에 적용
+    $('#progressBar1').css('width', totalRunningMotorPercent + '%').attr('aria-valuenow',
+        totalRunningMotorPercent);
 
   });
 
@@ -269,6 +325,7 @@
       var totalNormalMotors = motorInfoOverview.totalMotorNormalCount;
       var totalAnomalyMotors = motorInfoOverview.totalMotorAbnomalCount;
       var totalMotors = motorInfoOverview.totalMotorCount;
+      var totalRunningMotors = motorInfoOverview.totalMotorConnectedCount;
       var sectorName = 'Total Motor Status';
 
       $('#totalMotors').text(totalMotors);
@@ -276,7 +333,29 @@
       $('#anomalyMotors').text(totalAnomalyMotors);
       $('#sectorname').text(sectorName);
 
+      // 전체 모터의 normal motor 퍼센트 계산 및 표시
+      var totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+      $('#sectorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
+      // 전체 모터의 normal motor 퍼센트를 progress bar에 적용
+      $('#progressBar').css('width', totalNormalMotorPercent + '%').attr('aria-valuenow',
+          totalNormalMotorPercent);
+
+      // 전체 모터의 running motor 퍼센트 계산 및 표시
+      var totalRunningMotorPercent = (totalRunningMotors / totalMotors) * 100;
+      $('#sectorPercent1').text(totalRunningMotorPercent.toFixed(2) + '%');
+      // 전체 모터의 running motor 퍼센트를 progress bar에 적용
+      $('#progressBar1').css('width', totalRunningMotorPercent + '%').attr('aria-valuenow',
+          totalRunningMotorPercent);
+
     } else {
+
+      // 선택한 섹터의 normal motor 퍼센트를 progress bar에 적용
+      var sector = getSectorById(sectorId);
+      $('#progressBar').css('width', sector.normalMotorPercent + '%').attr('aria-valuenow',
+          sector.normalMotorPercent);
+      // 선택한 섹터의 running motor 퍼센트를 progress bar에 적용
+      // $('#progressBar1').css('width', sector.runningMotorPercent + '%').attr('aria-valuenow',
+      //     sector.runningMotorPercent);
       // 모든 모터 요소 숨기기
       motorElements.hide();
 
@@ -290,10 +369,9 @@
       $('#normalMotors').text(sector.normalCount);
       $('#anomalyMotors').text(sector.anomalyCount);
       $('#sectorname').text(sector.sectorName + ' Motor Status');
-      // var normalMotorsPercent = calculatePercentage(sector.normalCount,
-      //     sector.normalCount + sector.anomalyCount);
-      // $('#sectorPercent').text('Success Motors: ' + normalMotorsPercent.toFixed(2) + '%');
 
+      // 선택한 섹터의 normal motor 퍼센트 업데이트
+      $('#normalMotorsPercent').text(sector.normalMotorPercent + '%');
     }
   }
 
@@ -302,20 +380,39 @@
     var sectors = [[${sectorInfo}]]; // 서버에서 받아온 섹터 정보
     for (var i = 0; i < sectors.length; i++) {
       if (sectors[i].sectorId == sectorId) {
+        // Normal motor 퍼센트 계산
+        var totalMotors = sectors[i].normalCount + sectors[i].anomalyCount;
+        var normalMotorPercent = (sectors[i].normalCount / totalMotors) * 100;
+        sectors[i].normalMotorPercent = normalMotorPercent.toFixed(2); // 소수점 둘째 자리까지 표시
         return sectors[i];
       }
     }
     return null;
   }
 
-  function calculatePercentage(part, whole) {
-    return (part / whole) * 100;
-  }
+  // 드롭다운 메뉴 클릭 이벤트 처리
+  $(document).on('click', '.sector-button', function (event) {
+    event.stopPropagation();
+    $(this).parent().toggleClass('show');
+    $(this).attr('aria-expanded', function (i, attr) {
+      return attr === 'true' ? 'false' : 'true';
+    });
+  });
 
-  // jQuery를 사용하여 드롭다운 메뉴 클릭 이벤트 처리
-  $(document).on('click', '.dropdown-item', function () {
+  // 드롭다운 아이템 클릭 이벤트 처리
+  $(document).on('click', '.dropdown-item', function (event) {
+    event.stopPropagation();
     var sectorId = $(this).attr('data-sector-id');
     selectSector(sectorId);
+  });
+
+  // 드롭다운 메뉴 외부 클릭 시 메뉴 닫기
+  $(document).on('click', function (event) {
+    var dropdown = $('.btn-group');
+    if (!dropdown.is(event.target) && dropdown.has(event.target).length === 0) {
+      dropdown.removeClass('show');
+      dropdown.find('.dropdown-toggle').attr('aria-expanded', 'false');
+    }
   });
 
 </script>
@@ -329,3 +426,25 @@
 
   // 기존 코드...
 </script>
+<!-- BEGIN: Vendor JS-->
+<script src="/vertical-menu-template/app-assets/vendors/js/vendors.min.js"
+        type="text/javascript"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="/vertical-menu-template/app-assets/vendors/js/charts/chartist.min.js"
+        type="text/javascript"></script>
+<script src="/vertical-menu-template/app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js"
+        type="text/javascript"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="/vertical-menu-template/app-assets/js/core/app-menu.js"
+        type="text/javascript"></script>
+<script src="/vertical-menu-template/app-assets/js/core/app.js" type="text/javascript"></script>
+<!-- END: Theme JS-->
+
+<!-- BEGIN: Page JS-->
+<script src="/vertical-menu-template/app-assets/js/scripts/pages/dashboard-analytics.js"
+        type="text/javascript"></script>
+<!-- END: Page JS-->

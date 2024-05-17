@@ -18,12 +18,9 @@ public class MotorInfoOverviewDto {
 //  this.totalMotorDisconnectedCount = totalMotorDisconnectedCount;
 // }
 
-  int totalSectorCount;
   int totalMotorCount;
   int totalMotorNormalCount;
-  int totalMotorAbnomalCount;
-  int totalMotorConnectedCount;
-  int totalMotorDisConnectedCount;
+  int totalMotorIsOnCount;
 
 
 }
