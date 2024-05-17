@@ -1,14 +1,15 @@
 package com.nhnacademy.front.server.filter;
 
 import com.nhnacademy.front.server.exception.NotFoundTokenException;
-import com.nhnacademy.front.server.exception.UnauthorizedException;
+import com.nhnacademy.front.server.service.AuthService;
 import com.nhnacademy.front.server.util.WebUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,24 +19,38 @@ import java.util.Arrays;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class TokenFilter extends OncePerRequestFilter {
+public class TokenExpiredFilter extends OncePerRequestFilter {
+    private final AuthService authService;
 
-    private static final String[] EXCLUDE_PATH_PREFIX = {"/auth", "/register"};
+    private static final String[] EXCLUDE_PATH_PREFIX = { "/auth", "/register", "/vertical-menu-template", "/test", "/logo" }; // todo, resource file config에서 제외하도록 수정
 
+    /**
+     * true를 반환하면 filtering 되지 않고 스킵됩니다,
+     */
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return Arrays.stream(EXCLUDE_PATH_PREFIX)
+        boolean isExcludePath = Arrays.stream(EXCLUDE_PATH_PREFIX)
                 .anyMatch(prefix -> request.getRequestURI().startsWith(prefix));
+
+        return (isExcludePath && request.getCookies() == null);
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         Cookie authorizationCookie = WebUtils.findAuthorizationCookie(request.getCookies()).orElseThrow(NotFoundTokenException::new);
+        final String accessToken = authorizationCookie.getValue();
 
-        if (!WebUtils.isTokenExpired(authorizationCookie.getValue())) {
-            throw new UnauthorizedException("올바른 형식의 토큰이 아니거나, 기한이 만료된 토큰입니다.");
+        if (!WebUtils.isTokenExpired(accessToken)) {
+            String refreshAccessToken = authService.requestTokenRefresh(accessToken);
+
+            log.info("access token이 재발급 되었습니다.");
+
+            Cookie cookie = new Cookie("Authorization", refreshAccessToken);
+            response.addCookie(cookie);
         }
 
         filterChain.doFilter(request, response);
     }
+
+
 }
