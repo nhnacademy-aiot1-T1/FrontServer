@@ -14,7 +14,8 @@ public class SectorDto {
 
   private Long sectorId;
   private String sectorName;
+  private int totalCount;
   private int normalCount;
-  private int anomalyCount;
+  private int isOnCount;
 
 }
