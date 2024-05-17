@@ -30,6 +30,7 @@ public class UserAdaptorImpl implements UserAdaptor {
   private static final String GET_USER_DETAIL_URL = "https://run.mocky.io/v3/1dc226c9-8189-49ef-8bbe-28616b6d2f1f";
   private static final String POST_USER_DETAIL_URL = "https://run.mocky.io/v3/cfd28bcd-01f2-4de3-9db2-53253d403a71";
   private static final String DELETE_USER_DETAIL_URL = "https://run.mocky.io/v3/30972868-a1ef-45f2-a5fc-7521dad46bd2";
+  private static final String GET_USER_LIST_URL = "";
   private static final String JSON_PARSING_ERROR_MESSAGE = "JSON parsing error";
 
   @Override
@@ -44,6 +45,22 @@ public class UserAdaptorImpl implements UserAdaptor {
     if (isStatusNotOk(exchange)) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
+    return exchange.getBody();
+  }
+
+  @Override
+  public CommonResponse<List<UserDetailDto>> getUsers() {
+    HttpHeaders headers = setupHttpHeaders();
+    HttpEntity<String> request = new HttpEntity<>(headers);
+
+    ResponseEntity<CommonResponse<List<UserDetailDto>>> exchange = restTemplateExchange(
+        GET_USER_LIST_URL, HttpMethod.GET, request
+    );
+
+    if (isStatusNotOk(exchange)) {
+      throw new ResponseStatusException(exchange.getStatusCode());
+    }
+
     return exchange.getBody();
   }
 
@@ -102,7 +119,7 @@ public class UserAdaptorImpl implements UserAdaptor {
     return httpHeaders;
   }
 
-  private ResponseEntity<CommonResponse<UserDetailDto>> restTemplateExchange(String url,
+  private <T> ResponseEntity<CommonResponse<T>> restTemplateExchange(String url,
       HttpMethod httpMethod, HttpEntity<String> request) {
     return restTemplate.exchange(
         url,
@@ -112,7 +129,8 @@ public class UserAdaptorImpl implements UserAdaptor {
         });
   }
 
-  private boolean isStatusNotOk(ResponseEntity<CommonResponse<UserDetailDto>> response) {
+
+  private <T> boolean isStatusNotOk( ResponseEntity<CommonResponse<T>> response) {
     return !response.getStatusCode().equals(HttpStatus.OK);
   }
 }
