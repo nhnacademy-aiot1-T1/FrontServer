@@ -2,6 +2,7 @@ package com.nhnacademy.front.server.service;
 
 import com.nhnacademy.front.server.adapter.UserAdaptor;
 import com.nhnacademy.front.server.dto.UserDetailDto;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,10 @@ public class UserDetailService {
 
   public UserDetailDto getUserDetail(Long userId) {
     return userAdaptor.getUserDetail(userId).getData();
+  }
+
+  public List<UserDetailDto> getUsers() {
+    return userAdaptor.getUsers().getData();
   }
 
   public UserDetailDto updateUserDetail(Long id, UserDetailDto userDetailDto) {
