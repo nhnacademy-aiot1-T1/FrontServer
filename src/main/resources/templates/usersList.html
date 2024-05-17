@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div>
+  <div class="card-content collapse show">
+    <div class="card-body">
+            [[${users}]]
+      <div th:each="user:${users}">
+        <div th:if="${user.role != ADMIN}">
+          <p class="form-control border-primary" th:text="${user.name}"></p>
+          <form th:action="@{/mypage/user/update}" method="post">
+            <p class="form-control border-primary" th:text="${user.name}"></p>
+            <select name="role">
+              <option value="NONE" th:selected="${user.role == 'NONE'}">NONE</option>
+              <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Change Role</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
