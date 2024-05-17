@@ -15,7 +15,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("auth")
+@RequestMapping("/auth")
 @Slf4j
 @RequiredArgsConstructor
 public class AuthController {
@@ -40,7 +40,9 @@ public class AuthController {
      * oauth login 입니다.
      */
     @GetMapping("/oauth-authorize")
-    public String oauth() {
+    public String oauth(@CookieValue(value = AUTHORIZATION_KEY, required = false) String token) {
+        if (StringUtils.hasText(token)) return HOME_PAGE;
+
         final String url = "https://id.payco.com/oauth2.0/authorize?response_type=code"
                 + "&client_id=" + paycoProperties.getClientId()
                 + "&serviceProviderCode=FRIENDS"
