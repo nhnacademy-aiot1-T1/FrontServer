@@ -24,8 +24,8 @@ public class UserDetailService {
     return userAdaptor.updateUserDetail(id, userDetailDto).getData();
   }
 
-  public UserDetailDto deleteUserDetail(Long userId) {
-    return userAdaptor.deleteUserDetail(userId).getData();
+  public void deleteUserDetail(Long userId) {
+    userAdaptor.deleteUserDetail(userId).getData();
   }
 
 }
