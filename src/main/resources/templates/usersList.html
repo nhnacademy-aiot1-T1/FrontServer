@@ -1,29 +1,104 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <link th:include="fixedTemplate/defaultCSS.html" rel="stylesheet"/>
 </head>
-<body>
-<div>
+
+<body class="vertical-layout vertical-menu content-detached-left-sidebar fixed-navbar"
+      data-open="click"
+      data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue"
+      data-col="content-detached-left-sidebar">
+
+<!-- BEGIN: Header-->
+<div th:include="fixedTemplate/fixed-top.html"></div>
+<!-- END: Header-->
+
+<!-- BEGIN: Main Menu-->
+<div th:include="fixedTemplate/side-navigation.html"></div>
+<!-- END: Main Menu-->
+
+<div class="app-content content">
+  <div class="content-header-right col-md-8 col-12">
+    <div class="breadcrumbs-top float-md-right">
+      <div class="breadcrumb-wrapper mr-1">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="../vertical-menu-template/index.html">Home</a>
+          </li>
+          <li class="breadcrumb-item"><a href="#">Apps</a>
+          </li>
+          <li class="breadcrumb-item active">Contact List
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
   <div class="card-content collapse show">
     <div class="card-body">
-            [[${users}]]
       <div th:each="user:${users}">
-        <div th:if="${user.role != ADMIN}">
+        <form th:action="@{/mypage/user/update}" method="post">
           <p class="form-control border-primary" th:text="${user.name}"></p>
-          <form th:action="@{/mypage/user/update}" method="post">
-            <p class="form-control border-primary" th:text="${user.name}"></p>
-            <select name="role">
-              <option value="NONE" th:selected="${user.role == 'NONE'}">NONE</option>
-              <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
-            </select>
-            <button type="submit" class="btn btn-primary">Change Role</button>
-          </form>
-        </div>
+          <select name="role">
+            <option value="NONE" th:selected="${user.role == 'NONE'}">NONE</option>
+            <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Change Role</button>
+        </form>
       </div>
     </div>
   </div>
 </div>
+
+<!-- BEGIN: Footer-->
+<a class="btn btn-try-builder btn-bg-gradient-x-purple-red btn-glow white"
+   href="https://www.themeselection.com/layout-builder/horizontal" target="_blank">Try Layout
+  Builder</a>
+<footer class="footer footer-static footer-light navbar-border navbar-shadow">
+  <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span
+      class="float-md-left d-block d-md-inline-block">2019 &copy; Copyright <a
+      class="text-bold-800 grey darken-2" href="https://themeselection.com" target="_blank">ThemeSelection</a></span>
+    <ul class="list-inline float-md-right d-block d-md-inline-blockd-none d-lg-block mb-0">
+      <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/"
+                                      target="_blank"> More
+        themes</a></li>
+      <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/support"
+                                      target="_blank"> Support</a></li>
+    </ul>
+  </div>
+</footer>
+<!-- END: Footer-->
+
+<!-- BEGIN: Vendor JS-->
+<script src="/vertical-menu-template/app-assets/vendors/js/vendors.min.js"
+        type="text/javascript"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="/vertical-menu-template/app-assets/vendors/js/tables/jquery.dataTables.min.js"
+        type="text/javascript"></script>
+<script
+    src="/vertical-menu-template/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js"
+    type="text/javascript"></script>
+<script
+    src="/vertical-menu-template/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"
+    type="text/javascript"></script>
+<script
+    src="/vertical-menu-template/app-assets/vendors/js/tables/datatable/dataTables.rowReorder.min.js"
+    type="text/javascript"></script>
+<script src="/vertical-menu-template/app-assets/vendors/js/forms/icheck/icheck.min.js"
+        type="text/javascript"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="/vertical-menu-template/app-assets/js/core/app-menu.js"
+        type="text/javascript"></script>
+<script src="/vertical-menu-template/app-assets/js/core/app.js" type="text/javascript"></script>
+<!-- END: Theme JS-->
+
+<script src="/vertical-menu-template/app-assets/js/scripts/pages/users-contacts.js"
+        type="text/javascript"></script>
+
+<div th:include="fixedTemplate/defaultJS.html"></div>
 </body>
 </html>
