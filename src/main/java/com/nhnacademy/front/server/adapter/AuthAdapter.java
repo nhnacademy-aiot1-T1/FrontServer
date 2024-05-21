@@ -8,7 +8,7 @@ import com.nhnacademy.front.server.dto.register.RegisterRequestDto;
 public interface AuthAdapter {
     CommonResponse<LoginResponseDto> login(UserLoginRequestDto requestDto);
 
-    CommonResponse<LoginResponseDto> oauthLogin(String authCode);
+    CommonResponse<LoginResponseDto> paycoLogin(String authCode);
 
     void logout(String accessToken);
 
