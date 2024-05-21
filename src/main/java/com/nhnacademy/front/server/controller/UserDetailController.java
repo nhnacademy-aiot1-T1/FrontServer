@@ -32,7 +32,7 @@ public class UserDetailController {
 
     model.addAttribute("userDetail", userDetailDto);
 
-    log.warn(" is :{}", userDetailDto);
+    log.info(" is :{}", userDetailDto);
 
     return "users-edit";
   }
@@ -43,7 +43,7 @@ public class UserDetailController {
 
     model.addAttribute("users", users);
 
-    log.warn(" is :{}", users);
+    log.info(" is :{}", users);
     return "usersList";
   }
 
