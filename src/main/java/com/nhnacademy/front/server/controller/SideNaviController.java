@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class SideNaviController {
 
-//  @GetMapping("/management")
-//  public String management() {
-//    return "area-motor-management";
-//  }
-
   @GetMapping("/controllog")
   public String controlLog() {
     return "controlLog";
