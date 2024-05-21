@@ -26,22 +26,20 @@ public class WebUtils {
     public static UserAgent findUserAgent(HttpServletRequest request) {
         String agent = request.getHeader("user-agent");
 
-        if (agent != null) {
-            Optional<UserAgent> res = Arrays.stream(USER_AGENT_LIST)
-                    .filter(value -> agent.toUpperCase().contains(value.name()))
-                    .findFirst();
+        if (agent == null) {
+            log.info("user agent를 찾을 수 없습니다.");
 
-            if (res.isPresent()) {
-                return res.get();
-            }
+            return UserAgent.UNKNOWN;
         }
 
-        log.info("user agent를 찾을 수 없습니다. user-agent : {}", agent);
-        return UserAgent.UNKNOWN;
+        return Arrays.stream(USER_AGENT_LIST)
+                .filter(value -> agent.toUpperCase().contains(value.name()))
+                .findFirst()
+                .orElse(UserAgent.UNKNOWN);
     }
 
     /**
-     * @return 만약 lite device type이 NORMAL일 경우 true를 반환하고 그 외의 경우 false를 반환 합니다.
+     * @return 만약 device type이 NORMAL일 경우 WEB을 반환하고 그 외의 경우 MOBILE을 반환 합니다.
      */
     public static DeviceType getDeviceType(HttpServletRequest request) {
         Object currentDevice = request.getAttribute("currentDevice");
@@ -66,7 +64,9 @@ public class WebUtils {
     }
 
     public static Optional<Cookie> findAuthorizationCookie(Cookie[] cookies) {
-        if (cookies == null) throw new NotFoundTokenException();
+        if (cookies == null) {
+            throw new NotFoundTokenException();
+        }
 
         return Arrays.stream(cookies)
                 .filter(cookie -> cookie.getName().equals("Authorization"))
