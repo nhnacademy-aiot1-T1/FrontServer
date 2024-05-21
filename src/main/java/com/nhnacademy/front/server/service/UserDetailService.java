@@ -1,11 +1,14 @@
 package com.nhnacademy.front.server.service;
 
+import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.adapter.UserAdaptor;
 import com.nhnacademy.front.server.dto.UserDetailDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserDetailService {
@@ -13,7 +16,10 @@ public class UserDetailService {
   private final UserAdaptor userAdaptor;
 
   public UserDetailDto getUserDetail(Long userId) {
-    return userAdaptor.getUserDetail(userId).getData();
+    CommonResponse<UserDetailDto> dto = userAdaptor.getUserDetail(userId);
+
+    log.info(":{}, :{}, :{}",dto.getData(), dto.getMessage(), dto.getStatus());
+    return dto.getData();
   }
 
   public List<UserDetailDto> getUsers() {
