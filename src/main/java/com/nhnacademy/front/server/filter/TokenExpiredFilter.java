@@ -22,22 +22,21 @@ import java.util.Arrays;
 public class TokenExpiredFilter extends OncePerRequestFilter {
     private final AuthService authService;
 
-    private static final String[] EXCLUDE_PATH_PREFIX = { "/auth", "/register", "/vertical-menu-template", "/test", "/logo" }; // todo, resource file config에서 제외하도록 수정
+    // todo, resource file config에서 제외하도록 수정
+    private static final String[] EXCLUDE_PATH_PREFIX = { "/login", "/logout", "/register", "/test", "/logo", "/vertical-menu-template" };
 
-    /**
-     * true를 반환하면 filtering 되지 않고 스킵됩니다,
-     */
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         boolean isExcludePath = Arrays.stream(EXCLUDE_PATH_PREFIX)
                 .anyMatch(prefix -> request.getRequestURI().startsWith(prefix));
 
-        return (isExcludePath && request.getCookies() == null);
+        return (isExcludePath && (request.getCookies() == null || WebUtils.findAuthorizationCookie(request.getCookies()).isEmpty()));
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        Cookie authorizationCookie = WebUtils.findAuthorizationCookie(request.getCookies()).orElseThrow(NotFoundTokenException::new);
+        Cookie authorizationCookie = WebUtils.findAuthorizationCookie(request.getCookies())
+                .orElseThrow(NotFoundTokenException::new);
         final String accessToken = authorizationCookie.getValue();
 
         if (!WebUtils.isTokenExpired(accessToken)) {
@@ -51,6 +50,4 @@ public class TokenExpiredFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-
-
 }
