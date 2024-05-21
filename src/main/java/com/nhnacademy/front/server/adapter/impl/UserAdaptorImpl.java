@@ -24,7 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class UserAdaptorImpl implements UserAdaptor {
 
-  private final RestTemplate restTemplate;
+  private final RestTemplate restTemplateMocky;
 
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON;
   private static final String GET_USER_DETAIL_URL = "https://run.mocky.io/v3/1dc226c9-8189-49ef-8bbe-28616b6d2f1f";
@@ -39,9 +39,8 @@ public class UserAdaptorImpl implements UserAdaptor {
     HttpEntity<String> request = new HttpEntity<>(headers);
 
     ResponseEntity<CommonResponse<UserDetailDto>> exchange = restTemplateExchange(
-        GET_USER_DETAIL_URL, HttpMethod.GET, request);
+        GET_USER_DETAIL_URL, HttpMethod.GET, request ,new ParameterizedTypeReference<>() {});
 
-    log.error("it is :{}", exchange.getBody());
     if (isStatusNotOk(exchange)) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
@@ -54,8 +53,9 @@ public class UserAdaptorImpl implements UserAdaptor {
     HttpEntity<String> request = new HttpEntity<>(headers);
 
     ResponseEntity<CommonResponse<List<UserDetailDto>>> exchange = restTemplateExchange(
-        GET_USER_LIST_URL, HttpMethod.GET, request
-    );
+        GET_USER_LIST_URL, HttpMethod.GET, request,
+        new ParameterizedTypeReference<>() {
+        });
 
     log.info(":{}", exchange.getBody());
 
@@ -83,7 +83,9 @@ public class UserAdaptorImpl implements UserAdaptor {
 
     ResponseEntity<CommonResponse<UserDetailDto>> exchange;
     try {
-      exchange = restTemplateExchange(POST_USER_DETAIL_URL, HttpMethod.POST, request);
+      exchange = restTemplateExchange(POST_USER_DETAIL_URL, HttpMethod.POST, request,
+          new ParameterizedTypeReference<>() {
+          });
     } catch (ResponseStatusException e) {
       log.error("RestTemplate exchange error :{}", e.getMessage());
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
@@ -103,7 +105,9 @@ public class UserAdaptorImpl implements UserAdaptor {
     HttpEntity<String> request = new HttpEntity<>(headers);
 
     ResponseEntity<CommonResponse<UserDetailDto>> exchange = restTemplateExchange(
-        DELETE_USER_DETAIL_URL, HttpMethod.DELETE, request);
+        DELETE_USER_DETAIL_URL, HttpMethod.DELETE, request,
+        new ParameterizedTypeReference<>() {
+        });
 
     if (isStatusNotOk(exchange)) {
       throw new ResponseStatusException(exchange.getStatusCode());
@@ -122,17 +126,16 @@ public class UserAdaptorImpl implements UserAdaptor {
   }
 
   private <T> ResponseEntity<CommonResponse<T>> restTemplateExchange(String url,
-      HttpMethod httpMethod, HttpEntity<String> request) {
-    return restTemplate.exchange(
+      HttpMethod httpMethod, HttpEntity<String> request,
+      ParameterizedTypeReference<CommonResponse<T>> responseType) {
+    return restTemplateMocky.exchange(
         url,
         httpMethod,
         request,
-        new ParameterizedTypeReference<>() {
-        });
+        responseType);
   }
 
-
-  private <T> boolean isStatusNotOk( ResponseEntity<CommonResponse<T>> response) {
+  private <T> boolean isStatusNotOk(ResponseEntity<CommonResponse<T>> response) {
     return !response.getStatusCode().equals(HttpStatus.OK);
   }
 }
