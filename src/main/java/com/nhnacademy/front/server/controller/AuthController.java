@@ -15,13 +15,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("/auth")
 @Slf4j
 @RequiredArgsConstructor
 public class AuthController {
     private static final String AUTHORIZATION_KEY = "Authorization";
     private static final String LOGIN_PAGE = "login";
-    private static final String HOME_PAGE = "home";
+    private static final String HOME_PAGE = "/home";
 
 
     private final PaycoProperties paycoProperties;
@@ -33,7 +32,7 @@ public class AuthController {
      */
     @GetMapping("/login")
     public String showLoginForm(@CookieValue(value = AUTHORIZATION_KEY, required = false) String token) {
-        return (!StringUtils.hasText(token)) ? LOGIN_PAGE : HOME_PAGE;
+        return (!StringUtils.hasText(token)) ? LOGIN_PAGE : WebUtils.REDIRECT_PREFIX + HOME_PAGE;
     }
 
     /**
