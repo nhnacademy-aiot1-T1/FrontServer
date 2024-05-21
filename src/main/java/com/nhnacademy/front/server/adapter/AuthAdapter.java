@@ -6,14 +6,13 @@ import com.nhnacademy.front.server.dto.UserLoginRequestDto;
 import com.nhnacademy.front.server.dto.register.RegisterRequestDto;
 
 public interface AuthAdapter {
+    CommonResponse<LoginResponseDto> login(UserLoginRequestDto requestDto);
 
-  CommonResponse<LoginResponseDto> login(UserLoginRequestDto requestDto);
+    CommonResponse<LoginResponseDto> oauthLogin(String authCode);
 
-  CommonResponse<LoginResponseDto> oauthLogin(String authCode);
+    void logout(String accessToken);
 
-  void logout(String accessToken);
+    void registerUser(RegisterRequestDto registerRequestDto);
 
-  void registerUser(RegisterRequestDto registerRequestDto);
-
-  CommonResponse<String> requestTokenRefresh(String accessToken);
+    CommonResponse<String> requestTokenRefresh(String accessToken);
 }
