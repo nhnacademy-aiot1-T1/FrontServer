@@ -14,7 +14,7 @@ public class SecureConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors().disable()
-                .csrf().disable() // todo, enable csrf.
+                .csrf().and()
                 .httpBasic().disable()
                 .formLogin().disable()
                 .logout().disable()
