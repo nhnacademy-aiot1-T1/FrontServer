@@ -2,10 +2,11 @@ package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.register.RegisterCheckDto;
 import com.nhnacademy.front.server.dto.register.RegisterRequestDto;
-import com.nhnacademy.front.server.exception.RegisterFailException;
 import com.nhnacademy.front.server.service.AuthService;
+import com.nhnacademy.front.server.util.WebUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,27 +36,21 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String doRegister(@ModelAttribute @Valid RegisterCheckDto registerCheckDto, Model model, RedirectAttributes redirectAttributes) {
+    public String doRegister(@ModelAttribute @Valid RegisterCheckDto registerCheckDto
+                             ,Model model
+                             ,RedirectAttributes redirectAttributes) {
         if (!registerCheckDto.getPassword().equals(registerCheckDto.getPasswordRetype())) { // todo, annotation 만들어지면 if 문 없애고 validation 순서 확인, 결과 확인
             model.addAttribute(REASON_ATTRIBUTE_NAME, "pw와 pw 확인이 일치하지 않습니다!");
 
             return REGISTER_PAGE;
         }
 
-        RegisterRequestDto registerRequestDto = new RegisterRequestDto(registerCheckDto.getId(), registerCheckDto.getPassword(), registerCheckDto.getName(), registerCheckDto.getEmail());
+        RegisterRequestDto registerRequestDto = new RegisterRequestDto();
+        BeanUtils.copyProperties(registerCheckDto, registerRequestDto);
 
-        try {
-            authService.registerUser(registerRequestDto);
-
-        } catch (RegisterFailException e) {
-            log.error(e.getMessage());
-
-            model.addAttribute(REASON_ATTRIBUTE_NAME, e.getMessage());
-            return REGISTER_PAGE;
-        }
-
+        authService.registerUser(registerRequestDto);
         redirectAttributes.addFlashAttribute(REASON_ATTRIBUTE_NAME, "회원가입이 완료되었습니다!");
 
-        return "redirect:login"; // todo, login
+        return WebUtils.REDIRECT_PREFIX + "login";
     }
 }
