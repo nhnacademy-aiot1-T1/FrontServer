@@ -38,18 +38,16 @@ public class AuthAdapterImpl implements AuthAdapter {
                 }
         );
 
-        if (!response.getStatusCode().equals(HttpStatus.OK)) {
+        if (!Objects.equals(response.getStatusCode(), HttpStatus.OK)) {
             throw new LoginFailedException("로그인에 실패했습니다.");
         }
 
         return response.getBody();
     }
 
-    /**
-     * payco를 이용한 oauth 로그인을 합니다.
-     */
+
     @Override
-    public CommonResponse<LoginResponseDto> oauthLogin(String authCode) {
+    public CommonResponse<LoginResponseDto> paycoLogin(String authCode) {
         OauthLoginRequestDto oauthLoginRequestDto = new OauthLoginRequestDto(OauthType.PAYCO, authCode);
 
         HttpHeaders headers = new HttpHeaders();
@@ -63,7 +61,7 @@ public class AuthAdapterImpl implements AuthAdapter {
                 }
         );
 
-        if (!response.getStatusCode().equals(HttpStatus.OK)) {
+        if (!Objects.equals(response.getStatusCode(), HttpStatus.OK)) {
             throw new LoginFailedException("로그인에 실패했습니다.");
         }
 
@@ -85,8 +83,10 @@ public class AuthAdapterImpl implements AuthAdapter {
                 }
         );
 
-        if (!response.getStatusCode().equals(HttpStatus.OK)) {
-            log.error("response code : {}, cause : {}", response.getStatusCode(), Objects.requireNonNull(response.getBody()).getMessage());
+        if (!Objects.equals(response.getStatusCode(), HttpStatus.OK)) {
+            String message = Objects.requireNonNull(response.getBody()).getMessage();
+
+            log.error("response code : {}, cause : {}", response.getStatusCode(), message);
         }
     }
 
@@ -103,7 +103,7 @@ public class AuthAdapterImpl implements AuthAdapter {
                 }
         );
 
-        if (!response.getStatusCode().equals(HttpStatus.CREATED)) {
+        if (!Objects.equals(response.getStatusCode(), HttpStatus.CREATED)) {
             String message = Objects.requireNonNull(response.getBody()).getMessage();
 
             log.error(message);
@@ -114,9 +114,7 @@ public class AuthAdapterImpl implements AuthAdapter {
     @Override
     public CommonResponse<String> requestTokenRefresh(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
-
-        String authorization = accessToken; // String.format("%s %s", TOKEN_TYPE, accessToken);
-        HttpEntity<TokenRefreshRequest> requestEntity = new HttpEntity<>(new TokenRefreshRequest(authorization), headers);
+        HttpEntity<TokenRefreshRequest> requestEntity = new HttpEntity<>(new TokenRefreshRequest(accessToken), headers);
 
         ResponseEntity<CommonResponse<String>> response = restTemplate.exchange(
                 "http://GATEWAY-SERVICE/api/auth/reissue",
@@ -126,7 +124,7 @@ public class AuthAdapterImpl implements AuthAdapter {
                 }
         );
 
-        if (!response.getStatusCode().equals(HttpStatus.OK)) {
+        if (!Objects.equals(response.getStatusCode(), HttpStatus.OK)) {
             String message = Objects.requireNonNull(response.getBody()).getMessage();
 
             throw new UnauthorizedException(message);
