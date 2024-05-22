@@ -23,14 +23,14 @@ public class TokenExpiredFilter extends OncePerRequestFilter {
     private final AuthService authService;
 
     // todo, resource file config에서 제외하도록 수정
-    private static final String[] EXCLUDE_PATH_PREFIX = { "/login", "/logout", "/register", "/test", "/logo", "/vertical-menu-template" };
+    private static final String[] EXCLUDE_PATH_PREFIX = { "/login", "/logout", "/register", "/vertical-menu-template" };
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         boolean isExcludePath = Arrays.stream(EXCLUDE_PATH_PREFIX)
                 .anyMatch(prefix -> request.getRequestURI().startsWith(prefix));
 
-        return (isExcludePath && (request.getCookies() == null || WebUtils.findAuthorizationCookie(request.getCookies()).isEmpty()));
+        return (isExcludePath && WebUtils.findAuthorizationCookie(request.getCookies()).isEmpty());
     }
 
     @Override
