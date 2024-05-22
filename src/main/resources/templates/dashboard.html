@@ -102,7 +102,7 @@
                   <li>
                     <h1 class="blue-grey lighten-1 text-bold-400">&nbsp;</h1>
                     <span class="info darken-2">
-                                                        <i class="ft-airplay"></i> Motors Registerd</span>
+                      <i class="ft-airplay"></i> Motors Registerd</span>
                   </li>
                 </ul>
               </div>
@@ -140,9 +140,12 @@
                 <ul class="list-inline clearfix mt-2">
                   <li>
                     <h1 class="blue-grey lighten-1 text-bold-400"
-                        th:text="${#numbers.formatDecimal(((motorOverview.getTotalMotorCount() - motorOverview.getTotalMotorNormalCount()) * 100.0) / (motorOverview.getTotalMotorCount()), 0, 2) + '%'}"></h1>
+                        th:text="${#numbers.formatDecimal(((motorOverview.getTotalMotorCount() -
+                        motorOverview.getTotalMotorNormalCount()) * 100.0) /
+                        (motorOverview.getTotalMotorCount()), 0, 2)
+                        + '%'}"></h1>
                     <span class="warning darken-2">
-                                                        <i class="ft-airplay"></i> Anomaly Motors Percentage</span>
+                      <i class="ft-airplay"></i> Anomaly Motors Percentage</span>
                   </li>
                 </ul>
               </div>
@@ -180,9 +183,10 @@
                 <ul class="list-inline clearfix mt-2">
                   <li>
                     <h1 class="blue-grey lighten-1 text-bold-400"
-                        th:text="${#numbers.formatDecimal((motorOverview.getTotalMotorIsOnCount() * 100.0) / (motorOverview.getTotalMotorCount()), 0, 2) + '%'}"></h1>
+                        th:text="${#numbers.formatDecimal((motorOverview.getTotalMotorIsOnCount() * 100.0) /
+                        (motorOverview.getTotalMotorCount()), 0, 2) + '%'}"></h1>
                     <span class="danger darken-2">
-                                                        <i class="ft-airplay"></i> Running Motors Percentage</span>
+                      <i class="ft-airplay"></i> Running Motors Percentage</span>
                   </li>
                 </ul>
               </div>
@@ -198,7 +202,7 @@
 
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Motor Operation Rate by Time Zone</h4>
+            <h4 class="card-title">Motor Anomaly Rate by Time Zone</h4>
             <a class="heading-elements-toggle"><i
                 class="la la-ellipsis-v font-medium-3"></i></a>
             <div class="heading-elements">
@@ -212,48 +216,23 @@
           </div>
           <div class="card-content collapse show">
             <div class="card-body chartjs">
-              <div class="height-400">
+              <div class="chart-container">
                 <canvas id="line-chart"></canvas>
               </div>
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
-    <!-- row end-->
-
-    <div class="row">
-      <div class="col-12">
-
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Motor Operation Rate by Time Zone</h4>
-            <a class="heading-elements-toggle"><i
-                class="la la-ellipsis-v font-medium-3"></i></a>
-            <div class="heading-elements">
-              <ul class="list-inline mb-0">
-                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                <li><a data-action="close"><i class="ft-x"></i></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-content collapse show">
-            <div class="card-body chartjs">
-              <div class="height-400">
-                <canvas id="line-chart4"></canvas>
+              <div class="chart-container">
+                <canvas id="line-chart1"></canvas>
+              </div>
+              <div class="chart-container">
+                <canvas id="line-chart2"></canvas>
               </div>
             </div>
           </div>
+
         </div>
-
-
       </div>
     </div>
     <!-- row end-->
+
 
 
     <div class="row">
@@ -281,13 +260,15 @@
                     <div class="media d-flex">
                       <div class="media-body text-left mt-1">
                         <h3 class="font-large-2 white"
-                            th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) / sector.getTotalCount(), 0, 2) + '%'}"></h3>
+                            th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) /
+                            sector.getTotalCount(), 0, 2) + '%'}"></h3>
                         <h6 class="mt-1"><span class="text-muted white">Normal Rate</span>
                         </h6>
                       </div>
                       <div class="media-body text-right mt-1">
                         <h3 class="font-large-2 white"
-                            th:text="${#numbers.formatDecimal((sector.getIsOnCount() * 100.0) / sector.getTotalCount(), 0, 2) + '%'}"></h3>
+                            th:text="${#numbers.formatDecimal((sector.getIsOnCount() * 100.0) /
+                            sector.getTotalCount(), 0, 2) + '%'}"></h3>
                         <h6 class="mt-1"><span class="text-muted white">Running Rate</span>
                         </h6>
                       </div>
@@ -536,7 +517,8 @@
     var chartData = {
       labels: dayRunningRates.map(dayRunningRate => {
         var date = new Date(dayRunningRate.timestamp);
-        var monthDay = (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+        var monthDay = (date.getMonth() + 1).toString().padStart(2, '0') + '-'
+            + date.getDate().toString().padStart(2, '0');
         var hour = date.getHours().toString() + '시';
         return [monthDay, hour];
       }),
@@ -560,9 +542,10 @@
     var chartData1 = {
       labels: weekRunningRates.map(weekRunningRate => {
         var date = new Date(weekRunningRate.timestamp);
-        var monthDay = (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
-        var hour = date.getHours().toString() + '시';
-        return [monthDay, hour];
+        var year =(date.getFullYear()).toString().padStart(2,'0')
+        var monthDay = (date.getMonth() + 1).toString().padStart(2, '0') + '-'
+            + date.getDate().toString().padStart(2, '0');
+        return [monthDay];
       }),
       datasets: [
         {
@@ -584,7 +567,8 @@
     var chartData2 = {
       labels: monthRunningRates.map(monthRunningRate => {
         var date = new Date(monthRunningRate.timestamp);
-        var monthDay = (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+        var monthDay = (date.getMonth() + 1).toString().padStart(2, '0') + '-'
+            + date.getDate().toString().padStart(2, '0');
         var hour = date.getHours().toString() + '시';
         return [monthDay, hour];
       }),

@@ -34,6 +34,8 @@
         href="/vertical-menu-template/app-assets/css/pages/chat-application.css">
   <link rel="stylesheet" type="text/css"
         href="/vertical-menu-template/app-assets/css/pages/dashboard-analytics.css">
+  <link rel="stylesheet" type="text/css"
+        href="/vertical-menu-template/app-assets/vendors/css/timeline/vertical-timeline.css">
   <!-- END: Page CSS-->
 
   <!-- BEGIN: Custom CSS-->
@@ -92,8 +94,8 @@
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">Normal Motors</p>
-                            <th:p id="normalMotors" class="font-medium-5 text-bold-400"></th:p>
+                            <p class="blue-grey lighten-2 mb-0">Running Motors</p>
+                            <th:p id="runningMotors" class="font-medium-5 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
@@ -262,6 +264,49 @@
           </section>
         </div>
       </div>
+
+      <!-- 구역선택 사이드 바 -->
+      <div class="sidebar-detached sidebar-left sidebar-sticky">
+        <div class="sidebar">
+          <div class="sidebar-content card d-none d-lg-block">
+            <div class="card-body">
+
+              <!-- Carousel Card sample -->
+              <h4 class="card-title">Card title</h4>
+              <!-- /Carousel Card sample -->
+
+              <!-- List Group example -->
+              <div class="category-title pb-1">
+                <h6>List Group example</h6>
+              </div>
+              <div>
+
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <span class="badge badge-primary badge-pill float-right">14</span> <a href="#">
+                    Project</a>
+                  </li>
+                  <li class="list-group-item">
+                    <span class="badge badge-info badge-pill float-right">22</span> <a href="#">
+                    Team</a>
+                  </li>
+                  <li class="list-group-item">
+                    <span class="badge badge-warning badge-pill float-right">10</span> <a href="#">
+                    Clients</a>
+                  </li>
+                  <li class="list-group-item">
+                    <span class="badge badge-success badge-pill float-right">5</span> <a href="#">
+                    Friends</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /List group example -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
   </div>
@@ -366,7 +411,7 @@
       // 선택한 섹터의 total motors, normal motors, anomaly motors 개수 업데이트
       var sector = getSectorById(sectorId);
       $('#totalMotors').text(sector.normalCount + sector.anomalyCount);
-      $('#normalMotors').text(sector.normalCount);
+      $('#runningMotors').text(sector.normalCount);
       $('#anomalyMotors').text(sector.anomalyCount);
       $('#sectorname').text(sector.sectorName + ' Motor Status');
 
