@@ -24,7 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class UserAdaptorImpl implements UserAdaptor {
 
-  private final RestTemplate restTemplate;
+  private final RestTemplate restTemplateMocky;
 
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON;
   private static final String GET_USER_DETAIL_URL = "https://run.mocky.io/v3/1dc226c9-8189-49ef-8bbe-28616b6d2f1f";
@@ -104,7 +104,7 @@ public class UserAdaptorImpl implements UserAdaptor {
 
   private ResponseEntity<CommonResponse<UserDetailDto>> restTemplateExchange(String url,
       HttpMethod httpMethod, HttpEntity<String> request) {
-    return restTemplate.exchange(
+    return restTemplateMocky.exchange(
         url,
         httpMethod,
         request,
