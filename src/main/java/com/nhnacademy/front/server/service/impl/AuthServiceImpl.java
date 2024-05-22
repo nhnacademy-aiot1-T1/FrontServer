@@ -25,8 +25,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public LoginResponseDto oauthLogin(String authCode) {
-        CommonResponse<LoginResponseDto> response = authAdapter.oauthLogin(authCode);
+    public LoginResponseDto paycoLogin(String authCode) {
+        CommonResponse<LoginResponseDto> response = authAdapter.paycoLogin(authCode);
         log.info(response.getMessage());
 
         return response.getData();
