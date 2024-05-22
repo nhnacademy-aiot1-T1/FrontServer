@@ -7,7 +7,7 @@ import com.nhnacademy.front.server.dto.register.RegisterRequestDto;
 public interface AuthService {
     LoginResponseDto login(UserLoginRequestDto requestDto);
 
-    LoginResponseDto oauthLogin(String authCode);
+    LoginResponseDto paycoLogin(String authCode);
 
     void logout(String accessToken);
 
