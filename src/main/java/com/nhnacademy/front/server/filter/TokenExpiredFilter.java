@@ -17,37 +17,41 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @Slf4j
-@Component
+//@Component
 @RequiredArgsConstructor
 public class TokenExpiredFilter extends OncePerRequestFilter {
-    private final AuthService authService;
 
-    // todo, resource file config에서 제외하도록 수정
-    private static final String[] EXCLUDE_PATH_PREFIX = { "/oauth", "/login", "/logout", "/register", "/vertical-menu-template", "/img" };
+  private final AuthService authService;
 
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        boolean isExcludePath = Arrays.stream(EXCLUDE_PATH_PREFIX)
-                .anyMatch(prefix -> request.getRequestURI().startsWith(prefix));
+  // todo, resource file config에서 제외하도록 수정
+  private static final String[] EXCLUDE_PATH_PREFIX = {"/login", "/logout", "/register", "/test",
+      "/logo", "/vertical-menu-template"};
 
-        return (isExcludePath && WebUtils.findAuthorizationCookie(request.getCookies()).isEmpty());
+  @Override
+  protected boolean shouldNotFilter(HttpServletRequest request) {
+    boolean isExcludePath = Arrays.stream(EXCLUDE_PATH_PREFIX)
+        .anyMatch(prefix -> request.getRequestURI().startsWith(prefix));
+
+    return (isExcludePath && (request.getCookies() == null || WebUtils.findAuthorizationCookie(
+        request.getCookies()).isEmpty()));
+  }
+
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+      FilterChain filterChain) throws ServletException, IOException {
+    Cookie authorizationCookie = WebUtils.findAuthorizationCookie(request.getCookies())
+        .orElseThrow(NotFoundTokenException::new);
+    final String accessToken = authorizationCookie.getValue();
+
+    if (!WebUtils.isTokenExpired(accessToken)) {
+      String refreshAccessToken = authService.requestTokenRefresh(accessToken);
+
+      log.info("access token이 재발급 되었습니다.");
+
+      Cookie cookie = new Cookie("Authorization", refreshAccessToken);
+      response.addCookie(cookie);
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        Cookie authorizationCookie = WebUtils.findAuthorizationCookie(request.getCookies())
-                .orElseThrow(NotFoundTokenException::new);
-        final String accessToken = authorizationCookie.getValue();
-
-        if (!WebUtils.isTokenExpired(accessToken)) {
-            String refreshAccessToken = authService.requestTokenRefresh(accessToken);
-
-            log.info("access token이 재발급 되었습니다.");
-
-            Cookie cookie = new Cookie("Authorization", refreshAccessToken);
-            response.addCookie(cookie);
-        }
-
-        filterChain.doFilter(request, response);
-    }
+    filterChain.doFilter(request, response);
+  }
 }

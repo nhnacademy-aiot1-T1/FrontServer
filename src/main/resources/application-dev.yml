@@ -1,0 +1,12 @@
+eureka:
+  client:
+    service-url:
+      defualtZone: http://127.0.0.1:8761/eureka
+
+server:
+  port: 8082
+
+oauth:
+  payco:
+    redirect-uri: http://test-vm.com:8082/oauth-login
+    secret: 4nl1ZsBpejpz1VclsSRTD427
