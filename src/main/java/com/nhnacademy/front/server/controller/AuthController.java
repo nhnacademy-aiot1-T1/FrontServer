@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthController {
     private static final String AUTHORIZATION_KEY = "Authorization";
     private static final String LOGIN_PAGE = "login";
-    private static final String HOME_PAGE = "/home";
+    private static final String HOME_PAGE = "home";
 
 
     private final PaycoProperties paycoProperties;
@@ -38,8 +38,8 @@ public class AuthController {
     /**
      * oauth login 입니다.
      */
-    @GetMapping("/oauth-authorize")
-    public String oauth(@CookieValue(value = AUTHORIZATION_KEY, required = false) String token) {
+    @GetMapping("/oauth/payco-authorize")
+    public String paycoLogin(@CookieValue(value = AUTHORIZATION_KEY, required = false) String token) {
         if (StringUtils.hasText(token)) return HOME_PAGE;
 
         final String url = "https://id.payco.com/oauth2.0/authorize?response_type=code"
@@ -51,9 +51,9 @@ public class AuthController {
         return WebUtils.REDIRECT_PREFIX + url;
     }
 
-    @GetMapping("/oauth-login")
-    public String doOauthLogin(@RequestParam(name = "code") String authCode, HttpServletResponse res) {
-        String accessToken = authService.oauthLogin(authCode).getAccessToken();
+    @GetMapping("/oauth/payco-login")
+    public String doPaycoLogin(@RequestParam(name = "code") String authCode, HttpServletResponse res) {
+        String accessToken = authService.paycoLogin(authCode).getAccessToken();
 
         if (accessToken != null) {
             Cookie cookie = new Cookie(AUTHORIZATION_KEY, authCode);
