@@ -72,21 +72,14 @@
               <div class="card-content">
 
                 <div class="card-body">
-                  <form class="form-horizontal" method="post" action="/register" novalidate>
-                    <div class="row">
-                      <div class="col-8">
-                        <fieldset class="form-group position-relative has-icon-left">
-                          <input type="text" class="form-control round" name="id" id="user-id"
-                                 placeholder="ID" required>
-                          <div class="form-control-position">
-                            <i class="ft-user"></i>
-                          </div>
-                        </fieldset>
+                  <form class="form-horizontal" method="post" th:action="@{/register}">
+                    <fieldset class="form-group position-relative has-icon-left">
+                      <input type="text" class="form-control round" name="userId" id="user-id"
+                             placeholder="ID" required>
+                      <div class="form-control-position">
+                        <i class="ft-user"></i>
                       </div>
-                      <div class="col-4">
-                        <button class="btn round btn-block btn-bg-gradient-x-orange-yellow mr-1 mb-1 font-size-small" type="button">중복체크</button>
-                      </div>
-                    </div>
+                    </fieldset>
 
                     <fieldset class="form-group position-relative has-icon-left">
                       <input type="text" class="form-control round" name="name" id="user-name"
@@ -127,11 +120,10 @@
                   </form>
                 </div>
 
-
                 <p class="card-subtitle text-muted text-right font-small-3 mx-2 my-1">
-                                        <span>이미 회원이신가요 ?
-                                            <a href="login.html" class="card-link">로그인</a>
-                                        </span>
+                  <span>이미 회원이신가요 ?
+                    <a href="login.html" class="card-link">로그인</a>
+                  </span>
                 </p>
               </div>
             </div>
