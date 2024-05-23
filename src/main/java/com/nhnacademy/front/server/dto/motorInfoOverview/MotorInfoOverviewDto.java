@@ -19,8 +19,8 @@ public class MotorInfoOverviewDto {
 // }
 
   int totalMotorCount;
-  int totalMotorNormalCount;
-  int totalMotorIsOnCount;
+  int totalNormalMotorCount;
+  int totalOnMotorCount;
 
 
 }

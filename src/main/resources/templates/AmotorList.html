@@ -99,36 +99,18 @@
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">Anomaly Motors</p>
-                            <th:p id="anomalyMotors" class="font-medium-5 text-bold-400"></th:p>
+                            <p class="blue-grey lighten-2 mb-0">Normal Motors</p>
+                            <th:p id="normalMotors" class="font-medium-5 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <!-- 섹터 드롭다운 -->
-                            <div class="btn-group mr-1 mb-1">
-                              <button type="button"
-                                      class="btn btn-bg-gradient-x-blue-green dropdown-toggle"
-                                      data-toggle="dropdown" aria-haspopup="true"
-                                      aria-expanded="false">
-                                Sector
-                              </button>
-                              <div class="dropdown-menu">
-                                <button class="dropdown-item" data-sector-id="all">
-                                  전체보기
-                                </button>
-                                <button class="dropdown-item"
-                                        th:each="sector : ${sectorInfo}"
-                                        type="button"
-                                        th:text="${sector.getSectorName()}"
-                                        th:data-sector-id="${sector.getSectorId()}"
-                                ></button>
-                              </div>
-                            </div>
+                            <p class="blue-grey lighten-2 mb-0">Anomaly Motors</p>
+                            <th:p id="anomalyMotors" class="font-medium-5 text-bold-400"></th:p>
                           </div>
                         </div>
 
                         <h6 class="text-bold-600"> Normal Motors:
-                          <span id="sectorPercent"></span>
+                          <span id="normalMotorPercent"></span>
                         </h6>
                         <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
                           <div id="progressBar" class="progress-bar bg-gradient-x-success"
@@ -137,7 +119,7 @@
                         </div>
                         <br>
                         <h6 class="text-bold-600"> Running Motors:
-                          <span id="sectorPercent1"></span>
+                          <span id="isOnMotorPercent"></span>
                         </h6>
                         <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
                           <div id="progressBar1" class="progress-bar bg-gradient-x-success"
@@ -167,8 +149,8 @@
                              class="motorbox col-2" th:data-sector-id="${motor.getSectorId()}"
                              th:data-motor-id="${motor.getMotorId()}"
                              onclick="goToMotorDetail(this)">
-                          <div class="motorsection" th:if="${motor.getConnect()=='T'}">
-                            <div th:if="${motor.getStatus() =='normal'}"
+                          <div class="motorsection" th:if="${motor.getIsOn()== true}">
+                            <div th:if="${motor.getIsNormal() == true}"
                                  class="card pull-up bg-gradient-directional-success">
                               <div class="card pull-up bg-gradient-directional-success">
                                 <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
@@ -184,13 +166,12 @@
                                     </div>
                                   </div>
                                   <div class="media-body text-right mt-1">
-                                    <h3 class="font-large-0 white"
-                                        th:text="${motor.getStatus()}"></h3>
+                                    <h3 class="font-large-0 white">Normal</h3>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <div th:if="${motor.getStatus() =='warning'}"
+                            <div th:if="${motor.getIsNormal() == false }"
                                  class="card pull-up bg-gradient-directional-warning">
                               <div class="card pull-up bg-gradient-directional-warning">
                                 <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
@@ -211,15 +192,14 @@
                                     </div>
                                   </div>
                                   <div class="media-body text-right mt-1">
-                                    <h3 class="font-large-0 white"
-                                        th:text="${motor.getStatus()}"></h3>
+                                    <h3 class="font-large-0 white">Warning</h3>
                                   </div>
                                 </div>
                               </div>
                             </div>
                             <br>
                           </div>
-                          <div class="motorsection" th:if="${motor.getConnect()=='F'}">
+                          <div class="motorsection" th:if="${motor.getIsOn()==false}">
                             <div
                                 class="card pull-up bg-gradient-directional-blue-grey">
                               <div class="card pull-up bg-gradient-directional-blue-grey">
@@ -241,8 +221,7 @@
                                     </div>
                                   </div>
                                   <div class="media-body text-right mt-1">
-                                    <h3 class="font-large-0 white"
-                                        th:text="${motor.getStatus()}"></h3>
+                                    <h3 class="font-large-0 white">OFF</h3>
                                   </div>
                                 </div>
                               </div>
@@ -266,37 +245,32 @@
       </div>
 
       <!-- 구역선택 사이드 바 -->
-      <div class="sidebar-detached sidebar-left sidebar-sticky">
+      <div class="sidebar-detached sidebar-left sidebar-sticky" style="padding-left:10px ">
         <div class="sidebar">
           <div class="sidebar-content card d-none d-lg-block">
             <div class="card-body">
 
               <!-- Carousel Card sample -->
-              <h4 class="card-title">Card title</h4>
+              <h4 class="card-title">Sector List</h4>
               <!-- /Carousel Card sample -->
 
               <!-- List Group example -->
               <div class="category-title pb-1">
-                <h6>List Group example</h6>
+                <h6>Registerd Sector List</h6>
               </div>
               <div>
 
                 <ul class="list-group">
-                  <li class="list-group-item">
-                    <span class="badge badge-primary badge-pill float-right">14</span> <a href="#">
-                    Project</a>
+                  <li class="list-group-item" onclick="selectSector('all')">
+                    <a href="#">전체보기</a>
                   </li>
-                  <li class="list-group-item">
-                    <span class="badge badge-info badge-pill float-right">22</span> <a href="#">
-                    Team</a>
-                  </li>
-                  <li class="list-group-item">
-                    <span class="badge badge-warning badge-pill float-right">10</span> <a href="#">
-                    Clients</a>
-                  </li>
-                  <li class="list-group-item">
-                    <span class="badge badge-success badge-pill float-right">5</span> <a href="#">
-                    Friends</a>
+                  <li class="list-group-item" th:each="sector : ${sectorInfo}"
+                      th:data-sector-id="${sector.getSectorId()}"
+                      onclick="selectSector(this.getAttribute('data-sector-id'))">
+                    <span th:if="${sector.getTotalCount - sector.getNormalCount != 0}"
+                          class="badge badge-danger badge-pill float-right"
+                          th:text="${sector.getTotalCount()-sector.getNormalCount()}"></span>
+                    <a href="#" th:text="${sector.getSectorName()}"></a>
                   </li>
                 </ul>
               </div>
@@ -330,27 +304,30 @@
   // 페이지 로딩 시 전체 섹터의 개수 합산하여 출력
   $(document).ready(function () {
     var motorInfoOverview = [[${motorInfoOverview}]]; // 서버에서 받아온 섹터 정보
-    var totalNormalMotors = motorInfoOverview.totalMotorNormalCount;
-    var totalAnomalyMotors = motorInfoOverview.totalMotorAbnomalCount;
+    var totalNormalMotors = motorInfoOverview.totalNormalMotorCount;
+    var totalAnomalyMotors = motorInfoOverview.totalMotorCount
+        - motorInfoOverview.totalNormalMotorCount;
     var totalMotors = motorInfoOverview.totalMotorCount;
-    var totalRunningMotors = motorInfoOverview.totalMotorConnectedCount;
+    var totalIsOnMotors = motorInfoOverview.totalOnMotorCount;
     var sectorName = 'Total Motor Status';
 
+    // 상단 Total Motor Status
     $('#totalMotors').text(totalMotors);
     $('#normalMotors').text(totalNormalMotors);
+    $('#runningMotors').text(totalIsOnMotors);
     $('#anomalyMotors').text(totalAnomalyMotors);
     $('#sectorname').text(sectorName);
 
     // 전체 모터의 normal motor 퍼센트 계산 및 표시
     var totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
-    $('#sectorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
+    $('#normalMotorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
     // 전체 모터의 normal motor 퍼센트를 progress bar에 적용
     $('#progressBar').css('width', totalNormalMotorPercent + '%').attr('aria-valuenow',
         totalNormalMotorPercent);
 
     // 전체 모터의 running motor 퍼센트 계산 및 표시
-    var totalRunningMotorPercent = (totalRunningMotors / totalMotors) * 100;
-    $('#sectorPercent1').text(totalRunningMotorPercent.toFixed(2) + '%');
+    var totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+    $('#isOnMotorPercent').text(totalRunningMotorPercent.toFixed(2) + '%');
     // 전체 모터의 running motor 퍼센트를 progress bar에 적용
     $('#progressBar1').css('width', totalRunningMotorPercent + '%').attr('aria-valuenow',
         totalRunningMotorPercent);
@@ -366,28 +343,30 @@
       motorElements.show();
 
       // motorInfoOverview에서 데이터 꺼내서 설정
-      var motorInfoOverview = [[${motorInfoOverview}]];
-      var totalNormalMotors = motorInfoOverview.totalMotorNormalCount;
-      var totalAnomalyMotors = motorInfoOverview.totalMotorAbnomalCount;
+      var motorInfoOverview = [[${motorInfoOverview}]]; // 서버에서 받아온 섹터 정보
+      var totalNormalMotors = motorInfoOverview.totalNormalMotorCount;
+      var totalAnomalyMotors = motorInfoOverview.totalMotorCount
+          - motorInfoOverview.totalNormalMotorCount;
       var totalMotors = motorInfoOverview.totalMotorCount;
-      var totalRunningMotors = motorInfoOverview.totalMotorConnectedCount;
+      var totalIsOnMotors = motorInfoOverview.totalOnMotorCount;
       var sectorName = 'Total Motor Status';
 
       $('#totalMotors').text(totalMotors);
       $('#normalMotors').text(totalNormalMotors);
+      $('#runningMotors').text(totalIsOnMotors);
       $('#anomalyMotors').text(totalAnomalyMotors);
       $('#sectorname').text(sectorName);
 
       // 전체 모터의 normal motor 퍼센트 계산 및 표시
       var totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
-      $('#sectorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
+      $('#normalMotorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
       // 전체 모터의 normal motor 퍼센트를 progress bar에 적용
       $('#progressBar').css('width', totalNormalMotorPercent + '%').attr('aria-valuenow',
           totalNormalMotorPercent);
 
       // 전체 모터의 running motor 퍼센트 계산 및 표시
-      var totalRunningMotorPercent = (totalRunningMotors / totalMotors) * 100;
-      $('#sectorPercent1').text(totalRunningMotorPercent.toFixed(2) + '%');
+      var totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+      $('#isOnMotorPercent').text(totalRunningMotorPercent.toFixed(2) + '%');
       // 전체 모터의 running motor 퍼센트를 progress bar에 적용
       $('#progressBar1').css('width', totalRunningMotorPercent + '%').attr('aria-valuenow',
           totalRunningMotorPercent);
@@ -399,8 +378,8 @@
       $('#progressBar').css('width', sector.normalMotorPercent + '%').attr('aria-valuenow',
           sector.normalMotorPercent);
       // 선택한 섹터의 running motor 퍼센트를 progress bar에 적용
-      // $('#progressBar1').css('width', sector.runningMotorPercent + '%').attr('aria-valuenow',
-      //     sector.runningMotorPercent);
+      $('#progressBar1').css('width', sector.isOnMotorPercent + '%').attr('aria-valuenow',
+          sector.isOnMotorPercent);
       // 모든 모터 요소 숨기기
       motorElements.hide();
 
@@ -410,13 +389,16 @@
 
       // 선택한 섹터의 total motors, normal motors, anomaly motors 개수 업데이트
       var sector = getSectorById(sectorId);
-      $('#totalMotors').text(sector.normalCount + sector.anomalyCount);
-      $('#runningMotors').text(sector.normalCount);
-      $('#anomalyMotors').text(sector.anomalyCount);
+      $('#totalMotors').text(sector.totalCount);
+      $('#normalMotors').text(sector.normalCount);
+      $('#runningMotors').text(sector.isOnCount);
+      $('#anomalyMotors').text(sector.totalCount - sector.normalCount);
       $('#sectorname').text(sector.sectorName + ' Motor Status');
 
-      // 선택한 섹터의 normal motor 퍼센트 업데이트
-      $('#normalMotorsPercent').text(sector.normalMotorPercent + '%');
+      // 선택한 섹터의 isOn motor 퍼센트 업데이트
+      $('#normalMotorPercent').text(sector.normalMotorPercent + '%');
+      $('#isOnMotorPercent').text(sector.isOnMotorPercent + '%');
+
     }
   }
 
@@ -426,8 +408,10 @@
     for (var i = 0; i < sectors.length; i++) {
       if (sectors[i].sectorId == sectorId) {
         // Normal motor 퍼센트 계산
-        var totalMotors = sectors[i].normalCount + sectors[i].anomalyCount;
+        var totalMotors = sectors[i].totalCount;
+        var isOnMotorPercent = (sectors[i].isOnCount / totalMotors) * 100;
         var normalMotorPercent = (sectors[i].normalCount / totalMotors) * 100;
+        sectors[i].isOnMotorPercent = isOnMotorPercent.toFixed(2); // 소수점 둘째 자리까지 표시
         sectors[i].normalMotorPercent = normalMotorPercent.toFixed(2); // 소수점 둘째 자리까지 표시
         return sectors[i];
       }
@@ -435,30 +419,6 @@
     return null;
   }
 
-  // 드롭다운 메뉴 클릭 이벤트 처리
-  $(document).on('click', '.sector-button', function (event) {
-    event.stopPropagation();
-    $(this).parent().toggleClass('show');
-    $(this).attr('aria-expanded', function (i, attr) {
-      return attr === 'true' ? 'false' : 'true';
-    });
-  });
-
-  // 드롭다운 아이템 클릭 이벤트 처리
-  $(document).on('click', '.dropdown-item', function (event) {
-    event.stopPropagation();
-    var sectorId = $(this).attr('data-sector-id');
-    selectSector(sectorId);
-  });
-
-  // 드롭다운 메뉴 외부 클릭 시 메뉴 닫기
-  $(document).on('click', function (event) {
-    var dropdown = $('.btn-group');
-    if (!dropdown.is(event.target) && dropdown.has(event.target).length === 0) {
-      dropdown.removeClass('show');
-      dropdown.find('.dropdown-toggle').attr('aria-expanded', 'false');
-    }
-  });
 
 </script>
 

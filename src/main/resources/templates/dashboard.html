@@ -134,15 +134,15 @@
               <div class="card-header pt-0 pb-0">
                 <p class="warning darken-2">Anomaly Motors</p>
                 <h3 class="display-4 blue-grey lighten-1"
-                    th:text="${(motorOverview.getTotalMotorCount() - motorOverview.getTotalMotorNormalCount())}"></h3>
+                    th:text="${(motorOverview.getTotalMotorCount() - motorOverview.getTotalNormalMotorCount())}"></h3>
               </div>
               <div class="card-content">
                 <ul class="list-inline clearfix mt-2">
                   <li>
                     <h1 class="blue-grey lighten-1 text-bold-400"
                         th:text="${#numbers.formatDecimal(((motorOverview.getTotalMotorCount() -
-                        motorOverview.getTotalMotorNormalCount()) * 100.0) /
-                        (motorOverview.getTotalMotorCount()), 0, 2)
+                        motorOverview.getTotalNormalMotorCount()) * 100.0) /
+                        (motorOverview.getTotalNormalMotorCount()), 0, 2)
                         + '%'}"></h1>
                     <span class="warning darken-2">
                       <i class="ft-airplay"></i> Anomaly Motors Percentage</span>
@@ -177,13 +177,13 @@
               <div class="card-header pt-0 pb-0">
                 <p class="danger darken-2">Running Motors</p>
                 <h3 class="display-4 blue-grey lighten-1"
-                    th:text="${motorOverview.getTotalMotorIsOnCount()}"></h3>
+                    th:text="${motorOverview.getTotalOnMotorCount()}"></h3>
               </div>
               <div class="card-content">
                 <ul class="list-inline clearfix mt-2">
                   <li>
                     <h1 class="blue-grey lighten-1 text-bold-400"
-                        th:text="${#numbers.formatDecimal((motorOverview.getTotalMotorIsOnCount() * 100.0) /
+                        th:text="${#numbers.formatDecimal((motorOverview.getTotalOnMotorCount() * 100.0) /
                         (motorOverview.getTotalMotorCount()), 0, 2) + '%'}"></h1>
                     <span class="danger darken-2">
                       <i class="ft-airplay"></i> Running Motors Percentage</span>
@@ -569,8 +569,7 @@
         var date = new Date(monthRunningRate.timestamp);
         var monthDay = (date.getMonth() + 1).toString().padStart(2, '0') + '-'
             + date.getDate().toString().padStart(2, '0');
-        var hour = date.getHours().toString() + '시';
-        return [monthDay, hour];
+        return [monthDay];
       }),
       datasets: [
         {

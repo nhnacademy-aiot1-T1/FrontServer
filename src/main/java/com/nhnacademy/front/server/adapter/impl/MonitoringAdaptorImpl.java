@@ -22,9 +22,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
-  public static final String MOTOR_INFO_OVERVIEW = "https://run.mocky.io/v3/2fdf345f-24d8-4eb9-acf9-56b94bcdab84";
-  public static final String SECTORS_INFO = "https://run.mocky.io/v3/fbea79ab-4ba0-4d6e-8bcf-9d961fa43020";
-  public static final String MOTORS = "https://run.mocky.io/v3/c092c66d-b352-46c7-b283-5c96dffbd272";
+  public static final String MOTOR_INFO_OVERVIEW = "https://run.mocky.io/v3/08ec999b-5345-4075-84b9-2ce8619d71fc";
+  public static final String SECTORS_INFO = "https://run.mocky.io/v3/60b8f744-27ca-44d4-924a-f63119ed8d3e";
+  public static final String MOTORS = "https://run.mocky.io/v3/626e23f9-091c-45d1-9c8e-f1ff5b644f28";
   public static final String MOTOR_DETAIL = "https://run.mocky.io/v3/652d7a44-6913-4ff7-bc7f-289e9ad64ff4";
   public static final String MOTOR_SCORES = "https://run.mocky.io/v3/ef52835f-8b16-4d70-abbd-c1cde05d6fd5";
   public static final String CONTR0L_LOGS = "https://run.mocky.io/v3/f76094b7-f650-431f-a9e4-bb1d5224b5fe";
