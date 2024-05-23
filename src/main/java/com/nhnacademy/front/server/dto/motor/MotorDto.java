@@ -12,6 +12,8 @@ public class MotorDto {
   private Long motorId;
   private String motorName;
   private Long sectorId;
-  private String status;
-  private String connect;
+  private String sectorName;
+  private Boolean isOn;
+  private Boolean isNormal;
+
 }
