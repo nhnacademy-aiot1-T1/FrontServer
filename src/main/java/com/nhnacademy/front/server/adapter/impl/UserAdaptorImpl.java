@@ -137,7 +137,7 @@ public class UserAdaptorImpl implements UserAdaptor {
         url,
         httpMethod,
         request,
-        new ParameterizedTypeReference<CommonResponse<List<UserDetailDto>>>() {
+        new ParameterizedTypeReference<>() {
         });
   }
 
