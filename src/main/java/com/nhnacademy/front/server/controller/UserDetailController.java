@@ -33,7 +33,7 @@ public class UserDetailController {
 
     model.addAttribute("userDetail", userDetailDto);
 
-    log.warn(" is :{}", userDetailDto);
+    log.warn(" is :{}", userDetailDto.getId());
 
     return "users-edit";
   }
