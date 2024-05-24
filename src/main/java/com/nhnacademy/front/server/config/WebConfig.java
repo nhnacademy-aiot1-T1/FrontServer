@@ -1,30 +1,61 @@
 package com.nhnacademy.front.server.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.nhnacademy.front.server.interceptor.AuthorizationInterceptor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.Duration;
+import java.util.List;
 
-/**
- * 스프링 부트를 활용하기 위한 wevConfig 파일입니다!
- * @author AoiTuNa
- * @version 1.0
- * @see #restTemplate(RestTemplateBuilder)
- */
+
+@Slf4j
 @Configuration
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
 
-    /**
-     * bean으로 등록된 restTemplate 객체입니다!
-     * @param builder bean을 설정하기위한 빌더 입니다!
-     * @return 설정된 빌더를 리턴합니다!
-     */
     @Bean
     @LoadBalanced
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        RestTemplate restTemplate = builder
+                .setConnectTimeout(Duration.ofSeconds(5))
+                .setReadTimeout(Duration.ofSeconds(5))
+            .build();
+
+        restTemplate.setInterceptors(List.of(new AuthorizationInterceptor()));
+
+        return restTemplate;
+    }
+
+    @Bean
+    @ConditionalOnProperty(value = "spring.profiles.active", havingValue = "dev")
+    public RestTemplate restTemplateMocky(RestTemplateBuilder builder) {
+        return builder
+                .setConnectTimeout(Duration.ofSeconds(5))
+                .setReadTimeout(Duration.ofSeconds(5))
+                .build();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper().registerModule(new JavaTimeModule());
+    }
+
+    @Bean
+    public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+        return new DeviceResolverHandlerInterceptor();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(deviceResolverHandlerInterceptor());
     }
 }

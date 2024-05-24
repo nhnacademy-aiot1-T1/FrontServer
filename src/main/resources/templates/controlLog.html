@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <!-- 필요한 css 파일 -->
+  <div th:include="fixedTemplate/defaultCSS.html"></div>
+  <title>log</title>
+</head>
+<body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar"
+      data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue"
+      data-col="content-detached-left-sidebar">
+
+<!-- BEGIN: Header-->
+<div th:include="fixedTemplate/fixed-top.html"></div>
+<!-- END: Header-->
+
+
+<!-- BEGIN: Main Menu-->
+<div th:include="fixedTemplate/side-navigation.html"></div>
+<!-- END: Main Menu-->
+
+
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-header row">
+      <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+        <h3 class="mb-0 d-inline-block">Log</h3>
+      </div>
+
+    </div>
+    <div class="content-body">
+      <section id="drag-area">
+        <div class="row">
+          <div class="col-md-12">
+            <th:block th:each="date : ${dateSet}">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title" th:text="${date}"></h4>
+                </div>
+                <div class="card-content collapse show">
+                  <div class="card-body">
+                    <ul>
+                      <li th:each="controlLog : ${controlLogs}"
+                          th:if="${#strings.startsWith(controlLog.time, date)}">
+                <span th:if="${controlLog.status == 'normal'}">
+                  <span class="badge badge-pill badge-success"> ✅ 이상 없음 </span>
+                  <span th:text="'Log Id : ' + ${controlLog.id} + ' ----- '"></span>
+                  <span th:text="'[' + ${controlLog.time} + ']'"></span>
+                  <span th:text="'Sensor Id = ' + ${controlLog.channelId}"></span>
+                </span>
+                        <span th:if="${controlLog.status == 'warning'}">
+                  <span class="badge badge-pill badge-warning"> ⚠️ 주의 요함 </span>
+                  <span th:text="'Log Id : ' + ${controlLog.id} + ' ----- '"></span>
+                  <span th:text="'[' + ${controlLog.time} + ']'"></span>
+                  <span th:text="'Sensor Id = ' + ${controlLog.channelId}"></span>
+                </span>
+                        <span th:if="${controlLog.status == 'danger'}">
+                  <span class="badge badge-pill badge-danger"> 🚨 매우 위험 </span>
+                  <span th:text="'Log Id : ' + ${controlLog.id} + ' ----- '"></span>
+                  <span th:text="'[' + ${controlLog.time} + ']'"></span>
+                  <span th:text="'Sensor Id = ' + ${controlLog.channelId}"></span>
+                </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </th:block>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div th:include="fixedTemplate/defaultJS.html"></div>
+
+</body>
+</html>
+

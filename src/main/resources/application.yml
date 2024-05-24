@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: FRONT-SERVICE
+  profiles:
+    active: dev
+
+eureka:
+  client:
+    enabled: false
+    service-url:
+      defualtZone:
+
+server:
+  port: 8080
+
+oauth:
+  payco:
+    client_id: 3RDwMkWpqVbBXbEs0f7uAo9
+    redirect-uri:

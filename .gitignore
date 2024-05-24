@@ -32,3 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 /src/main/resources/templates/AdminLTE-3.2.0
+
+### resource template ###
+src/main/resources/static/vertical-menu-template
