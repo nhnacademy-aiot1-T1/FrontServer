@@ -2,6 +2,7 @@ package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.UserDetailDto;
 import com.nhnacademy.front.server.service.UserDetailService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,16 @@ public class UserDetailController {
     return "users-edit";
   }
 
+  @GetMapping("/admin/users")
+  public String getUsers(Model model) {
+    List<UserDetailDto> users = userService.getUsers();
+
+    model.addAttribute("users", users);
+
+    log.warn(" is :{}", users);
+    return "usersList";
+  }
+
   @PostMapping("/user/update")
   public String updateUserDetail(@ModelAttribute UserDetailDto userDetailDto, @RequestParam(value = "id", required = false) Long id) {
 
@@ -45,6 +56,16 @@ public class UserDetailController {
     log.info(" is :{}", updateUser);
 
     return "users-edit";
+  }
+
+  @PostMapping("/user/update/role")
+  public String updateUserRole(@ModelAttribute UserDetailDto userDetailDto,
+      @RequestParam(value = "id", required = false) Long id) {
+
+    UserDetailDto updateUser = userService.updateUserDetail(id, userDetailDto);
+
+    log.info(" is :{}", updateUser);
+    return "usersList";
   }
 
   @DeleteMapping("/user/delete")
