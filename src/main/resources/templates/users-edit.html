@@ -3,7 +3,7 @@
 
 <head>
   <!-- Thymeleaf template inclusion -->
-  <link th:include="../fixedTemplate/defaultCSS.html" rel="stylesheet"/>
+  <link th:include="/fixedTemplate/defaultCSS.html" rel="stylesheet"/>
 </head>
 
 <body class="vertical-layout vertical-menu content-detached-left-sidebar fixed-navbar"
@@ -12,11 +12,11 @@
       data-col="content-detached-left-sidebar">
 
 <!-- BEGIN: Header-->
-<div th:include="../fixedTemplate/fixed-top.html"></div>
+<div th:include="/fixedTemplate/fixed-top.html"></div>
 <!-- END: Header-->
 
 <!-- BEGIN: Main Menu-->
-<div th:include="../fixedTemplate/side-navigation.html"></div>
+<div th:include="/fixedTemplate/side-navigation.html"></div>
 <!-- END: Main Menu-->
 
 <!-- BEGIN: Content-->
@@ -81,8 +81,7 @@
               <div class="card-content collapse show">
                 <div class="card-body">
 
-                  <form id="editForm" class="form" action="/mypage/user/update" method="post">
-                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                  <form id="editForm" class="form" th:action="@{/mypage/user/update}" method="post">
                     <div class="form-body">
                       <h4 class="form-section">
                         <i class="ft-briefcase"></i> 유저 정보</h4>
