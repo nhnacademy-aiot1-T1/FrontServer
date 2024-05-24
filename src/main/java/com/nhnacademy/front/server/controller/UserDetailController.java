@@ -1,8 +1,11 @@
 package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.UserDetailDto;
+import com.nhnacademy.front.server.dto.UserRole;
 import com.nhnacademy.front.server.service.UserDetailService;
+import com.nhnacademy.front.server.util.WebUtils;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,7 +26,6 @@ public class UserDetailController {
   private final UserDetailService userService;
 
   /**
-   *
    * @param id AccountId. not user login id
    * @return
    */
@@ -49,7 +51,8 @@ public class UserDetailController {
   }
 
   @PostMapping("/user/update")
-  public String updateUserDetail(@ModelAttribute UserDetailDto userDetailDto, @RequestParam(value = "id", required = false) Long id) {
+  public String updateUserDetail(@ModelAttribute UserDetailDto userDetailDto,
+      @RequestParam(value = "id", required = false) Long id) {
 
     UserDetailDto updateUser = userService.updateUserDetail(id, userDetailDto);
 
@@ -59,14 +62,22 @@ public class UserDetailController {
   }
 
   @PostMapping("/user/update/role")
-  public String updateUserRole(@ModelAttribute UserDetailDto userDetailDto,
-      @RequestParam(value = "id", required = false) Long id) {
+  public String updateUserRole(@RequestParam(value = "id", required = false) Long id, @RequestParam("role") String role, Model model) {
 
-    UserDetailDto updateUser = userService.updateUserDetail(id, userDetailDto);
+    UserDetailDto userDetailDto = (UserDetailDto) model.getAttribute("userDetail");
 
-    log.info(" is :{}", updateUser);
-    return "usersList";
+    if (userDetailDto == null) {
+      userDetailDto = userService.getUserDetail(id);
+    }
+
+    userDetailDto.setRole(UserRole.valueOf(role));
+    userService.updateUserDetail(id, userDetailDto);
+
+    log.info("Updated user: {}", userDetailDto);
+
+    return WebUtils.REDIRECT_PREFIX + "/mypage/admin/users";
   }
+
 
   @DeleteMapping("/user/delete")
   public String deleteUserDetail(@RequestParam(value = "id", required = false) Long id) {
