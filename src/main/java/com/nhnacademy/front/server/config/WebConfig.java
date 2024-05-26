@@ -2,6 +2,7 @@ package com.nhnacademy.front.server.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.nhnacademy.common.aop.CommonLogger;
 import com.nhnacademy.front.server.interceptor.AuthorizationInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -57,5 +58,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(deviceResolverHandlerInterceptor());
+    }
+
+    @Bean
+    public CommonLogger commonLogger() {
+        return new CommonLogger();
     }
 }
