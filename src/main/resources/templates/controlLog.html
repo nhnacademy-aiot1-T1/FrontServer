@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <!-- 필요한 css 파일 -->
-  <div th:include="fixedTemplate/defaultCSS.html"></div>
-  <title>log</title>
+    <meta charset="UTF-8">
+    <!-- 필요한 css 파일 -->
+    <div th:include="fixedTemplate/defaultCSS.html"></div>
+    <title>log</title>
 </head>
 <body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar"
       data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue"
@@ -21,57 +21,103 @@
 
 
 <div class="app-content content">
-  <div class="content-wrapper">
-    <div class="content-header row">
-      <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-        <h3 class="mb-0 d-inline-block">Log</h3>
-      </div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+                <h3 class="mb-0 d-inline-block">Log</h3>
+            </div>
 
-    </div>
-    <div class="content-body">
-      <section id="drag-area">
-        <div class="row">
-          <div class="col-md-12">
-            <th:block th:each="date : ${dateSet}">
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="card-title" th:text="${date}"></h4>
+        </div>
+        <section id="positioning">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-content collapse show">
+                            <div class="card-body card-dashboard">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered dom-positioning">
+                                        <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Sector</th>
+                                            <th>Motor</th>
+                                            <th>Sensor-Type</th>
+                                            <th>Status</th>
+                                            <th>Time</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="controlLog : ${controlLogs}">
+                                            <td th:text="${controlLog.getTime().substring(0,10)}">Date</td>
+                                            <td th:text="${controlLog.getSectorName()}">Sector</td>
+                                            <td th:text="${controlLog.getMotorName()}">Motor</td>
+                                            <td th:text="${controlLog.getSensorType()}">Sensor-Type</td>
+                                            <td th:text="${controlLog.getStatus()}">Status</td>
+                                            <td th:text="${controlLog.getTime()}">Time</td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Sector</th>
+                                            <th>Motor</th>
+                                            <th>Sensor-Type</th>
+                                            <th>Status</th>
+                                            <th>Time</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content collapse show">
-                  <div class="card-body">
-                    <ul>
-                      <li th:each="controlLog : ${controlLogs}"
-                          th:if="${#strings.startsWith(controlLog.time, date)}">
+            </div>
+        <!--</section>
+        <div class="content-body">
+            <section id="drag-area">
+                <div class="row">
+                    <div class="col-md-12">
+                        <th:block th:each="date : ${dateSet}">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title" th:text="${date}"></h4>
+                                </div>
+                                <div class="card-content collapse show">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li th:each="controlLog : ${controlLogs}"
+                                                th:if="${#strings.startsWith(controlLog.time, date)}">
                 <span th:if="${controlLog.status == 'normal'}">
                   <span class="badge badge-pill badge-success"> ✅ 이상 없음 </span>
-                  <span th:text="'Log Id : ' + ${controlLog.id} + ' ----- '"></span>
+                  <span th:text="'Log Id : ' + ${controlLog.id} + ' -&#45;&#45;&#45;&#45; '"></span>
                   <span th:text="'[' + ${controlLog.time} + ']'"></span>
                   <span th:text="'Sensor Id = ' + ${controlLog.channelId}"></span>
                 </span>
-                        <span th:if="${controlLog.status == 'warning'}">
+                                                <span th:if="${controlLog.status == 'warning'}">
                   <span class="badge badge-pill badge-warning"> ⚠️ 주의 요함 </span>
-                  <span th:text="'Log Id : ' + ${controlLog.id} + ' ----- '"></span>
+                  <span th:text="'Log Id : ' + ${controlLog.id} + ' -&#45;&#45;&#45;&#45; '"></span>
                   <span th:text="'[' + ${controlLog.time} + ']'"></span>
                   <span th:text="'Sensor Id = ' + ${controlLog.channelId}"></span>
                 </span>
-                        <span th:if="${controlLog.status == 'danger'}">
+                                                <span th:if="${controlLog.status == 'danger'}">
                   <span class="badge badge-pill badge-danger"> 🚨 매우 위험 </span>
-                  <span th:text="'Log Id : ' + ${controlLog.id} + ' ----- '"></span>
+                  <span th:text="'Log Id : ' + ${controlLog.id} + ' -&#45;&#45;&#45;&#45; '"></span>
                   <span th:text="'[' + ${controlLog.time} + ']'"></span>
                   <span th:text="'Sensor Id = ' + ${controlLog.channelId}"></span>
                 </span>
-                      </li>
-                    </ul>
-                  </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
                 </div>
-              </div>
-            </th:block>
-          </div>
-        </div>
-      </section>
+            </section>
 
-    </div>
-  </div>
+        </div>-->
+        </div>
 </div>
 
 <div th:include="fixedTemplate/defaultJS.html"></div>
