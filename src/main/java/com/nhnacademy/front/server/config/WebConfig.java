@@ -23,49 +23,41 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        RestTemplate restTemplate = builder
-                .setConnectTimeout(Duration.ofSeconds(5))
-                .setReadTimeout(Duration.ofSeconds(5))
-            .build();
+  @Bean
+  @LoadBalanced
+  public RestTemplate restTemplate(RestTemplateBuilder builder) {
+    RestTemplate restTemplate = builder
+        .setConnectTimeout(Duration.ofSeconds(5))
+        .setReadTimeout(Duration.ofSeconds(5))
+        .build();
 
-        restTemplate.setInterceptors(List.of(new AuthorizationInterceptor()));
+    restTemplate.setInterceptors(List.of(new AuthorizationInterceptor()));
 
-        return restTemplate;
-    }
+    return restTemplate;
+  }
 
-    @Bean
-    @ConditionalOnProperty(value = "spring.profiles.active", havingValue = "dev")
-    public RestTemplate restTemplateMocky(RestTemplateBuilder builder) {
-        return builder
-                .setConnectTimeout(Duration.ofSeconds(5))
-                .setReadTimeout(Duration.ofSeconds(5))
-                .build();
-    }
+  @Bean
+  @ConditionalOnProperty(value = "spring.profiles.active", havingValue = "dev")
+  public RestTemplate restTemplateMocky(RestTemplateBuilder builder) {
+    return builder
+        .setConnectTimeout(Duration.ofSeconds(5))
+        .setReadTimeout(Duration.ofSeconds(5))
+        .build();
+  }
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper().registerModule(new JavaTimeModule());
-    }
+  @Bean
+  public ObjectMapper objectMapper() {
+    return new ObjectMapper().registerModule(new JavaTimeModule());
+  }
 
-    @Bean
-    public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
-        return new DeviceResolverHandlerInterceptor();
-    }
+  @Bean
+  public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor();
+  }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(deviceResolverHandlerInterceptor());
-    }
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
+  }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-            .allowedOrigins("http://localhost:8082")
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-            .allowedHeaders("*")
-            .allowCredentials(true);
-    }
 }
