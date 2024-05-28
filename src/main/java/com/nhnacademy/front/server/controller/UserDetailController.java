@@ -1,7 +1,11 @@
 package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.UserDetailDto;
+import com.nhnacademy.front.server.dto.UserRole;
 import com.nhnacademy.front.server.service.UserDetailService;
+import com.nhnacademy.front.server.util.WebUtils;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,7 +26,6 @@ public class UserDetailController {
   private final UserDetailService userService;
 
   /**
-   *
    * @param id AccountId. not user login id
    * @return
    */
@@ -32,13 +35,24 @@ public class UserDetailController {
 
     model.addAttribute("userDetail", userDetailDto);
 
-    log.warn(" is :{}", userDetailDto);
+    log.warn(" is :{}", userDetailDto.getId());
 
     return "users-edit";
   }
 
+  @GetMapping("/admin/users")
+  public String getUsers(Model model) {
+    List<UserDetailDto> users = userService.getUsers();
+
+    model.addAttribute("users", users);
+
+    log.warn(" is :{}", users);
+    return "usersList";
+  }
+
   @PostMapping("/user/update")
-  public String updateUserDetail(@ModelAttribute UserDetailDto userDetailDto, @RequestParam(value = "id", required = false) Long id) {
+  public String updateUserDetail(@ModelAttribute UserDetailDto userDetailDto,
+      @RequestParam(value = "id", required = false) Long id) {
 
     UserDetailDto updateUser = userService.updateUserDetail(id, userDetailDto);
 
@@ -46,6 +60,24 @@ public class UserDetailController {
 
     return "users-edit";
   }
+
+  @PostMapping("/user/update/role")
+  public String updateUserRole(@RequestParam(value = "id", required = false) Long id, @RequestParam("role") String role, Model model) {
+
+    UserDetailDto userDetailDto = (UserDetailDto) model.getAttribute("userDetail");
+
+    if (userDetailDto == null) {
+      userDetailDto = userService.getUserDetail(id);
+    }
+
+    userDetailDto.setRole(UserRole.valueOf(role));
+    userService.updateUserDetail(id, userDetailDto);
+
+    log.info("Updated user: {}", userDetailDto);
+
+    return WebUtils.REDIRECT_PREFIX + "/mypage/admin/users";
+  }
+
 
   @DeleteMapping("/user/delete")
   public String deleteUserDetail(@RequestParam(value = "id", required = false) Long id) {

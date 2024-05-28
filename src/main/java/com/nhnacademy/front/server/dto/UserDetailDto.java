@@ -3,6 +3,7 @@ package com.nhnacademy.front.server.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
@@ -13,6 +14,6 @@ public class UserDetailDto {
   String name;
   String phone;
   String email;
+  @Setter
   UserRole role;
-
 }

@@ -1,4 +1,4 @@
-package com.nhnacademy.front.server.dto;
+package com.nhnacademy.front.server.dto.user;
 
 import lombok.AccessLevel;
 import lombok.Getter;
