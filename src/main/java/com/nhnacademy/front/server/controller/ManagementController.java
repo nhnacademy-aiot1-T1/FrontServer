@@ -1,7 +1,7 @@
 package com.nhnacademy.front.server.controller;
 
-import com.nhnacademy.front.server.dto.SectorDto;
-import com.nhnacademy.front.server.dto.SectorsDto;
+import com.nhnacademy.front.server.dto.sector.SectorDto;
+import com.nhnacademy.front.server.dto.sector.SectorsDto;
 import com.nhnacademy.front.server.service.SectorService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
