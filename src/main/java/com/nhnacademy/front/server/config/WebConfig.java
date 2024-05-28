@@ -22,7 +22,6 @@ import java.util.List;
 @Slf4j
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
     @Bean
     @LoadBalanced
     public RestTemplate restTemplate(RestTemplateBuilder builder) {

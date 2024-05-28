@@ -81,7 +81,7 @@
               <div class="card-content collapse show">
                 <div class="card-body">
 
-                  <form id="editForm" class="form" action="mypage/user/update" method="post">
+                  <form id="editForm" class="form" th:action="@{/mypage/user/update}" method="post">
                     <div class="form-body">
                       <h4 class="form-section">
                         <i class="ft-briefcase"></i> 유저 정보</h4>
@@ -123,7 +123,7 @@
                       </button>
                     </div>
                   </form>
-                  <form id="deleteForm" action="mypage/user/delete" method="post">
+                  <form id="deleteForm" action="/mypage/user/delete" method="post">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" id="userId" name="id">
                     <button type="submit" class="btn btn-danger mr-1">delete</button>
