@@ -60,12 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(deviceResolverHandlerInterceptor());
   }
-
-  @Bean
-  public CommonLogger commonLogger() {
-    return new CommonLogger();
-  }
-
+  
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
