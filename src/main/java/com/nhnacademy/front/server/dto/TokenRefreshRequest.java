@@ -6,5 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class TokenRefreshRequest {
-    private String expiredToken;
+
+  private String expiredToken;
 }

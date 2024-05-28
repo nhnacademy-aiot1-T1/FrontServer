@@ -5,22 +5,23 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
 public class SecureConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors().disable()
-                .csrf().and()
-                .httpBasic().disable()
-                .formLogin().disable()
-                .logout().disable()
-                .headers()
-                .frameOptions().disable();
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .cors().disable()
+        .csrf().csrfTokenRepository(new HttpSessionCsrfTokenRepository()).and()
+        .httpBasic().disable()
+        .formLogin().disable()
+        .logout().disable()
+        .headers()
+        .frameOptions().disable();
 
-        return http.build();
-    }
+    return http.build();
+  }
 }

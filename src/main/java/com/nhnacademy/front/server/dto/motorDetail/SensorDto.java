@@ -11,6 +11,5 @@ public class SensorDto {
 
   Long sensorId;
   String sensorType;
-  double hourMean;
 
 }

@@ -1,11 +1,9 @@
-package com.nhnacademy.front.server.dto;
+package com.nhnacademy.front.server.dto.sector;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
