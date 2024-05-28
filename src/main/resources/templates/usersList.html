@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link th:include="/fixedTemplate/defaultCSS.html" rel="stylesheet"/>
+  <link th:include="fixedTemplate/defaultCSS.html" rel="stylesheet"/>
 </head>
 
 <body class="vertical-layout vertical-menu content-detached-left-sidebar fixed-navbar"
@@ -12,11 +12,11 @@
       data-col="content-detached-left-sidebar">
 
 <!-- BEGIN: Header-->
-<div th:include="/fixedTemplate/fixed-top.html"></div>
+<div th:include="fixedTemplate/fixed-top.html"></div>
 <!-- END: Header-->
 
 <!-- BEGIN: Main Menu-->
-<div th:include="/fixedTemplate/side-navigation.html"></div>
+<div th:include="fixedTemplate/side-navigation.html"></div>
 <!-- END: Main Menu-->
 
 <div class="app-content content">
@@ -38,8 +38,7 @@
     <div class="card-body">
       <div th:each="user: ${users}">
         <p class="form-control border-primary" th:text="${user.name}"></p>
-        <form id="updateRole" action="/mypage/user/update/role" method="post">
-          <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+        <form id="updateRole" th:action="@{/mypage/user/update/role}" method="post">
           <select name="role">
             <option value="NONE" th:selected="${user.role == 'NONE'}">NONE</option>
             <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
