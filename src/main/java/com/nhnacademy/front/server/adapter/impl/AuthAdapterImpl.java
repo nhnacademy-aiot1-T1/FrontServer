@@ -5,6 +5,7 @@ import com.nhnacademy.front.server.adapter.AuthAdapter;
 import com.nhnacademy.front.server.dto.*;
 import com.nhnacademy.front.server.dto.register.RegisterRequestDto;
 import com.nhnacademy.front.server.dto.TokenRefreshRequest;
+import com.nhnacademy.front.server.dto.user.UserLoginRequestDto;
 import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
 import com.nhnacademy.front.server.exception.UnauthorizedException;
