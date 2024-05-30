@@ -1,6 +1,7 @@
 package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.controlLog.ControlLogDto;
+import com.nhnacademy.front.server.dto.controlLog.ControlLogsDto;
 import com.nhnacademy.front.server.service.ControlLogService;
 import java.util.Comparator;
 import java.util.List;
@@ -19,14 +20,15 @@ public class ControlLogController {
 
   @GetMapping("/home/controlLog")
   public String getControlLogs(Model model) {
-    List<ControlLogDto> controlLogsDto = controlLogService.getControlLogs().getLogs();
+    ControlLogsDto controlLogs = controlLogService.getControlLogs();
+    List<ControlLogDto> controlLogsDto = controlLogs.getLogs();
     Set<String> dateSet = new TreeSet<>(Comparator.reverseOrder());
 
     for (ControlLogDto controlLog : controlLogsDto) {
       String date = controlLog.getTime().substring(0, 10);
       dateSet.add(date);
     }
-
+    model.addAttribute("pagination",controlLogs);
     model.addAttribute("controlLogs", controlLogsDto);
     model.addAttribute("dateSet", dateSet);
 
