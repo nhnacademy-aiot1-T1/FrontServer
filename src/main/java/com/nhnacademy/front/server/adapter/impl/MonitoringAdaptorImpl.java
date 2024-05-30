@@ -9,7 +9,11 @@ import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunnin
 import com.nhnacademy.front.server.dto.motorScore.MotorScoresDto;
 import com.nhnacademy.front.server.dto.motor.MotorsDto;
 import com.nhnacademy.front.server.dto.sector.SectorManagementDto;
+import com.nhnacademy.front.server.dto.sector.SectorRegisterRequest;
+import com.nhnacademy.front.server.dto.sector.SectorRemoveRequest;
+import com.nhnacademy.front.server.dto.sector.SectorRenameRequest;
 import com.nhnacademy.front.server.dto.sector.SectorsDto;
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -41,6 +45,8 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
   // TODO 요청 주소 입력해줘야함
   public static final String REGIST_SECTOR = "";
+  public static final String RENAME_SECTOR = "";
+  public static final String REMOVE_SECTOR = "";
 
   private final RestTemplate restTemplateMocky;
 
@@ -262,12 +268,13 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
   }
 
   @Override
-  public CommonResponse<SectorManagementDto> registSector(String sectorName) {
+  public CommonResponse<SectorManagementDto> registSector(
+      SectorRegisterRequest sectorRegisterRequest) {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-    HttpEntity<Object> request = new HttpEntity<>(sectorName, httpHeaders);
+    HttpEntity<Object> request = new HttpEntity<>(sectorRegisterRequest, httpHeaders);
 
     ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
         REGIST_SECTOR, HttpMethod.POST, request,
@@ -283,5 +290,45 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
   }
 
+  @Override
+  public CommonResponse<SectorManagementDto> renameSector(SectorRenameRequest sectorRenameRequest) {
+    HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
 
+    HttpEntity<SectorRenameRequest> HttpRequest = new HttpEntity<>(sectorRenameRequest,
+        httpHeaders);
+
+    ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
+        RENAME_SECTOR, HttpMethod.POST, HttpRequest,
+        new ParameterizedTypeReference<>() {
+        });
+
+    if (exchange.getStatusCode() != HttpStatus.OK) {
+      throw new ResponseStatusException(exchange.getStatusCode());
+    }
+
+    return exchange.getBody();
+  }
+
+  @Override
+  public CommonResponse<SectorManagementDto> removeSector(SectorRemoveRequest sectorRemoveRequest) {
+    HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+    HttpEntity<SectorRemoveRequest> HttpRequest = new HttpEntity<>(sectorRemoveRequest,
+        httpHeaders);
+
+    ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
+        REMOVE_SECTOR, HttpMethod.DELETE, HttpRequest,
+        new ParameterizedTypeReference<>() {
+        });
+
+    if (exchange.getStatusCode() != HttpStatus.OK) {
+      throw new ResponseStatusException(exchange.getStatusCode());
+    }
+
+    return exchange.getBody();
+  }
 }
