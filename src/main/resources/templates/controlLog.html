@@ -28,44 +28,91 @@
             </div>
 
         </div>
-        <section id="positioning">
+<!--        <section id="positioning">-->
+<!--            <div class="row">-->
+<!--                <div class="col-12">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-content collapse show">-->
+<!--                            <div class="card-body card-dashboard">-->
+<!--                                <div class="table-responsive">-->
+<!--                                    <table class="table table-striped table-bordered dom-positioning">-->
+<!--                                        <thead>-->
+<!--                                        <tr>-->
+<!--                                            <th>Date</th>-->
+<!--                                            <th>Sector</th>-->
+<!--                                            <th>Motor</th>-->
+<!--                                            <th>Sensor-Type</th>-->
+<!--                                            <th>Status</th>-->
+<!--                                            <th>Time</th>-->
+<!--                                        </tr>-->
+<!--                                        </thead>-->
+<!--                                        <tbody>-->
+<!--                                        <tr th:each="controlLog : ${controlLogs}">-->
+<!--                                            <td th:text="${controlLog.getTime().substring(0,10)}">Date</td>-->
+<!--                                            <td th:text="${controlLog.getSectorName()}">Sector</td>-->
+<!--                                            <td th:text="${controlLog.getMotorName()}">Motor</td>-->
+<!--                                            <td th:text="${controlLog.getSensorType()}">Sensor-Type</td>-->
+<!--                                            <td th:text="${controlLog.getStatus()}">Status</td>-->
+<!--                                            <td th:text="${controlLog.getTime()}">Time</td>-->
+<!--                                        </tr>-->
+<!--                                        </tbody>-->
+<!--                                        <tfoot>-->
+<!--                                        <tr>-->
+<!--                                            <th>Date</th>-->
+<!--                                            <th>Sector</th>-->
+<!--                                            <th>Motor</th>-->
+<!--                                            <th>Sensor-Type</th>-->
+<!--                                            <th>Status</th>-->
+<!--                                            <th>Time</th>-->
+<!--                                        </tr>-->
+<!--                                        </tfoot>-->
+<!--                                    </table>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+        <section id="horizontal-vertical">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Scroll - horizontal and vertical</h4>
+                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
+                                <p class="card-text">In this example you can see DataTables doing both horizontal and vertical scrolling at the same time. Note also that pagination is enabled in this example, and the scrolling accounts for this.</p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered dom-positioning">
+                                    <table class="table display nowrap table-striped table-bordered scroll-horizontal-vertical">
                                         <thead>
                                         <tr>
                                             <th>Date</th>
-                                            <th>Sector</th>
                                             <th>Motor</th>
                                             <th>Sensor-Type</th>
-                                            <th>Status</th>
+                                            <th>score</th>
                                             <th>Time</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="controlLog : ${controlLogs}">
                                             <td th:text="${controlLog.getTime().substring(0,10)}">Date</td>
-                                            <td th:text="${controlLog.getSectorName()}">Sector</td>
                                             <td th:text="${controlLog.getMotorName()}">Motor</td>
                                             <td th:text="${controlLog.getSensorType()}">Sensor-Type</td>
-                                            <td th:text="${controlLog.getStatus()}">Status</td>
+                                            <td th:text="${controlLog.getScore()}">Score</td>
                                             <td th:text="${controlLog.getTime()}">Time</td>
                                         </tr>
                                         </tbody>
-                                        <tfoot>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Sector</th>
-                                            <th>Motor</th>
-                                            <th>Sensor-Type</th>
-                                            <th>Status</th>
-                                            <th>Time</th>
-                                        </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -73,6 +120,7 @@
                     </div>
                 </div>
             </div>
+        </section>
         <!--</section>
         <div class="content-body">
             <section id="drag-area">
@@ -121,6 +169,7 @@
 </div>
 
 <div th:include="fixedTemplate/defaultJS.html"></div>
+
 
 </body>
 </html>

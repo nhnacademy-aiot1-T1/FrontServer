@@ -46,10 +46,10 @@ public class WebConfig implements WebMvcConfigurer {
         .build();
   }
 
-  @Bean
-  public ObjectMapper objectMapper() {
-    return new ObjectMapper().registerModule(new JavaTimeModule());
-  }
+//  @Bean
+//  public ObjectMapper objectMapper() {
+//    return new ObjectMapper().registerModule(new JavaTimeModule());
+//  }
 
   @Bean
   public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {

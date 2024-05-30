@@ -19,7 +19,7 @@ public class ControlLogController {
 
   @GetMapping("/home/controlLog")
   public String getControlLogs(Model model) {
-    List<ControlLogDto> controlLogsDto = controlLogService.getControlLogs().getSensorStatusList();
+    List<ControlLogDto> controlLogsDto = controlLogService.getControlLogs().getLogs();
     Set<String> dateSet = new TreeSet<>(Comparator.reverseOrder());
 
     for (ControlLogDto controlLog : controlLogsDto) {

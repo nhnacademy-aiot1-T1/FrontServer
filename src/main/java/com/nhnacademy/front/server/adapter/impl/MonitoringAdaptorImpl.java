@@ -2,6 +2,7 @@ package com.nhnacademy.front.server.adapter.impl;
 
 import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.adapter.MonitoringAdaptor;
+import com.nhnacademy.front.server.dto.controlLog.ControlLogDto;
 import com.nhnacademy.front.server.dto.controlLog.ControlLogsDto;
 import com.nhnacademy.front.server.dto.motorDetail.MotorDetailDto;
 import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
@@ -10,7 +11,6 @@ import com.nhnacademy.front.server.dto.motorScore.MotorScoresDto;
 import com.nhnacademy.front.server.dto.motor.MotorsDto;
 import com.nhnacademy.front.server.dto.sector.SectorManagementDto;
 import com.nhnacademy.front.server.dto.sector.SectorsDto;
-import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -30,7 +30,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
   public static final String MOTORS = "https://run.mocky.io/v3/da4d361e-37ee-487a-a9c8-8c471a114638";
   public static final String MOTOR_DETAIL = "https://run.mocky.io/v3/21547def-ce33-46f4-9295-0221dcfb5761";
   public static final String MOTOR_SCORES = "https://run.mocky.io/v3/ef52835f-8b16-4d70-abbd-c1cde05d6fd5";
-  public static final String CONTR0L_LOGS = "https://run.mocky.io/v3/3465dde1-dfa1-4955-ad0c-7d10403347c7";
+  public static final String CONTR0L_LOGS = "https://run.mocky.io/v3/b54db4af-ab41-42c1-adbe-1ef0511f96ce";
   public static final String RUNNING_RATES_BY_TIME1 = "https://run.mocky.io/v3/fc91f26c-1883-41b3-a65d-406681cc7060"; // day data
   public static final String RUNNING_RATES_BY_TIME2 = "https://run.mocky.io/v3/8eda357b-8c12-41ff-aa6f-87b7940df3fb"; // week data
   public static final String RUNNING_RATES_BY_TIME3 = "https://run.mocky.io/v3/eae23440-8507-4205-9efd-e06fe6daa6be"; // month data
@@ -160,8 +160,6 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     }
 
     return exchange.getBody();
-
-
   }
 
   // 총 모터 가동률
