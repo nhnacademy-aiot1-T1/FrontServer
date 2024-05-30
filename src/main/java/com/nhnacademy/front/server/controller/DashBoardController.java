@@ -1,7 +1,7 @@
 package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
-import com.nhnacademy.front.server.dto.SectorDto;
+import com.nhnacademy.front.server.dto.sector.SectorDto;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateData;
 import com.nhnacademy.front.server.service.MotorService;
 import com.nhnacademy.front.server.service.SectorService;

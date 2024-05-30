@@ -1,9 +1,8 @@
 package com.nhnacademy.front.server.controller;
 
-import com.nhnacademy.front.server.dto.motor.MotorDto;
-import com.nhnacademy.front.server.dto.motorScore.MotorScoreDto;
-import com.nhnacademy.front.server.dto.motorScore.MotorScoresDto;
-import com.nhnacademy.front.server.dto.SectorDto;
+import com.nhnacademy.front.server.dto.motorDetail.MotorDetailDto;
+import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateData;
+import com.nhnacademy.front.server.dto.sector.SectorDto;
 import com.nhnacademy.front.server.dto.motorDetail.SensorDto;
 import com.nhnacademy.front.server.service.MotorService;
 import com.nhnacademy.front.server.service.SectorService;
@@ -23,18 +22,22 @@ public class MotorDetailController {
 
   @GetMapping("/SectorDetail/MotorDetail")
   public String motorDetail(Model model, @RequestParam("motorId") Long motorId) {
+    MotorDetailDto motorDetailDto = motorService.getMotorDetail(motorId);
     List<SensorDto> sensorList = motorService.getMotorDetail(motorId).getSensors();
-    List<MotorDto> motors = motorService.getMotors().getMotors();
-    List<SectorDto> sectorInfo = sectorService.getSectorsInfo().getSectors();
-
-    MotorScoresDto motorScoresDto = motorService.getMotorScores(motorId);
-    List<MotorScoreDto> scores = motorScoresDto.getScores();
+    List<SectorDto> sectorsInfo = sectorService.getSectorsInfo().getSectors();
+    List<MotorsRunningRateData> individualMotorRunningRates_day = motorService.getIndividualMotorsRunningRatesByTimePeriod(
+        motorId, "day").getRates();
+    List<MotorsRunningRateData> individualMotorRunningRates_week = motorService.getIndividualMotorsRunningRatesByTimePeriod(
+        motorId, "week").getRates();
+    List<MotorsRunningRateData> individualMotorRunningRates_month = motorService.getIndividualMotorsRunningRatesByTimePeriod(
+        motorId, "month").getRates();
 
     model.addAttribute("sensorList", sensorList);
-    model.addAttribute("motors", motors);
-    model.addAttribute("sectorInfo", sectorInfo);
-    model.addAttribute("motorScores", scores);
-    model.addAttribute("motorScoresDto", motorScoresDto);
+    model.addAttribute("sectorsInfo", sectorsInfo);
+    model.addAttribute("motorDetail", motorDetailDto);
+    model.addAttribute("individualMotorRunningRates_day", individualMotorRunningRates_day);
+    model.addAttribute("individualMotorRunningRates_week", individualMotorRunningRates_week);
+    model.addAttribute("individualMotorRunningRates_month", individualMotorRunningRates_month);
 
     return "AmotorDetail";
   }

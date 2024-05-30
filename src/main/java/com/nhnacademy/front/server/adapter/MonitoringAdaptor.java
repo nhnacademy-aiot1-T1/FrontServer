@@ -8,7 +8,9 @@ import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRatesByTimePeriod;
 import com.nhnacademy.front.server.dto.motorScore.MotorScoresDto;
 import com.nhnacademy.front.server.dto.motor.MotorsDto;
-import com.nhnacademy.front.server.dto.SectorsDto;
+import com.nhnacademy.front.server.dto.sector.SectorManagementDto;
+import com.nhnacademy.front.server.dto.sector.SectorsDto;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface MonitoringAdaptor {
 
@@ -26,4 +28,9 @@ public interface MonitoringAdaptor {
 
   CommonResponse<MotorsRunningRatesByTimePeriod> getMotorsRunningRatesByTimePeriod(
       String timePeriod);
+
+  CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
+      @RequestParam Long motorId, String timePeriod);
+
+  CommonResponse<SectorManagementDto> registSector(String sectorName);
 }

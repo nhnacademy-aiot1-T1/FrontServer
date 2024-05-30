@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ControlLogDto {
 
-  private Long id;
-  private Long channelId;
+  private Long logId;
+  private String sectorName;
+  private String motorName;
+  private String sensorType;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
   private String time;
   private String status;

@@ -34,4 +34,10 @@ public class MotorService {
   public MotorsRunningRatesByTimePeriod getMotorsRunningRatesByTimePeriod(String timePeriod) {
     return monitoringAdaptor.getMotorsRunningRatesByTimePeriod(timePeriod).getData();
   }
+
+  public MotorsRunningRatesByTimePeriod getIndividualMotorsRunningRatesByTimePeriod(
+      Long motorId, String timePeriod) {
+    return monitoringAdaptor.getIndividualMotorsRunningRatesByTimePeriod(motorId, timePeriod)
+        .getData();
+  }
 }
