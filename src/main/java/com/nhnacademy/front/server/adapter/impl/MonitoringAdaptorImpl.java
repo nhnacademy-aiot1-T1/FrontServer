@@ -2,9 +2,11 @@ package com.nhnacademy.front.server.adapter.impl;
 
 import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.adapter.MonitoringAdaptor;
+import com.nhnacademy.front.server.config.ApiPathProperties;
 import com.nhnacademy.front.server.dto.controlLog.ControlLogsDto;
 import com.nhnacademy.front.server.dto.motorDetail.MotorDetailDto;
 import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
+import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateDataRequest;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRatesByTimePeriod;
 import com.nhnacademy.front.server.dto.motorScore.MotorScoresDto;
 import com.nhnacademy.front.server.dto.motor.MotorsDto;
@@ -29,24 +31,33 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
-  public static final String MOTOR_INFO_OVERVIEW = "https://run.mocky.io/v3/08ec999b-5345-4075-84b9-2ce8619d71fc";
-  public static final String SECTORS_INFO = "https://run.mocky.io/v3/60b8f744-27ca-44d4-924a-f63119ed8d3e";
-  public static final String MOTORS = "https://run.mocky.io/v3/da4d361e-37ee-487a-a9c8-8c471a114638";
-  public static final String MOTOR_DETAIL = "https://run.mocky.io/v3/21547def-ce33-46f4-9295-0221dcfb5761";
-  public static final String MOTOR_SCORES = "https://run.mocky.io/v3/ef52835f-8b16-4d70-abbd-c1cde05d6fd5";
-  public static final String CONTR0L_LOGS = "https://run.mocky.io/v3/3465dde1-dfa1-4955-ad0c-7d10403347c7";
-  public static final String RUNNING_RATES_BY_TIME1 = "https://run.mocky.io/v3/fc91f26c-1883-41b3-a65d-406681cc7060"; // day data
-  public static final String RUNNING_RATES_BY_TIME2 = "https://run.mocky.io/v3/8eda357b-8c12-41ff-aa6f-87b7940df3fb"; // week data
-  public static final String RUNNING_RATES_BY_TIME3 = "https://run.mocky.io/v3/eae23440-8507-4205-9efd-e06fe6daa6be"; // month data
+  private final ApiPathProperties pathProperties;
+  //  public static final String MOTOR_INFO_OVERVIEW = "https://run.mocky.io/v3/08ec999b-5345-4075-84b9-2ce8619d71fc";
+//  public static final String MOTOR_INFO_OVERVIEW = "http://GATEWAY-SERVICE/api/monitor/overview";
+  //  public static final String SECTORS_INFO = "https://run.mocky.io/v3/60b8f744-27ca-44d4-924a-f63119ed8d3e";
+//  public static final String SECTORS_INFO = "http://GATEWAY-SERVICE/api/monitor/sectors/overview";
+  //  public static final String MOTORS = "https://run.mocky.io/v3/da4d361e-37ee-487a-a9c8-8c471a114638";
+//  public static final String MOTORS = "http://GATEWAY-SERVICE/api/monitor/motors";
+  //  public static final String MOTOR_DETAIL = "https://run.mocky.io/v3/21547def-ce33-46f4-9295-0221dcfb5761";
+//  public static final String MOTOR_DETAIL = "http://GATEWAY-SERVICE/api/monitor/motors/{motorId}";
+  //  public static final String CONTR0L_LOGS = "https://run.mocky.io/v3/3465dde1-dfa1-4955-ad0c-7d10403347c7";
+//  public static final String CONTR0L_LOGS = "http://GATEWAY-SERVICE/api/monitor/log";
 
-  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME1 = "https://run.mocky.io/v3/92a16e33-fc73-44b8-bf0a-c3b37f3c78eb";
-  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME2 = "https://run.mocky.io/v3/bd1925c9-ece8-4087-86d9-ffae0e0c1ae8";
-  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME3 = "https://run.mocky.io/v3/890de582-586d-4ef7-9d26-5bb6a39e8b34";
+//  public static final String RUNNING_RATES_BY_TIME1 = "https://run.mocky.io/v3/fc91f26c-1883-41b3-a65d-406681cc7060"; // day data
+//  public static final String RUNNING_RATES_BY_TIME2 = "https://run.mocky.io/v3/8eda357b-8c12-41ff-aa6f-87b7940df3fb"; // week data
+//  public static final String RUNNING_RATES_BY_TIME3 = "https://run.mocky.io/v3/eae23440-8507-4205-9efd-e06fe6daa6be"; // month data
+//  public static final String RUNNING_RATES_BY_TIME = "http://GATEWAY-SERVICE/api/monitor/motors/running-rate"; // month data
+
+//  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME1 = "https://run.mocky.io/v3/92a16e33-fc73-44b8-bf0a-c3b37f3c78eb";
+//  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME2 = "https://run.mocky.io/v3/bd1925c9-ece8-4087-86d9-ffae0e0c1ae8";
+//  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME3 = "https://run.mocky.io/v3/890de582-586d-4ef7-9d26-5bb6a39e8b34";
+//  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME = "http://GATEWAY-SERVICE/api/monitor/motors/{motorId}/running-rate";
 
   // TODO 요청 주소 입력해줘야함
-  public static final String REGIST_SECTOR = "";
-  public static final String RENAME_SECTOR = "";
-  public static final String REMOVE_SECTOR = "";
+  public static final String REGIST_SECTOR = "http://GATEWAY-SERVICE/api/monitor";
+  public static final String RENAME_SECTOR = "http://GATEWAY-SERVICE/api/monitor/sectors/";
+  public static final String REMOVE_SECTOR = "http://GATEWAY-SERVICE/api/monitor/sectors/";
+
 
   private final RestTemplate restTemplateMocky;
 
@@ -59,7 +70,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     ResponseEntity<CommonResponse<MotorInfoOverviewDto>> exchange = restTemplateMocky.exchange(
-        MOTOR_INFO_OVERVIEW, HttpMethod.GET, request,
+        pathProperties.getMotorOverview(), HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -79,7 +90,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     ResponseEntity<CommonResponse<SectorsDto>> exchange = restTemplateMocky.exchange(
-        SECTORS_INFO, HttpMethod.GET, request,
+        pathProperties.getSectorInfo(), HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -100,7 +111,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     ResponseEntity<CommonResponse<MotorsDto>> exchange = restTemplateMocky.exchange(
-        MOTORS, HttpMethod.GET, request,
+        pathProperties.getMotors(), HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -119,29 +130,10 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     ResponseEntity<CommonResponse<MotorDetailDto>> exchange = restTemplateMocky.exchange(
-        MOTOR_DETAIL, HttpMethod.GET, request,
+        pathProperties.getMotorDetail(), HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
 
-    if (exchange.getStatusCode() != HttpStatus.OK) {
-      throw new ResponseStatusException(exchange.getStatusCode());
-    }
-
-    return exchange.getBody();
-  }
-
-  @Override
-  public CommonResponse<MotorScoresDto> getMotorScores(Long motorId) {
-    HttpHeaders httpHeaders = new HttpHeaders();
-    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
-
-    ResponseEntity<CommonResponse<MotorScoresDto>> exchange = restTemplateMocky.exchange(
-        // TODO 프로퍼티로 뺴기 ( Monitoring
-        MOTOR_SCORES, HttpMethod.GET, request,
-        new ParameterizedTypeReference<>() {
-        });
     if (exchange.getStatusCode() != HttpStatus.OK) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
@@ -157,7 +149,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     ResponseEntity<CommonResponse<ControlLogsDto>> exchange = restTemplateMocky.exchange(
-        CONTR0L_LOGS, HttpMethod.GET, request,
+        pathProperties.getControlLogs(), HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -171,100 +163,141 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
   }
 
   // 총 모터 가동률
+//  @Override
+//  public CommonResponse<MotorsRunningRatesByTimePeriod> getMotorsRunningRatesByTimePeriod(
+//      String timePeriod) {
+//
+//    HttpHeaders httpHeaders = new HttpHeaders();
+//    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+//    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+//    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
+//
+//    if (timePeriod.equals("day")) {
+//
+//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
+//          RUNNING_RATES_BY_TIME1, HttpMethod.GET, request,
+//          new ParameterizedTypeReference<>() {
+//          });
+//      if (exchange.getStatusCode() != HttpStatus.OK) {
+//        throw new ResponseStatusException(exchange.getStatusCode());
+//      }
+//      return exchange.getBody();
+//
+//    }
+//    if (timePeriod.equals("week")) {
+//
+//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
+//          RUNNING_RATES_BY_TIME2, HttpMethod.GET, request,
+//          new ParameterizedTypeReference<>() {
+//          });
+//      if (exchange.getStatusCode() != HttpStatus.OK) {
+//        throw new ResponseStatusException(exchange.getStatusCode());
+//      }
+//      return exchange.getBody();
+//
+//    }
+//    if (timePeriod.equals("month")) {
+//
+//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
+//          RUNNING_RATES_BY_TIME3, HttpMethod.GET, request,
+//          new ParameterizedTypeReference<>() {
+//          });
+//      if (exchange.getStatusCode() != HttpStatus.OK) {
+//        throw new ResponseStatusException(exchange.getStatusCode());
+//      }
+//      return exchange.getBody();
+//    }
+//
+//    return null;
+//  }
+
+  // 총 모터 가동률
   @Override
   public CommonResponse<MotorsRunningRatesByTimePeriod> getMotorsRunningRatesByTimePeriod(
-      String timePeriod) {
+      MotorsRunningRateDataRequest motorsRunningRateDataRequest) {
 
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
+    HttpEntity<Object> request = new HttpEntity<>(motorsRunningRateDataRequest, httpHeaders);
 
-    if (timePeriod.equals("day")) {
-
-      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-          RUNNING_RATES_BY_TIME1, HttpMethod.GET, request,
-          new ParameterizedTypeReference<>() {
-          });
-      if (exchange.getStatusCode() != HttpStatus.OK) {
-        throw new ResponseStatusException(exchange.getStatusCode());
-      }
-      return exchange.getBody();
-
+    ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
+        pathProperties.getRunningRateByTime(), HttpMethod.GET, request,
+        new ParameterizedTypeReference<>() {
+        });
+    if (exchange.getStatusCode() != HttpStatus.OK) {
+      throw new ResponseStatusException(exchange.getStatusCode());
     }
-    if (timePeriod.equals("week")) {
+    return exchange.getBody();
 
-      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-          RUNNING_RATES_BY_TIME2, HttpMethod.GET, request,
-          new ParameterizedTypeReference<>() {
-          });
-      if (exchange.getStatusCode() != HttpStatus.OK) {
-        throw new ResponseStatusException(exchange.getStatusCode());
-      }
-      return exchange.getBody();
-
-    }
-    if (timePeriod.equals("month")) {
-
-      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-          RUNNING_RATES_BY_TIME3, HttpMethod.GET, request,
-          new ParameterizedTypeReference<>() {
-          });
-      if (exchange.getStatusCode() != HttpStatus.OK) {
-        throw new ResponseStatusException(exchange.getStatusCode());
-      }
-      return exchange.getBody();
-    }
-
-    return null;
   }
+
+//  // 개별 모터 가동률
+//  @Override
+//  public CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
+//      Long motorId, String timePeriod) {
+//    HttpHeaders httpHeaders = new HttpHeaders();
+//    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+//    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+//    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
+//
+//    if (timePeriod.equals("day")) {
+//
+//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
+//          INDIVIDUAL_RUNNING_RATES_BY_TIME1, HttpMethod.GET, request,
+//          new ParameterizedTypeReference<>() {
+//          });
+//      if (exchange.getStatusCode() != HttpStatus.OK) {
+//        throw new ResponseStatusException(exchange.getStatusCode());
+//      }
+//      return exchange.getBody();
+//
+//    }
+//    if (timePeriod.equals("week")) {
+//
+//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
+//          INDIVIDUAL_RUNNING_RATES_BY_TIME2, HttpMethod.GET, request,
+//          new ParameterizedTypeReference<>() {
+//          });
+//      if (exchange.getStatusCode() != HttpStatus.OK) {
+//        throw new ResponseStatusException(exchange.getStatusCode());
+//      }
+//      return exchange.getBody();
+//
+//    }
+//    if (timePeriod.equals("month")) {
+//
+//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
+//          INDIVIDUAL_RUNNING_RATES_BY_TIME3, HttpMethod.GET, request,
+//          new ParameterizedTypeReference<>() {
+//          });
+//      if (exchange.getStatusCode() != HttpStatus.OK) {
+//        throw new ResponseStatusException(exchange.getStatusCode());
+//      }
+//      return exchange.getBody();
+//    }
+//
+//    return null;
+//  }
 
   // 개별 모터 가동률
   @Override
   public CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
-      Long motorId, String timePeriod) {
+      Long motorId, MotorsRunningRateDataRequest motorsRunningRateDataRequest) {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
+    HttpEntity<Object> request = new HttpEntity<>(motorsRunningRateDataRequest, httpHeaders);
 
-    if (timePeriod.equals("day")) {
-
-      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-          INDIVIDUAL_RUNNING_RATES_BY_TIME1, HttpMethod.GET, request,
-          new ParameterizedTypeReference<>() {
-          });
-      if (exchange.getStatusCode() != HttpStatus.OK) {
-        throw new ResponseStatusException(exchange.getStatusCode());
-      }
-      return exchange.getBody();
-
+    ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
+        pathProperties.getIndividualRunningRateByTime(), HttpMethod.GET, request,
+        new ParameterizedTypeReference<>() {
+        }, motorId);
+    if (exchange.getStatusCode() != HttpStatus.OK) {
+      throw new ResponseStatusException(exchange.getStatusCode());
     }
-    if (timePeriod.equals("week")) {
+    return exchange.getBody();
 
-      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-          INDIVIDUAL_RUNNING_RATES_BY_TIME2, HttpMethod.GET, request,
-          new ParameterizedTypeReference<>() {
-          });
-      if (exchange.getStatusCode() != HttpStatus.OK) {
-        throw new ResponseStatusException(exchange.getStatusCode());
-      }
-      return exchange.getBody();
-
-    }
-    if (timePeriod.equals("month")) {
-
-      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-          INDIVIDUAL_RUNNING_RATES_BY_TIME3, HttpMethod.GET, request,
-          new ParameterizedTypeReference<>() {
-          });
-      if (exchange.getStatusCode() != HttpStatus.OK) {
-        throw new ResponseStatusException(exchange.getStatusCode());
-      }
-      return exchange.getBody();
-    }
-
-    return null;
   }
 
   @Override
@@ -277,7 +310,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<Object> request = new HttpEntity<>(sectorRegisterRequest, httpHeaders);
 
     ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
-        REGIST_SECTOR, HttpMethod.POST, request,
+        pathProperties.getSectorRegister(), HttpMethod.POST, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -296,11 +329,11 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-    HttpEntity<SectorRenameRequest> HttpRequest = new HttpEntity<>(sectorRenameRequest,
+    HttpEntity<SectorRenameRequest> request = new HttpEntity<>(sectorRenameRequest,
         httpHeaders);
 
     ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
-        RENAME_SECTOR, HttpMethod.POST, HttpRequest,
+        pathProperties.getSectorRename(), HttpMethod.POST, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -312,16 +345,16 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
   }
 
   @Override
-  public CommonResponse<SectorManagementDto> removeSector(SectorRemoveRequest sectorRemoveRequest) {
+  public CommonResponse<SectorManagementDto> removeSector(Long sectorId) {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-    HttpEntity<SectorRemoveRequest> HttpRequest = new HttpEntity<>(sectorRemoveRequest,
+    HttpEntity<SectorRemoveRequest> HttpRequest = new HttpEntity<>(
         httpHeaders);
 
     ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
-        REMOVE_SECTOR, HttpMethod.DELETE, HttpRequest,
+        pathProperties.getSectorRemove() + sectorId, HttpMethod.DELETE, HttpRequest,
         new ParameterizedTypeReference<>() {
         });
 

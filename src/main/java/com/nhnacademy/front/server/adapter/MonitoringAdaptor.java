@@ -5,6 +5,7 @@ import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.dto.controlLog.ControlLogsDto;
 import com.nhnacademy.front.server.dto.motorDetail.MotorDetailDto;
 import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
+import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateDataRequest;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRatesByTimePeriod;
 import com.nhnacademy.front.server.dto.motorScore.MotorScoresDto;
 import com.nhnacademy.front.server.dto.motor.MotorsDto;
@@ -26,19 +27,19 @@ public interface MonitoringAdaptor {
 
   CommonResponse<MotorDetailDto> getMotorDetail(Long motorId);
 
-  CommonResponse<MotorScoresDto> getMotorScores(Long motorId);
+//  CommonResponse<MotorScoresDto> getMotorScores(Long motorId);
 
   CommonResponse<ControlLogsDto> getControlLogs();
 
   CommonResponse<MotorsRunningRatesByTimePeriod> getMotorsRunningRatesByTimePeriod(
-      String timePeriod);
+      MotorsRunningRateDataRequest motorsRunningRateDataRequest);
 
   CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
-      @RequestParam Long motorId, String timePeriod);
+      Long motorId, MotorsRunningRateDataRequest motorsRunningRateDataRequest);
 
   CommonResponse<SectorManagementDto> registSector(SectorRegisterRequest sectorRegisterRequest);
 
   CommonResponse<SectorManagementDto> renameSector(SectorRenameRequest sectorRenameRequest);
 
-  CommonResponse<SectorManagementDto> removeSector(SectorRemoveRequest sectorRemoveRequest);
+  CommonResponse<SectorManagementDto> removeSector(Long sectorId);
 }
