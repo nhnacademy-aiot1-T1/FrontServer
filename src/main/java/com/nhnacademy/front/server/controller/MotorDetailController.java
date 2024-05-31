@@ -2,6 +2,7 @@ package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.motorDetail.MotorDetailDto;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateData;
+import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateDataRequest;
 import com.nhnacademy.front.server.dto.sector.SectorDto;
 import com.nhnacademy.front.server.dto.motorDetail.SensorDto;
 import com.nhnacademy.front.server.service.MotorService;
@@ -26,11 +27,11 @@ public class MotorDetailController {
     List<SensorDto> sensorList = motorService.getMotorDetail(motorId).getSensors();
     List<SectorDto> sectorsInfo = sectorService.getSectorsInfo().getSectors();
     List<MotorsRunningRateData> individualMotorRunningRates_day = motorService.getIndividualMotorsRunningRatesByTimePeriod(
-        motorId, "day").getRates();
+        motorId, new MotorsRunningRateDataRequest("day")).getRates();
     List<MotorsRunningRateData> individualMotorRunningRates_week = motorService.getIndividualMotorsRunningRatesByTimePeriod(
-        motorId, "week").getRates();
+        motorId, new MotorsRunningRateDataRequest("week")).getRates();
     List<MotorsRunningRateData> individualMotorRunningRates_month = motorService.getIndividualMotorsRunningRatesByTimePeriod(
-        motorId, "month").getRates();
+        motorId, new MotorsRunningRateDataRequest("month")).getRates();
 
     model.addAttribute("sensorList", sensorList);
     model.addAttribute("sectorsInfo", sectorsInfo);

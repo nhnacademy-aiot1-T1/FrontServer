@@ -27,7 +27,7 @@ public class SectorService {
     return monitoringAdaptor.renameSector(sectorRenameRequest).getData();
   }
 
-  public SectorManagementDto removeSector(SectorRemoveRequest sectorRemoveRequest) {
-    return monitoringAdaptor.removeSector(sectorRemoveRequest).getData();
+  public SectorManagementDto removeSector(Long sectorId) {
+    return monitoringAdaptor.removeSector(sectorId).getData();
   }
 }

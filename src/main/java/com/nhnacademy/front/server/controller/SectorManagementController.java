@@ -29,28 +29,26 @@ public class SectorManagementController {
 
     sectorService.registSector(sectorRegisterRequest);
 
-    return REDIRECT + "AmotorList";
+    return REDIRECT + "/SectorDetail";
   }
 
   @PutMapping("/renameSector")
-  public String renameSector(@RequestParam("sectorId") Long sectorId,
+  public String renameSector(Long sectorId,
       @RequestParam("newSectorName") String newSectorName) {
 
     SectorRenameRequest sectorRenameRequest = new SectorRenameRequest(sectorId, newSectorName);
 
     sectorService.renameSector(sectorRenameRequest);
 
-    return REDIRECT + "AmotorList";
+    return REDIRECT + "/SectorDetail";
   }
 
-  @DeleteMapping("/renameSector")
-  public String renameSector(@RequestParam("sectorId") Long sectorId) {
+  @DeleteMapping("/removeSector")
+  public String removeSector(Long sectorId) {
 
-    SectorRemoveRequest sectorRemoveRequest = new SectorRemoveRequest(sectorId);
+    sectorService.removeSector(sectorId);
 
-    sectorService.removeSector(sectorRemoveRequest);
-
-    return REDIRECT + "AmotorList";
+    return REDIRECT + "/SectorDetail";
   }
 
 }
