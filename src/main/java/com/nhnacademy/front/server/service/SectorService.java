@@ -2,6 +2,9 @@ package com.nhnacademy.front.server.service;
 
 import com.nhnacademy.front.server.adapter.MonitoringAdaptor;
 import com.nhnacademy.front.server.dto.sector.SectorManagementDto;
+import com.nhnacademy.front.server.dto.sector.SectorRegisterRequest;
+import com.nhnacademy.front.server.dto.sector.SectorRemoveRequest;
+import com.nhnacademy.front.server.dto.sector.SectorRenameRequest;
 import com.nhnacademy.front.server.dto.sector.SectorsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,9 +19,15 @@ public class SectorService {
     return monitoringAdaptor.getSectorsInfo().getData();
   }
 
-  public SectorManagementDto registSector(String sectorName) {
-    return monitoringAdaptor.registSector(sectorName).getData();
+  public SectorManagementDto registSector(SectorRegisterRequest sectorRegisterRequest) {
+    return monitoringAdaptor.registSector(sectorRegisterRequest).getData();
   }
 
+  public SectorManagementDto renameSector(SectorRenameRequest sectorRenameRequest) {
+    return monitoringAdaptor.renameSector(sectorRenameRequest).getData();
+  }
 
+  public SectorManagementDto removeSector(Long sectorId) {
+    return monitoringAdaptor.removeSector(sectorId).getData();
+  }
 }

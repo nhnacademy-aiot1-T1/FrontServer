@@ -25,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Bean
   @LoadBalanced
+  @ConditionalOnProperty(value = "spring.profiles.active", havingValue = "test")
   public RestTemplate restTemplate(RestTemplateBuilder builder) {
     RestTemplate restTemplate = builder
         .setConnectTimeout(Duration.ofSeconds(5))
@@ -44,11 +45,12 @@ public class WebConfig implements WebMvcConfigurer {
         .setReadTimeout(Duration.ofSeconds(5))
         .build();
   }
-
-  @Bean
-  public ObjectMapper objectMapper() {
-    return new ObjectMapper().registerModule(new JavaTimeModule());
-  }
+// TODO 실제 실행 테스트시 주석처리
+  
+//  @Bean
+//  public ObjectMapper objectMapper() {
+//    return new ObjectMapper().registerModule(new JavaTimeModule());
+//  }
 
   @Bean
   public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {

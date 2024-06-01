@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr" xmlns="http://www.w3.org/1999/html">
+<html class="loading" lang="en" data-textdirection="ltr" xmlns:th="http://www.thymeleaf.org">
 <!-- BEGIN: Head-->
 
 <head>
@@ -23,7 +23,8 @@
         href="https://aiotone.live/resources/app-assets/css/bootstrap.css">
   <link rel="stylesheet" type="text/css"
         href="https://aiotone.live/resources/app-assets/css/bootstrap-extended.css">
-  <link rel="stylesheet" type="text/css" href="https://aiotone.live/resources/app-assets/css/colors.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/css/colors.css">
   <link rel="stylesheet" type="text/css"
         href="https://aiotone.live/resources/app-assets/css/components.css">
   <!-- END: Theme CSS-->
@@ -183,13 +184,13 @@
                            class="motorbox col-2" th:data-sector-id="${motor.getSectorId()}"
                            th:data-motor-id="${motor.getMotorId()}"
                            onclick="goToMotorDetail(this)">
-                        <div class="motorsection" th:if="${motor.getIsOn()== true}">
+                        <div class="card pull-up" th:if="${motor.getIsOn()== true}">
                           <div th:if="${motor.getIsNormal() == true}"
-                               class="card pull-up bg-gradient-directional-success">
-                            <div class="card pull-up bg-gradient-directional-success">
+                               class="card bg-gradient-directional-success">
+                            <div class="card bg-gradient-directional-success">
                               <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
                             </div>
-                            <div class="card pull-up bg-gradient-directional-success">
+                            <div class="card bg-gradient-directional-success">
                               <div class="card-body">
                                 <div
                                     class="media d-flex align-items-center justify-content-center">
@@ -206,8 +207,8 @@
                             </div>
                           </div>
                           <div th:if="${motor.getIsNormal() == false }"
-                               class="card pull-up bg-gradient-directional-warning">
-                            <div class="card pull-up bg-gradient-directional-warning">
+                               class="card bg-gradient-directional-warning">
+                            <div class="card bg-gradient-directional-warning">
                               <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
                               <a class="heading-elements-toggle"><i
                                   class="la la-ellipsis-v font-medium-3"></i></a>
@@ -215,7 +216,7 @@
                                 <ul class="list-inline mb-0"></ul>
                               </div>
                             </div>
-                            <div class="card pull-up bg-gradient-directional-warning">
+                            <div class="card bg-gradient-directional-warning">
                               <div class="card-body">
                                 <div
                                     class="media d-flex align-items-center justify-content-center">
@@ -233,11 +234,33 @@
                           </div>
                           <br>
                         </div>
-                        <div class="motorsection" th:if="${motor.getIsOn()==false}">
-                          <div
-                              class="card pull-up bg-gradient-directional-blue-grey">
-                            <div class="card pull-up bg-gradient-directional-blue-grey">
+                        <div class="card pull-up" th:if="${motor.getIsOn()==false}">
+                          <div th:if="${motor.getIsNormal() == true}"
+                               class="card bg-gradient-directional-blue-grey">
+                            <div class="card bg-gradient-directional-blue-grey">
                               <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
+                            </div>
+                            <div class="card bg-gradient-directional-blue-grey">
+                              <div class="card-body">
+                                <div
+                                    class="media d-flex align-items-center justify-content-center">
+                                  <div>
+                                    <img
+                                        src="/vertical-menu-template/app-assets/images/icons/motoricon.png"
+                                        alt="Your Image" class="img-fluid">
+                                  </div>
+                                </div>
+                                <div class="media-body text-right mt-1">
+                                  <h3 class="font-large-0 white">NORMAL</h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div th:if="${motor.getIsNormal() == false }"
+                               class="card  bg-gradient-directional-blue-grey">
+                            <div class="card  bg-gradient-directional-blue-grey">
+                              <h4 class="card-title white"
+                                  th:text="${motor.getMotorName()}"></h4>
                               <a class="heading-elements-toggle"><i
                                   class="la la-ellipsis-v font-medium-3"></i></a>
                               <div class="heading-elements">
@@ -255,12 +278,12 @@
                                   </div>
                                 </div>
                                 <div class="media-body text-right mt-1">
-                                  <h3 class="font-large-0 white">OFF</h3>
+                                  <h3 class="font-large-0 bg-gradient-directional-warning">
+                                    WARNING</h3>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <br>
                         </div>
                       </div>
                     </div>
@@ -286,10 +309,6 @@
               <!-- Carousel Card sample -->
               <div class="row">
                 <h4 class="card-title" style="margin: 27px; margin-top: 10px">Sector List</h4>
-                <button type="button" class="btn btn-secondary btn-min-width mr-1 mb-1"
-                        style="height: 40px;">Edit
-                </button>
-
               </div>
               <!-- /Carousel Card sample -->
 
@@ -316,6 +335,11 @@
                       <a href="#" data-toggle="modal" data-target="#sectorRegistModal">구역추가</a>
                     </i>
                   </li>
+                  <li class="list-group-item">
+                    <i class="mr-1 ft-plus">
+                      <a href="#" data-toggle="modal" data-target="#sectorEditModal">구역편집</a>
+                    </i>
+                  </li>
                 </ul>
               </div>
               <!-- /List group example -->
@@ -333,7 +357,7 @@
   </div>
 
   <!-- END: Content-->
-  <!-- 모달 창 -->
+  <!-- 구역 등록 모달 창 -->
   <div class="modal fade" id="sectorRegistModal" tabindex="-1" role="dialog"
        aria-labelledby="sectorRegistModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -364,11 +388,129 @@
                            placeholder="Enter sector name">
                   </div>
                   <div class="form-actions right">
-                    <button type="button" class="btn btn-danger mr-1" data-dismiss="modal">
+                    <!--                    <button type="button" class="btn btn-danger mr-1" data-dismiss="modal">-->
+                    <!--                      <i class="ft-x"></i> Cancel-->
+                    <!--                    </button>-->
+                    <button type="submit" class="btn btn-primary">
+                      <i class="la la-check-square-o"></i> Register
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 구역 편집 모달 창 -->
+  <div class="modal fade" id="sectorEditModal" tabindex="-1" role="dialog"
+       aria-labelledby="sectorRegistModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="sectorEditModalLabel">Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title" id="basic-layout-colored-form-control2">Sector Edit Form</h4>
+            </div>
+            <div class="card-content collapse show">
+              <div class="card-body">
+                <div class="card-text">
+                  <p>Please select the area you want to edit and the task you wish to perform.</p>
+                </div>
+                <br>
+                <div id="sectorEditForm" th:each="sector:${sectorInfo}">
+                  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                  <div class="form-group">
+                    <h3 th:text="${sector.getSectorName()}"></h3>
+                    <input type="hidden" name="sectorId" th:value="${sector.sectorId}">
+                  </div>
+                  <div class="form-actions right">
+                    <button type="button" class="btn btn-warning right btnModify"
+                            th:value="${sector.sectorId}"
+                            onclick="renameSector(this.value)"
+                            data-dismiss="modal">
+                      <i class="la la-check-square-o"></i> Rename
+                    </button>
+                    <button type="button" class="btn btn-danger right btnRemove"
+                            th:value="${sector.sectorId}"
+                            onclick="removeSector(this.value)"
+                            data-dismiss="modal">
+                      <i class="ft-x"></i> Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 새로운 Sector Name 입력 모달 창 -->
+  <div class="modal fade" id="sectorRenameModal" tabindex="-1" role="dialog"
+       aria-labelledby="sectorRenameModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <!-- ... -->
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-content collapse show">
+              <div class="card-body">
+                <!-- ... -->
+                <form id="sectorRenameForm" action="/renameSector" th:method="put">
+                  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                  <input type="hidden" id="sectorIdForRename" name="sectorId" value="">
+                  <div class="form-group">
+                    <label for="newSectorName">New Sector Name</label>
+                    <input type="text" class="form-control" id="newSectorName" name="newSectorName"
+                           placeholder="Enter new sector name">
+                  </div>
+                  <div class="form-actions right">
+                    <button type="button" class="btn btn-warning mr-1" data-dismiss="modal">
                       <i class="ft-x"></i> Cancel
                     </button>
                     <button type="submit" class="btn btn-primary">
-                      <i class="la la-check-square-o"></i> Register
+                      <i class="la la-check-square-o"></i> Confirm
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 구역 삭제 확인 모달 창 -->
+  <div class="modal fade" id="sectorRemoveModal" tabindex="-1" role="dialog"
+       aria-labelledby="sectorRemoveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <!-- ... -->
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-content collapse show">
+              <div class="card-body">
+                <!-- ... -->
+                <form id="sectorRemoveForm" action="/removeSector" th:method="delete">
+                  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                  <input type="hidden" id="sectorIdForRemove" name="sectorId" value="">
+                  <div class="form-actions right">
+                    <button type="button" class="btn btn-warning mr-1" data-dismiss="modal">
+                      <i class="ft-x"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                      <i class="la la-check-square-o">Delete Sector</i>
                     </button>
                   </div>
                 </form>
@@ -444,7 +586,7 @@
       var sectorName = 'Total Motor Status';
 
       $('#totalMotors').text(totalMotors);
-      $('#normalMotors').text(totalNormalMotors);
+      $('#normalMotorsnormalMotors').text(totalNormalMotors);
       $('#runningMotors').text(totalIsOnMotors);
       $('#anomalyMotors').text(totalAnomalyMotors);
       $('#sectorname').text(sectorName);
@@ -622,22 +764,45 @@
   });
 </script>
 
+<script>
+
+  function renameSector(sectorId) {
+    console.log(sectorId);
+    $("#sectorIdForRename").val(sectorId);
+    $("#sectorRenameModal").modal("show");
+  }
+
+</script>
+
+<script>
+  function removeSector(sectorId) {
+    console.log(sectorId);
+
+    $("#sectorIdForRemove").val(sectorId);
+    $("#sectorRemoveModal").modal("show");
+  }
+
+</script>
+
+
 <!-- BEGIN: Vendor JS-->
 <script src="https://aiotone.live/resources/app-assets/vendors/js/vendors.min.js"
         type="text/javascript"></script>
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
-<script src="https://aiotone.live/resources/app-assets/vendors/js/charts/chartist.min.js"
-        type="text/javascript"></script>
-<script src="https://aiotone.live/resources/app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js"
-        type="text/javascript"></script>
+<!--<script src="https://aiotone.live/resources/app-assets/vendors/js/charts/chartist.min.js"-->
+<!--        type="text/javascript"></script>-->
+<!--<script-->
+<!--    src="https://aiotone.live/resources/app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js"-->
+<!--    type="text/javascript"></script>-->
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
 <script src="https://aiotone.live/resources/app-assets/js/core/app-menu.js"
         type="text/javascript"></script>
-<script src="https://aiotone.live/resources/app-assets/js/core/app.js" type="text/javascript"></script>
+<script src="https://aiotone.live/resources/app-assets/js/core/app.js"
+        type="text/javascript"></script>
 <!-- END: Theme JS-->
 
 <!-- BEGIN: Page JS-->
@@ -649,4 +814,5 @@
 <!--토글 박스 js-->
 <script src="https://aiotone.live/resources/app-assets/js/core/app-menu.js"
         type="text/javascript"></script>
-<script src="https://aiotone.live/resources/app-assets/js/core/app.js" type="text/javascript"></script>
+<script src="https://aiotone.live/resources/app-assets/js/core/app.js"
+        type="text/javascript"></script>
