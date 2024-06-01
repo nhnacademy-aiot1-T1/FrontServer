@@ -74,7 +74,7 @@
                 <div class="card-body">
                   <form class="form-horizontal" method="post" th:action="@{/register}">
                     <fieldset class="form-group position-relative has-icon-left">
-                      <input type="text" class="form-control round" name="userId" id="user-id"
+                      <input type="text" class="form-control round" name="loginId" id="login-id"
                              placeholder="ID" required>
                       <div class="form-control-position">
                         <i class="ft-user"></i>
@@ -135,6 +135,13 @@
 </div>
 <!-- END: Content-->
 
+<script th:inline="javascript" type="application/javascript">
+  let errorMessage = [[${Error}]];
+
+  if (errorMessage) {
+    alert(errorMessage);
+  }
+</script>
 
 <!-- BEGIN: Vendor JS-->
 <script src="https://aiotone.live/resources/app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
