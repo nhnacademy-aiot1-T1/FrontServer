@@ -2,18 +2,23 @@ package com.nhnacademy.front.server.dto.controlLog;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@Builder
 public class ControlLogsDto {
 
 
-  private List<ControlLogDto> sensorStatusList;
+  private final int total;
 
-  @JsonCreator
-  public ControlLogsDto(List<ControlLogDto> controlLogs) {
-    this.sensorStatusList = controlLogs;
-  }
+  private final int page;
+
+  private final int size;
+
+  private List<ControlLogDto> logs;
+
 }
