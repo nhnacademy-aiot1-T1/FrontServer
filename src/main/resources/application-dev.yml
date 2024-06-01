@@ -22,7 +22,7 @@ api:
     sector-info: https://run.mocky.io/v3/60b8f744-27ca-44d4-924a-f63119ed8d3e
     motors: https://run.mocky.io/v3/da4d361e-37ee-487a-a9c8-8c471a114638
     motor-detail: https://run.mocky.io/v3/21547def-ce33-46f4-9295-0221dcfb5761
-    control-logs: https://run.mocky.io/v3/3465dde1-dfa1-4955-ad0c-7d10403347c7
+    control-logs: https://run.mocky.io/v3/c7658e0a-073b-4d83-bd1e-24abea2ba4ed
     running-rate-by-time: https://run.mocky.io/v3/fc91f26c-1883-41b3-a65d-406681cc7060
     individual-running-rate-by-time: https://run.mocky.io/v3/92a16e33-fc73-44b8-bf0a-c3b37f3c78eb
     sector-register: http://GATEWAY-SERVICE/api/monitor/sectors
