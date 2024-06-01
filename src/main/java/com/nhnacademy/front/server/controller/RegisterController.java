@@ -2,6 +2,7 @@ package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.register.RegisterCheckDto;
 import com.nhnacademy.front.server.dto.register.RegisterRequestDto;
+import com.nhnacademy.front.server.exception.RegisterFailException;
 import com.nhnacademy.front.server.service.AuthService;
 import com.nhnacademy.front.server.util.WebUtils;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +42,7 @@ public class RegisterController {
                              ,RedirectAttributes redirectAttributes) {
         if (!registerCheckDto.getPassword().equals(registerCheckDto.getPasswordRetype())) { // todo, annotation 만들어지면 if 문 없애고 validation 순서 확인, 결과 확인
             model.addAttribute(REASON_ATTRIBUTE_NAME, "pw와 pw 확인이 일치하지 않습니다!");
-
-            return REGISTER_PAGE;
+            throw new RegisterFailException("pw와 pw 확인이 일치하지 않습니다!");
         }
 
         RegisterRequestDto registerRequestDto = new RegisterRequestDto();
