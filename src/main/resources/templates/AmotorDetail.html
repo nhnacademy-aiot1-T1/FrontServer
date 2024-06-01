@@ -186,10 +186,9 @@
                 <!-- 로우데이터 탭 내용물 -->
                 <div class="tab-pane" th:id="'tab2'+${sensor.getSensorId()}"
                      aria-labelledby="base-tab2">
-                  <!-- 로우데이터 차트-->
-                  <p>Sugar plum tootsie roll biscuit caramels. Liquorice brownie pastry cotton candy
-                    oat cake fruitcake jelly chupa chups. Pudding caramels pastry powder cake
-                    soufflé wafer caramels. Jelly-o pie cupcake.</p>
+                  <div class="chart-container1">
+                    <canvas th:id="lineChartOfSensorRawData+${sensorStat.index}"></canvas>
+                  </div>
                 </div>
               </div>
             </div>
@@ -282,30 +281,50 @@
     chartId = 0;
     sensorList.forEach(function (sensor, index) {
 
-      var sensorDataURL = "http://192.168.71.99:8080/api/monitor/motors/"
-          + urlParms.get("motorId")
-          + "/sensors/"
-          + sensor.sensorId + "/scores";
+      // var sensorDataURL = "http://192.168.71.99:8080/api/monitor/motors/"
+      //     + urlParms.get("motorId")
+      //     + "/sensors/"
+      //     + sensor.sensorId + "/scores";
 
-      var sensorRawDataURL = "http://192.168.99.8080/api/monitor/motors/"
-          + urlParms.get("motorId")
-          + "/sensors/"
-          + sensor.sensorId + "/data";
+      var sensorDataURL = "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb";
+
+      // var sensorRawDataURL = "http://192.168.99.8080/api/monitor/motors/"
+      //     + urlParms.get("motorId")
+      //     + "/sensors/"
+      //     + sensor.sensorId + "/data";
+
+      var sensorRawDataURL = "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a";
 
       // var sensorType = sensorList[i].sensorType;
       var promise = new Promise((resolve, reject) => {
         var sensorDatarequest = new XMLHttpRequest();
+        var sensorRawDatarequest = new XMLHttpRequest();
+
         sensorDatarequest.open("GET", sensorDataURL);
+        sensorRawDatarequest.open("GET", sensorRawDataURL);
+
         sensorDatarequest.responseType = "json";
+        sensorRawDatarequest.responseType = "json";
+
         sensorDatarequest.onload = function () {
           var sensorDataResponse = sensorDatarequest.response;
           showSensorDataChart(sensorDataResponse, index);
           resolve();
         };
+        sensorRawDatarequest.onload = function () {
+          var sensorRawDataResponse = sensorRawDatarequest.response;
+          showSensorRawDataChart(sensorRawDataResponse, index);
+        }
+
         sensorDatarequest.onerror = function () {
           reject(new Error("Failed to load sensor data"));
         };
+        sensorRawDatarequest.onerror = function () {
+          reject(new Error("Failed to load sensor raw data"))
+        }
+
         sensorDatarequest.send();
+        sensorRawDatarequest.send();
       });
 
       promises.push(promise);
@@ -320,7 +339,7 @@
       console.error("Error occurred while drawing charts:", error);
     });
 
-    // 받아온 그래프 정보 json 응답에서 그래프 그리기 쉽게 데이터 추출해내고 차트 그리기
+    // 받아온 그래프 정보 json 응답에서 그래프 그리기 쉽게 데이터 추출해내고 차트 그리기 [score]
     function showSensorDataChart(jsonObj, chartId) {
       var dataOfSensorDataResponse = jsonObj["data"];
       // var startDate = dataOfSensorDataResponse["startDate"];
@@ -390,7 +409,7 @@
             data: scores.map(score => score.score),
             lineTension: 0,
             fill: true,
-            backgroundColor: "rgba(30, 144, 255, 0.2)", // 채워지는 색상 지정
+            backgroundColor: "rgba(30, 144, 255, 0.5)", // 채워지는 색상 지정
             borderColor: "#1E90FF",
             pointBorderColor: "#1E90FF",
             pointBackgroundColor: "#FFF",
@@ -402,7 +421,7 @@
       };
 
       var chartOfSensorConfig = {
-        type: 'line',
+        type: 'bar',
         options: chartOfSensorOptions,
         data: chartOfSensorData
       };
@@ -414,6 +433,99 @@
 
     //////////////////////////////////////////////////////////////
 
+    // 받아온 그래프 정보 json 응답에서 그래프 그리기 쉽게 데이터 추출해내고 차트 그리기 [rawData]
+    function showSensorRawDataChart(jsonObj, chartId) {
+      var dataOfSensorDataResponse = jsonObj["data"];
+      // var startDate = dataOfSensorDataResponse["startDate"];
+      var values = dataOfSensorDataResponse["sensorData"];
+      // var sensorType = dataOfSensorDataResponse[];
+
+      var chartOfSensorOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          position: 'bottom',
+        },
+        hover: {
+          mode: 'label'
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            gridLines: {
+              color: "#f3f3f3",
+              drawTicks: false,
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Time'
+            },
+            ticks: {
+              padding: 10,
+              callback: function (value, index, values) {
+                var date = new Date(value);
+                var dateString = (date.getMonth()
+                    + 1).toString().padStart(
+                    2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+                var timeString = date.getHours().toString().padStart(2, '0') + ':'
+                    + date.getMinutes().toString().padStart(2, '0');
+                return [dateString, timeString];
+              },
+              multiline: true
+            }
+          }],
+          yAxes: [{
+            display: true,
+            gridLines: {
+              color: "#f3f3f3",
+              drawTicks: false,
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Score'
+            },
+            ticks: {
+              min: 0,  // y축 최소값
+              max: 100  // y축 최대값
+            }
+          }]
+        },
+        title: {
+          display: false
+        }
+      };
+
+      var chartOfSensorData = {
+        labels: values.map(value => value.time),
+        datasets: [
+          {
+            label: "Day",
+            data: values.map(value => value.value),
+            lineTension: 0,
+            fill: true,
+            backgroundColor: "rgba(30, 144, 255, 0.5)", // 채워지는 색상 지정
+            borderColor: "#1E90FF",
+            pointBorderColor: "#1E90FF",
+            pointBackgroundColor: "#FFF",
+            pointBorderWidth: 2,
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+          }
+        ]
+      };
+
+      var chartOfSensorConfig = {
+        type: 'bar',
+        options: chartOfSensorOptions,
+        data: chartOfSensorData
+      };
+
+      var ctx3 = document.getElementById("lineChartOfSensorRawData" + chartId);
+      new Chart(ctx3, chartOfSensorConfig);
+
+    }
+
+    //////////////////////////////////////////////////////////////
     // Chart Options
     var chartOptions = {
       responsive: true,
@@ -533,9 +645,9 @@
           data: daymotorRunningRate.map(dayrate => dayrate.rate),
           lineTension: 0,
           fill: true,
-          backgroundColor: "rgba(0, 255, 0, 0.2)", // 채워지는 색상 지정
-          borderColor: "#00FF00",
-          pointBorderColor: "#00FF00",
+          backgroundColor: "rgba(30, 144, 255, 0.2)", // 채워지는 색상 지정
+          borderColor: "#1E90FF",
+          pointBorderColor: "#1E90FF",
           pointBackgroundColor: "#FFF",
           pointBorderWidth: 2,
           pointHoverBorderWidth: 2,
@@ -553,9 +665,9 @@
           data: weekmotorRunningRate.map(dayrate => dayrate.rate),
           lineTension: 0,
           fill: true,
-          backgroundColor: "rgba(0, 255, 0, 0.2)", // 채워지는 색상 지정
-          borderColor: "#00FF00",
-          pointBorderColor: "#00FF00",
+          backgroundColor: "rgba(5, 192, 192, 0.2)", // 채워지는 색상 지정
+          borderColor: "#4BC0C0",
+          pointBorderColor: "#4BC0C0",
           pointBackgroundColor: "#FFF",
           pointBorderWidth: 2,
           pointHoverBorderWidth: 2,
@@ -573,9 +685,9 @@
           data: monthmotorRunningRate.map(dayrate => dayrate.rate),
           lineTension: 0,
           fill: true,
-          backgroundColor: "rgba(0, 255, 0, 0.2)", // 채워지는 색상 지정
-          borderColor: "#00FF00",
-          pointBorderColor: "#00FF00",
+          backgroundColor: "rgba(255, 99, 132, 0.2)", // 채워지는 색상 지정
+          borderColor: "#FF6384",
+          pointBorderColor: "#FF6384",
           pointBackgroundColor: "#FFF",
           pointBorderWidth: 2,
           pointHoverBorderWidth: 2,
