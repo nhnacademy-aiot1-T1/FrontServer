@@ -30,7 +30,10 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(value = { RegisterFailException.class, BindException.class })
     public String handleLoginFailException(Exception e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("Error", e.getMessage());
+        String message = (e instanceof BindException) ?
+                ((BindException) e).getFieldError().getDefaultMessage() : e.getMessage();
+
+        redirectAttributes.addFlashAttribute("Error", message);
         log.info(e.getMessage());
 
         return WebUtils.REDIRECT_PREFIX + "register";
