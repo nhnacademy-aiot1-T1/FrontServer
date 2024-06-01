@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html class="loading" lang="en" data-textdirection="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <!-- DataTables JS -->
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
-    <!-- 필요한 css 파일 -->
-    <div th:include="fixedTemplate/defaultCSS.html"></div>
-    <title>log</title>
+  <meta charset="UTF-8">
+  <!-- 부트스트랩-->
+  <!-- 필요한 css 파일 -->
+  <div th:include="fixedTemplate/defaultCSS.html"></div>
+
+  <!-- 상단바의 드롭다운을 위한 -->
+  <script type="text/javascript" charset="utf8"
+          src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <title>log</title>
 </head>
 <body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar"
       data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue"
@@ -25,66 +27,66 @@
 
 
 <div class="app-content content">
-    <div class="content-wrapper">
-        <div class="content-header row">
-            <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-                <h3 class="mb-0 d-inline-block">Log</h3>
+  <div class="content-wrapper">
+    <div class="content-header row">
+      <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+        <h3 class="mb-0 d-inline-block">Log</h3>
+      </div>
+    </div>
+    <section id="horizontal-vertical">
+      <div class="row">
+        <div class="col-12">
+          <div class="card col-9 mx-auto">
+            <div class="card-header">
+              <h4 class="card-title">Motor warning Log</h4>
             </div>
-
-        </div>
-        <section id="horizontal-vertical">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card col-9 mx-auto">
-                        <div class="card-header">
-                            <h4 class="card-title">Motor warning Log</h4>
-                        </div>
-                        <div class="card-content collapse show">
-                            <div class="card-body card-dashboard">
-                                <div class="table-responsive">
-                                    <table id="logTable" class="table display nowrap table-striped table-bordered scroll-horizontal-vertical">
-                                        <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Motor</th>
-                                            <th>Sensor-Type</th>
-                                            <th>score</th>
-                                            <th>Time</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr th:each="controlLog : ${controlLogs}">
-                                            <td th:text="${controlLog.getTime().substring(0,10)}">Date</td>
-                                            <td th:text="${controlLog.getMotorName()}">Motor</td>
-                                            <td th:text="${controlLog.getSensorType()}">Sensor-Type</td>
-                                            <td th:text="${controlLog.getScore()}">Score</td>
-                                            <td th:text="${controlLog.getTime()}">Time</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="card-content collapse show">
+              <div class="card-body card-dashboard">
+                <div class="table-responsive">
+                  <table id="logTable"
+                         class="table display nowrap table-striped table-bordered scroll-horizontal-vertical">
+                    <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Motor</th>
+                      <th>Sensor-Type</th>
+                      <th>score</th>
+                      <th>Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="controlLog : ${controlLogs}">
+                      <td th:text="${controlLog.getTime().substring(0,10)}">Date</td>
+                      <td th:text="${controlLog.getMotorName()}">Motor</td>
+                      <td th:text="${controlLog.getSensorType()}">Sensor-Type</td>
+                      <td th:text="${controlLog.getScore()}">Score</td>
+                      <td th:text="${controlLog.getTime()}">Time</td>
+                    </tr>
+                    </tbody>
+                  </table>
                 </div>
+              </div>
             </div>
-        </section>
+          </div>
         </div>
+      </div>
+    </section>
+  </div>
 </div>
 <script>
-    $(document).ready(function() {
-        $('#logTable').DataTable({
-            pagingType: 'simple_numbers',
-            responsive: true,
-            autoWidth: false,
-            searching: true,
-            ordering: true,
-            info: true,
-            lengthChange: true,
-            pageLength: [[${pagination.size}]],
-            displayStart: [[${pagination.page * pagination.size}]],
-        });
+  $(document).ready(function () {
+    $('#logTable').DataTable({
+      pagingType: 'simple_numbers',
+      responsive: true,
+      autoWidth: false,
+      searching: true,
+      ordering: true,
+      info: true,
+      lengthChange: true,
+      pageLength: [[${pagination.size}]],
+      displayStart: [[${pagination.page * pagination.size}]],
     });
+  });
 </script>
 <div th:include="fixedTemplate/defaultJS.html"></div>
 </body>
