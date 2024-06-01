@@ -43,7 +43,7 @@ public class AuthController {
   @GetMapping("/oauth/payco-authorize")
   public String paycoLogin(@CookieValue(value = AUTHORIZATION_KEY, required = false) String token) {
     if (StringUtils.hasText(token)) {
-      return HOME_PAGE;
+      return WebUtils.REDIRECT_PREFIX + HOME_PAGE;
     }
 
     final String url = "https://id.payco.com/oauth2.0/authorize?response_type=code"
@@ -62,10 +62,11 @@ public class AuthController {
 
     if (accessToken != null) {
       Cookie cookie = new Cookie(AUTHORIZATION_KEY, authCode);
+      cookie.setPath("/");
       res.addCookie(cookie);
     }
 
-    return WebUtils.REDIRECT_PREFIX + HOME_PAGE;
+    return WebUtils.REDIRECT_PREFIX + "https://aiotone.live/home";
   }
 
 
@@ -80,6 +81,7 @@ public class AuthController {
 
     if (accessToken != null) {
       Cookie cookie = new Cookie(AUTHORIZATION_KEY, accessToken);
+      cookie.setPath("/");
       res.addCookie(cookie);
     }
 
