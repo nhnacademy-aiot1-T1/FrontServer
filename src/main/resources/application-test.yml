@@ -1,0 +1,33 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.71.99:8761/eureka
+
+server:
+  port: 8082
+
+oauth:
+  payco:
+    redirect-uri: http://test-vm.com:8082/oauth-login
+    secret: 4nl1ZsBpejpz1VclsSRTD427
+logging:
+  level:
+    root: info
+api:
+  path:
+    motor-overview: http://GATEWAY-SERVICE/api/monitor/overview
+    sector-info: http://GATEWAY-SERVICE/api/monitor/sectors/overview
+    motors: http://GATEWAY-SERVICE/api/monitor/motors
+    motor-detail: http://GATEWAY-SERVICE/api/monitor/motors/{motorId}
+    control-logs: http://GATEWAY-SERVICE/api/monitor/log
+    running-rate-by-time: http://GATEWAY-SERVICE/api/monitor/motors/running-rate
+    individual-running-rate-by-time: http://GATEWAY-SERVICE/api/monitor/motors/{motorId}/running-rate
+    sector-register: http://GATEWAY-SERVICE/api/monitor/sectors
+    sector-rename: http://GATEWAY-SERVICE/api/monitor/sectors/
+    sector-remove: http://GATEWAY-SERVICE/api/monitor/sectors/
+
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

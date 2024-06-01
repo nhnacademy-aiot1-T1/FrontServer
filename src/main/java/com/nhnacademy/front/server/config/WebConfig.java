@@ -2,7 +2,6 @@ package com.nhnacademy.front.server.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.nhnacademy.common.aop.CommonLogger;
 import com.nhnacademy.front.server.interceptor.AuthorizationInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -26,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Bean
   @LoadBalanced
+  @ConditionalOnProperty(value = "spring.profiles.active", havingValue = "test")
   public RestTemplate restTemplate(RestTemplateBuilder builder) {
     RestTemplate restTemplate = builder
         .setConnectTimeout(Duration.ofSeconds(5))
@@ -45,7 +45,8 @@ public class WebConfig implements WebMvcConfigurer {
         .setReadTimeout(Duration.ofSeconds(5))
         .build();
   }
-
+// TODO 실제 실행 테스트시 주석처리
+  
 //  @Bean
 //  public ObjectMapper objectMapper() {
 //    return new ObjectMapper().registerModule(new JavaTimeModule());
@@ -64,9 +65,8 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .allowedOrigins("http://localhost:8082")
-        .allowedOrigins("http://aiotone.live")
-        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        .allowedOrigins("https://www.aiotone.live","https://aiotone.live")
+        .allowedMethods("*")
         .allowedHeaders("*")
         .allowCredentials(true);
   }

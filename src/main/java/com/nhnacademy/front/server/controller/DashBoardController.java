@@ -1,6 +1,7 @@
 package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
+import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateDataRequest;
 import com.nhnacademy.front.server.dto.sector.SectorDto;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateData;
 import com.nhnacademy.front.server.service.MotorService;
@@ -24,12 +25,13 @@ public class DashBoardController {
 
     MotorInfoOverviewDto motorOverviewDTO = motorService.getMotorOverview();
     List<SectorDto> sectorsInfo = sectorService.getSectorsInfo().getSectors();
+
     List<MotorsRunningRateData> dayRunningRates = motorService.getMotorsRunningRatesByTimePeriod(
-        "day").getRates();
+        new MotorsRunningRateDataRequest("day")).getRates();
     List<MotorsRunningRateData> weekRunningRates = motorService.getMotorsRunningRatesByTimePeriod(
-        "week").getRates();
+        new MotorsRunningRateDataRequest("week")).getRates();
     List<MotorsRunningRateData> monthRunningRates = motorService.getMotorsRunningRatesByTimePeriod(
-        "month").getRates();
+        new MotorsRunningRateDataRequest("month")).getRates();
 
     model.addAttribute("motorOverview", motorOverviewDTO);
     model.addAttribute("sectorsInfo", sectorsInfo);

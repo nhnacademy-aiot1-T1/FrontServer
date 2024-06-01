@@ -6,9 +6,8 @@ spring:
 
 eureka:
   client:
-    enabled: false
-    service-url:
-      defualtZone:
+    enabled: true
+
 
 server:
   port: 8080
@@ -17,3 +16,4 @@ oauth:
   payco:
     client_id: 3RDwMkWpqVbBXbEs0f7uAo9
     redirect-uri:
+
