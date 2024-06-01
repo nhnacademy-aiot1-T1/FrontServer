@@ -32,32 +32,6 @@ import java.util.List;
 public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
   private final ApiPathProperties pathProperties;
-  //  public static final String MOTOR_INFO_OVERVIEW = "https://run.mocky.io/v3/08ec999b-5345-4075-84b9-2ce8619d71fc";
-//  public static final String MOTOR_INFO_OVERVIEW = "http://GATEWAY-SERVICE/api/monitor/overview";
-  //  public static final String SECTORS_INFO = "https://run.mocky.io/v3/60b8f744-27ca-44d4-924a-f63119ed8d3e";
-//  public static final String SECTORS_INFO = "http://GATEWAY-SERVICE/api/monitor/sectors/overview";
-  //  public static final String MOTORS = "https://run.mocky.io/v3/da4d361e-37ee-487a-a9c8-8c471a114638";
-//  public static final String MOTORS = "http://GATEWAY-SERVICE/api/monitor/motors";
-  //  public static final String MOTOR_DETAIL = "https://run.mocky.io/v3/21547def-ce33-46f4-9295-0221dcfb5761";
-//  public static final String MOTOR_DETAIL = "http://GATEWAY-SERVICE/api/monitor/motors/{motorId}";
-  //  public static final String CONTR0L_LOGS = "https://run.mocky.io/v3/3465dde1-dfa1-4955-ad0c-7d10403347c7";
-//  public static final String CONTR0L_LOGS = "http://GATEWAY-SERVICE/api/monitor/log";
-
-//  public static final String RUNNING_RATES_BY_TIME1 = "https://run.mocky.io/v3/fc91f26c-1883-41b3-a65d-406681cc7060"; // day data
-//  public static final String RUNNING_RATES_BY_TIME2 = "https://run.mocky.io/v3/8eda357b-8c12-41ff-aa6f-87b7940df3fb"; // week data
-//  public static final String RUNNING_RATES_BY_TIME3 = "https://run.mocky.io/v3/eae23440-8507-4205-9efd-e06fe6daa6be"; // month data
-//  public static final String RUNNING_RATES_BY_TIME = "http://GATEWAY-SERVICE/api/monitor/motors/running-rate"; // month data
-
-//  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME1 = "https://run.mocky.io/v3/92a16e33-fc73-44b8-bf0a-c3b37f3c78eb";
-//  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME2 = "https://run.mocky.io/v3/bd1925c9-ece8-4087-86d9-ffae0e0c1ae8";
-//  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME3 = "https://run.mocky.io/v3/890de582-586d-4ef7-9d26-5bb6a39e8b34";
-//  public static final String INDIVIDUAL_RUNNING_RATES_BY_TIME = "http://GATEWAY-SERVICE/api/monitor/motors/{motorId}/running-rate";
-
-  // TODO 요청 주소 입력해줘야함
-  public static final String REGIST_SECTOR = "http://GATEWAY-SERVICE/api/monitor";
-  public static final String RENAME_SECTOR = "http://GATEWAY-SERVICE/api/monitor/sectors/";
-  public static final String REMOVE_SECTOR = "http://GATEWAY-SERVICE/api/monitor/sectors/";
-
 
   private final RestTemplate restTemplateMocky;
 
