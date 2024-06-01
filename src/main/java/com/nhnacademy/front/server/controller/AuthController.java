@@ -66,7 +66,7 @@ public class AuthController {
       res.addCookie(cookie);
     }
 
-    return WebUtils.REDIRECT_PREFIX + "https://aiotone.live/home";
+    return WebUtils.REDIRECT_PREFIX + "/home";
   }
 
 
