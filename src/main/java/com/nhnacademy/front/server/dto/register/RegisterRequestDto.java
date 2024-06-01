@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 public class RegisterRequestDto {
-  private String userId;
+  private String loginId;
   private String password;
   private String name;
   private String email;
