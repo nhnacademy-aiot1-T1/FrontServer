@@ -31,20 +31,6 @@
       <div class="content-header-left col-md-4 col-12 mb-2">
         <h3 class="content-header-title">마이페이지</h3>
       </div>
-      <div class="content-header-right col-md-8 col-12">
-        <div class="breadcrumbs-top float-md-right">
-          <div class="breadcrumb-wrapper mr-1">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="/vertical-menu-template/index.html">Home</a>
-              </li>
-              <li class="breadcrumb-item"><a href="#">Apps</a>
-              </li>
-              <li class="breadcrumb-item active">Contact List
-              </li>
-            </ol>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="content-detached col-6 mx-auto">
       <div class="content-body">
@@ -66,7 +52,7 @@
 
                       <div class="form-group">
                         <label for="name">Nickname</label>
-                        <p class="form-control border-primary" id="name"
+                        <p class='form-control border-primary' id="name"
                            th:text="${userDetail != null ? userDetail.name : 'N/A'}"></p>
                       </div>
 
@@ -92,9 +78,6 @@
 
                     </div>
                     <div class="form-actions right">
-                      <button type="button" class="btn btn-danger mr-1">
-                        <i class="ft-x"></i> Cancel
-                      </button>
                       <button id="saveBtn" type="button" class="btn btn-primary"
                               onclick="saveData()">
                         <i class="la la-check-square-o"></i> Save
@@ -198,7 +181,6 @@
 <script>
   function showEdit() {
     let elements = document.getElementsByClassName('form-control border-primary');
-    console.log("num1")
     for (let i = 0; i < elements.length; i++) {
       let element = elements[i];
 
@@ -208,7 +190,6 @@
 
       let inputType = 'text';
 
-      console.log("num2")
       let value = element.textContent;
       let inputField = document.createElement('input');
       inputField.setAttribute('type', inputType);
@@ -217,10 +198,13 @@
       inputField.setAttribute('name', element.getAttribute('id'))
       inputField.value = value;
 
-      console.log("num3")
       element.parentNode.replaceChild(inputField, element);
     }
     document.getElementById("saveBtn").style.display = 'inline';
+
+    let inputList = document.getElementsByClassName('form-control border-primary');
+    inputList[0].focus();
+
   }
 
   function saveData() {
