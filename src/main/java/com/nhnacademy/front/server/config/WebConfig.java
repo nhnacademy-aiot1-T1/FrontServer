@@ -65,7 +65,7 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .allowedOrigins("https://www.aiotone.live","https://aiotone.live")
+        .allowedOrigins("https://www.aiotone.live", "https://aiotone.live")
         .allowedMethods("*")
         .allowedHeaders("*")
         .allowCredentials(true);
