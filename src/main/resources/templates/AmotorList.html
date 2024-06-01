@@ -5,8 +5,6 @@
 <head>
   <meta name="_csrf" th:content="${_csrf.token}"/>
   <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-  <!--  <meta name="_csrf" content="${_csrf.token}"/>-->
-  <!--  <meta name="_csrf_header" content="${_csrf.headerName}"/>-->
 
   <div th:include="fixedTemplate/defaultCSS.html"></div>
   <!-- BEGIN: Vendor CSS-->
@@ -72,24 +70,20 @@
 <!-- BEGIN: Content-->
 <div class="app-content content">
   <div class="content-wrapper">
-    <div class="content-wrapper-before"></div>
+    <div class="content-wrapper-before "></div>
     <div class="content-header row">
       <div class="content-header-left col-md-4 col-12 mb-2">
         <h3 class="content-header-title">Motor list</h3>
       </div>
 
-
       <div class="content-detached content-right">
-
         <div class="content-body">
           <section class="row">
             <div class="col-12">
-              <div class="card">
-                <div class="card-head">
+              <div class="card mx-auto" style="width: 90pc;">
+                <div class="card-head mx-auto">
                   <div class="card-header">
                     <h4 class="card-title" id=sectorname>Motor Status</h4>
-
-
                     <div class="card-content collapse show">
                       <div class="card-body pt-300 pb-300">
                         <div class="row mb-1">
@@ -181,16 +175,19 @@
                   <div class="container">
                     <div class="row">
                       <div th:each="motor : ${motors}"
-                           class="motorbox col-2" th:data-sector-id="${motor.getSectorId()}"
+                           class="motorbox col-2"
+                           th:data-sector-id="${motor.getSectorId()}"
                            th:data-motor-id="${motor.getMotorId()}"
-                           onclick="goToMotorDetail(this)">
+                           onclick="goToMotorDetail(this)"
+                           style="padding-bottom: 120px">
                         <div class="card pull-up" th:if="${motor.getIsOn()== true}">
                           <div th:if="${motor.getIsNormal() == true}"
-                               class="card bg-gradient-directional-success">
-                            <div class="card bg-gradient-directional-success">
-                              <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
+                               class="card bg-success" style="height: 70px;">
+                            <div class="card bg-success" style="height: 20px">
+                              <h4 class="card-title white" style="padding: 10px; height: 1px"
+                                  th:text="${motor.getMotorName()}"></h4>
                             </div>
-                            <div class="card bg-gradient-directional-success">
+                            <div class="card bg-success">
                               <div class="card-body">
                                 <div
                                     class="media d-flex align-items-center justify-content-center">
@@ -207,16 +204,17 @@
                             </div>
                           </div>
                           <div th:if="${motor.getIsNormal() == false }"
-                               class="card bg-gradient-directional-warning">
-                            <div class="card bg-gradient-directional-warning">
-                              <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
+                               class="card bg-warning " style="height: 70px">
+                            <div class="card bg-warning" style="height: 20px">
+                              <h4 class="card-title white" style="padding: 10px;height: 1px"
+                                  th:text="${motor.getMotorName()}"></h4>
                               <a class="heading-elements-toggle"><i
                                   class="la la-ellipsis-v font-medium-3"></i></a>
                               <div class="heading-elements">
                                 <ul class="list-inline mb-0"></ul>
                               </div>
                             </div>
-                            <div class="card bg-gradient-directional-warning">
+                            <div class="card bg-warning">
                               <div class="card-body">
                                 <div
                                     class="media d-flex align-items-center justify-content-center">
@@ -236,11 +234,12 @@
                         </div>
                         <div class="card pull-up" th:if="${motor.getIsOn()==false}">
                           <div th:if="${motor.getIsNormal() == true}"
-                               class="card bg-gradient-directional-blue-grey">
-                            <div class="card bg-gradient-directional-blue-grey">
-                              <h4 class="card-title white" th:text="${motor.getMotorName()}"></h4>
+                               class="card bg-blue-grey" style="height: 70px">
+                            <div class="card bg-blue-grey" style="height: 20px">
+                              <h4 class="card-title white" style="padding: 10px;height: 1px"
+                                  th:text="${motor.getMotorName()}"></h4>
                             </div>
-                            <div class="card bg-gradient-directional-blue-grey">
+                            <div class="card bg-blue-grey">
                               <div class="card-body">
                                 <div
                                     class="media d-flex align-items-center justify-content-center">
@@ -257,28 +256,29 @@
                             </div>
                           </div>
                           <div th:if="${motor.getIsNormal() == false }"
-                               class="card  bg-gradient-directional-blue-grey">
-                            <div class="card  bg-gradient-directional-blue-grey">
-                              <h4 class="card-title white"
-                                  th:text="${motor.getMotorName()}"></h4>
+                               class="card  bg-blue-grey" style="height: 70px">
+                            <div class="card  bg-blue-grey " style="height: 20px">
+                              <h4 class="card-title warning" style="padding: 10px;height: 1px"
+                                  th:text="${motor.getMotorName()}"
+                              ></h4>
                               <a class="heading-elements-toggle"><i
                                   class="la la-ellipsis-v font-medium-3"></i></a>
                               <div class="heading-elements">
                                 <ul class="list-inline mb-0"></ul>
                               </div>
                             </div>
-                            <div class="card pull-up bg-gradient-directional-blue-grey">
+                            <div class="card bg-blue-grey">
                               <div class="card-body">
                                 <div
                                     class="media d-flex align-items-center justify-content-center">
                                   <div>
                                     <img
-                                        src="https://aiotone.live/resources/app-assets/images/icons/motoricon.png"
+                                        src="/img/motoriconwarning.png"
                                         alt="Your Image" class="img-fluid">
                                   </div>
                                 </div>
                                 <div class="media-body text-right mt-1">
-                                  <h3 class="font-large-0 bg-gradient-directional-warning">
+                                  <h3 class="font-large-0 warning">
                                     WARNING</h3>
                                 </div>
                               </div>
@@ -297,236 +297,230 @@
               </div>
             </div>
           </section>
+
+
         </div>
       </div>
 
       <!-- 구역선택 사이드 바 -->
-      <div class="sidebar-detached sidebar-left sidebar-sticky" style="padding-left:10px ">
-        <div class="sidebar">
-          <div class="sidebar-content card d-none d-lg-block">
-            <div class="card-body">
-
-              <!-- Carousel Card sample -->
-              <div class="row">
-                <h4 class="card-title" style="margin: 27px; margin-top: 10px">Sector List</h4>
-              </div>
-              <!-- /Carousel Card sample -->
-
-              <!-- List Group example -->
-              <div class="category-title pb-1">
-                <!--                <h6>Registerd Sector List</h6>-->
-              </div>
-              <div>
-
-                <ul class="list-group">
-                  <li class="list-group-item" onclick="selectSector('all')">
-                    <a>전체보기</a>
-                  </li>
-                  <li class="list-group-item" th:each="sector : ${sectorInfo}"
-                      th:data-sector-id="${sector.getSectorId()}"
-                      onclick="selectSector(this.getAttribute('data-sector-id'))">
-                    <span th:if="${sector.getTotalCount - sector.getNormalCount != 0}"
-                          class="badge badge-danger badge-pill float-right"
-                          th:text="${sector.getTotalCount()-sector.getNormalCount()}"></span>
-                    <a th:text="${sector.getSectorName()}"></a>
-                  </li>
-                  <li class="list-group-item">
-                    <i class="mr-1 ft-plus">
-                      <a href="#" data-toggle="modal" data-target="#sectorRegistModal">구역추가</a>
-                    </i>
-                  </li>
-                  <li class="list-group-item">
-                    <i class="mr-1 ft-plus">
-                      <a href="#" data-toggle="modal" data-target="#sectorEditModal">구역편집</a>
-                    </i>
-                  </li>
-                </ul>
-              </div>
-              <!-- /List group example -->
-
+      <div class="sidebar" style="position: fixed;right: 20px">
+        <div class="sidebar-content card d-none d-lg-block">
+          <div class="card-body">
+            <div class="row">
+              <h4 class="card-title" style="padding-left: 10px">Sector List</h4>
             </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <div class="content-wrapper">
-
-  </div>
-
-  <!-- END: Content-->
-  <!-- 구역 등록 모달 창 -->
-  <div class="modal fade" id="sectorRegistModal" tabindex="-1" role="dialog"
-       aria-labelledby="sectorRegistModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="sectorRegistModalLabel">Information</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title" id="basic-layout-colored-form-control">Sector Registration
-                Form</h4>
+            <div class="category-title pb-1">
             </div>
-            <div class="card-content collapse show">
-              <div class="card-body">
-                <div class="card-text">
-                  <p>Please enter the desired sector name and complete the sector registration</p>
-                </div>
-                <form id="sectorRegistForm" action="/registSector" method="post">
-                  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                  <div class="form-group">
-                    <label for="sectorName">Sector Name</label>
-                    <input type="text" class="form-control" id="sectorNameInput"
-                           name="sectorNameInput"
-                           placeholder="Enter sector name">
-                  </div>
-                  <div class="form-actions right">
-                    <!--                    <button type="button" class="btn btn-danger mr-1" data-dismiss="modal">-->
-                    <!--                      <i class="ft-x"></i> Cancel-->
-                    <!--                    </button>-->
-                    <button type="submit" class="btn btn-primary">
-                      <i class="la la-check-square-o"></i> Register
-                    </button>
-                  </div>
-                </form>
-              </div>
+            <div>
+
+              <ul class="list-group">
+                <li class="list-group-item" onclick="selectSector('all')">
+                  <a>전체보기</a>
+                </li>
+                <li class="list-group-item" th:each="sector : ${sectorInfo}"
+                    th:data-sector-id="${sector.getSectorId()}"
+                    onclick="selectSector(this.getAttribute('data-sector-id'))">
+                          <span th:if="${sector.getTotalCount - sector.getNormalCount != 0}"
+                                class="badge badge-danger badge-pill float-right"
+                                th:text="${sector.getTotalCount()-sector.getNormalCount()}"></span>
+                  <a th:text="${sector.getSectorName()}"></a>
+                </li>
+                <li class="list-group-item">
+                  <i class="mr-1 ft-plus">
+                    <a href="#" data-toggle="modal" data-target="#sectorRegistModal">구역추가</a>
+                  </i>
+                </li>
+                <li class="list-group-item">
+                  <i class="mr-1 ft-plus">
+                    <a href="#" data-toggle="modal" data-target="#sectorEditModal">구역편집</a>
+                  </i>
+                </li>
+              </ul>
             </div>
+            <!-- /List group example -->
+
           </div>
         </div>
       </div>
     </div>
+
   </div>
+</div>
 
-  <!-- 구역 편집 모달 창 -->
-  <div class="modal fade" id="sectorEditModal" tabindex="-1" role="dialog"
-       aria-labelledby="sectorRegistModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="sectorEditModalLabel">Information</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title" id="basic-layout-colored-form-control2">Sector Edit Form</h4>
-            </div>
-            <div class="card-content collapse show">
-              <div class="card-body">
-                <div class="card-text">
-                  <p>Please select the area you want to edit and the task you wish to perform.</p>
-                </div>
-                <br>
-                <div id="sectorEditForm" th:each="sector:${sectorInfo}">
-                  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                  <div class="form-group">
-                    <h3 th:text="${sector.getSectorName()}"></h3>
-                    <input type="hidden" name="sectorId" th:value="${sector.sectorId}">
-                  </div>
-                  <div class="form-actions right">
-                    <button type="button" class="btn btn-warning right btnModify"
-                            th:value="${sector.sectorId}"
-                            onclick="renameSector(this.value)"
-                            data-dismiss="modal">
-                      <i class="la la-check-square-o"></i> Rename
-                    </button>
-                    <button type="button" class="btn btn-danger right btnRemove"
-                            th:value="${sector.sectorId}"
-                            onclick="removeSector(this.value)"
-                            data-dismiss="modal">
-                      <i class="ft-x"></i> Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 새로운 Sector Name 입력 모달 창 -->
-  <div class="modal fade" id="sectorRenameModal" tabindex="-1" role="dialog"
-       aria-labelledby="sectorRenameModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <!-- ... -->
-        <div class="modal-body">
-          <div class="card">
-            <div class="card-content collapse show">
-              <div class="card-body">
-                <!-- ... -->
-                <form id="sectorRenameForm" action="/renameSector" th:method="put">
-                  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                  <input type="hidden" id="sectorIdForRename" name="sectorId" value="">
-                  <div class="form-group">
-                    <label for="newSectorName">New Sector Name</label>
-                    <input type="text" class="form-control" id="newSectorName" name="newSectorName"
-                           placeholder="Enter new sector name">
-                  </div>
-                  <div class="form-actions right">
-                    <button type="button" class="btn btn-warning mr-1" data-dismiss="modal">
-                      <i class="ft-x"></i> Cancel
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                      <i class="la la-check-square-o"></i> Confirm
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 구역 삭제 확인 모달 창 -->
-  <div class="modal fade" id="sectorRemoveModal" tabindex="-1" role="dialog"
-       aria-labelledby="sectorRemoveModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <!-- ... -->
-        <div class="modal-body">
-          <div class="card">
-            <div class="card-content collapse show">
-              <div class="card-body">
-                <!-- ... -->
-                <form id="sectorRemoveForm" action="/removeSector" th:method="delete">
-                  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                  <input type="hidden" id="sectorIdForRemove" name="sectorId" value="">
-                  <div class="form-actions right">
-                    <button type="button" class="btn btn-warning mr-1" data-dismiss="modal">
-                      <i class="ft-x"></i> Cancel
-                    </button>
-                    <button type="submit" class="btn btn-danger">
-                      <i class="la la-check-square-o">Delete Sector</i>
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div th:include="fixedTemplate/defaultJS.html"></div>
-
-  <div th:include="fixedTemplate/defaultJS.html"></div>
+<div class="content-wrapper">
 
 </div>
+
+<!-- END: Content-->
+<!-- 구역 등록 모달 창 -->
+<div class="modal fade" id="sectorRegistModal" tabindex="-1" role="dialog"
+     aria-labelledby="sectorRegistModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sectorRegistModalLabel">Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title" id="basic-layout-colored-form-control">Sector Registration
+              Form</h4>
+          </div>
+          <div class="card-content collapse show">
+            <div class="card-body">
+              <div class="card-text">
+                <p>Please enter the desired sector name and complete the sector registration</p>
+              </div>
+              <form id="sectorRegistForm" action="/registSector" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <div class="form-group">
+                  <label for="sectorName">Sector Name</label>
+                  <input type="text" class="form-control" id="sectorNameInput"
+                         name="sectorNameInput"
+                         placeholder="Enter sector name">
+                </div>
+                <div class="form-actions right">
+                  <!--                    <button type="button" class="btn btn-danger mr-1" data-dismiss="modal">-->
+                  <!--                      <i class="ft-x"></i> Cancel-->
+                  <!--                    </button>-->
+                  <button type="submit" class="btn btn-primary">
+                    <i class="la la-check-square-o"></i> Register
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 구역 편집 모달 창 -->
+<div class="modal fade" id="sectorEditModal" tabindex="-1" role="dialog"
+     aria-labelledby="sectorRegistModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sectorEditModalLabel">Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title" id="basic-layout-colored-form-control2">Sector Edit Form</h4>
+          </div>
+          <div class="card-content collapse show">
+            <div class="card-body">
+              <div class="card-text">
+                <p>Please select the area you want to edit and the task you wish to perform.</p>
+              </div>
+              <br>
+              <div id="sectorEditForm" th:each="sector:${sectorInfo}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <div class="form-group">
+                  <h3 th:text="${sector.getSectorName()}"></h3>
+                  <input type="hidden" name="sectorId" th:value="${sector.sectorId}">
+                </div>
+                <div class="form-actions right">
+                  <button type="button" class="btn btn-warning right btnModify"
+                          th:value="${sector.sectorId}"
+                          onclick="renameSector(this.value)"
+                          data-dismiss="modal">
+                    <i class="la la-check-square-o"></i> Rename
+                  </button>
+                  <button type="button" class="btn btn-danger right btnRemove"
+                          th:value="${sector.sectorId}"
+                          onclick="removeSector(this.value)"
+                          data-dismiss="modal">
+                    <i class="ft-x"></i> Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 새로운 Sector Name 입력 모달 창 -->
+<div class="modal fade" id="sectorRenameModal" tabindex="-1" role="dialog"
+     aria-labelledby="sectorRenameModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- ... -->
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-content collapse show">
+            <div class="card-body">
+              <!-- ... -->
+              <form id="sectorRenameForm" action="/renameSector" th:method="put">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" id="sectorIdForRename" name="sectorId" value="">
+                <div class="form-group">
+                  <label for="newSectorName">New Sector Name</label>
+                  <input type="text" class="form-control" id="newSectorName" name="newSectorName"
+                         placeholder="Enter new sector name">
+                </div>
+                <div class="form-actions right">
+                  <button type="button" class="btn btn-warning mr-1" data-dismiss="modal">
+                    <i class="ft-x"></i> Cancel
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    <i class="la la-check-square-o"></i> Confirm
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 구역 삭제 확인 모달 창 -->
+<div class="modal fade" id="sectorRemoveModal" tabindex="-1" role="dialog"
+     aria-labelledby="sectorRemoveModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- ... -->
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-content collapse show">
+            <div class="card-body">
+              <!-- ... -->
+              <form id="sectorRemoveForm" action="/removeSector" th:method="delete">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" id="sectorIdForRemove" name="sectorId" value="">
+                <div class="form-actions right">
+                  <button type="button" class="btn btn-warning mr-1" data-dismiss="modal">
+                    <i class="ft-x"></i> Cancel
+                  </button>
+                  <button type="submit" class="btn btn-danger">
+                    <i class="la la-check-square-o">Delete Sector</i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:include="fixedTemplate/defaultJS.html"></div>
+
+<div th:include="fixedTemplate/defaultJS.html"></div>
+
 </body>
 <!-- END: Body-->
 
@@ -783,7 +777,6 @@
   }
 
 </script>
-
 
 <!-- BEGIN: Vendor JS-->
 <script src="https://aiotone.live/resources/app-assets/vendors/js/vendors.min.js"
