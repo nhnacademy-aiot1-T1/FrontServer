@@ -28,7 +28,7 @@ public class ControlLogController {
       String date = controlLog.getTime().substring(0, 10);
       dateSet.add(date);
     }
-    model.addAttribute("pagination",controlLogs);
+    model.addAttribute("pagination", controlLogs);
     model.addAttribute("controlLogs", controlLogsDto);
     model.addAttribute("dateSet", dateSet);
 
