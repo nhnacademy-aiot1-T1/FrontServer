@@ -43,11 +43,24 @@
   <!-- END: Page CSS-->
 
   <!-- BEGIN: Custom CSS-->
-  <link rel="stylesheet" type="text/css" href="https://aiotone.live/resources/assets/css/style.css">
+  <!--  <link rel="stylesheet" type="text/css" href="https://aiotone.live/resources/assets/css/style.css">-->
   <!-- END: Custom CSS-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquareNeo@1.0/nanumsquareneo.css"
+        rel="stylesheet">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="/static/vertical-menu-template/assets/css/style.css">
+  <style>
+    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+    body, p, h3, h4, h6 {
+      font-family: 'NanumSquare', sans-serif;
+      font-weight: 800;
+    }
+  </style>
+
 </head>
 <!-- END: Head-->
 
@@ -73,7 +86,7 @@
     <div class="content-wrapper-before "></div>
     <div class="content-header row">
       <div class="content-header-left col-md-4 col-12 mb-2">
-        <h3 class="content-header-title">모터 리스트</h3>
+        <h3 class="content-header-title">모터 목록</h3>
       </div>
 
       <div class="content-detached content-right">
@@ -83,33 +96,33 @@
               <div class="card mx-auto" style="width: 90pc;">
                 <div class="card-head mx-auto">
                   <div class="card-header">
-                    <h4 class="card-title" id=sectorname>Motor Status</h4>
+                    <h4 class="card-title" id=sectorname></h4>
                     <div class="card-content collapse show">
                       <div class="card-body pt-300 pb-300">
                         <div class="row mb-1">
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">Total Motors</p>
+                            <p class="blue-grey lighten-2 mb-0">총 모터</p>
                             <th:p id="totalMotors" class="font-medium-5 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">Running Motors</p>
+                            <p class="blue-grey lighten-2 mb-0">가동중인 모터</p>
                             <th:p id="runningMotors" class="font-medium-5 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">Normal Motors</p>
+                            <p class="blue-grey lighten-2 mb-0">정상 모터</p>
                             <th:p id="normalMotors" class="font-medium-5 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">Anomaly Motors</p>
+                            <p class="blue-grey lighten-2 mb-0">비정상 모터</p>
                             <th:p id="anomalyMotors" class="font-medium-5 text-bold-400"></th:p>
                           </div>
                         </div>
 
-                        <h6 class="text-bold-600"> Normal Motors:
+                        <h6 class="text-bold-600"> 정상 모터 비율:
                           <span id="normalMotorPercent"></span>
                         </h6>
                         <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
@@ -118,7 +131,7 @@
                                aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <br>
-                        <h6 class="text-bold-600"> Running Motors:
+                        <h6 class="text-bold-600"> 가동중인 모터 비율:
                           <span id="isOnMotorPercent"></span>
                         </h6>
                         <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
@@ -128,10 +141,8 @@
                         </div>
                         <div class="media d-flex">
                           <div class="align-self-center">
-                            <h6 class="text-bold-600 mt-2"> Manager:
-                              <span class="info">SangWoo Byun</span>
-                            </h6>
-                            <h6 class="text-bold-600 mt-1"> The Current TIme:
+
+                            <h6 class="text-bold-600 mt-1"> 현재 시간:
                               <span class="blue-grey"
                                     th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm')}"></span>
                             </h6>
@@ -139,13 +150,13 @@
                         </div>
                         <!--필터링 토글-->
                         <div class="right"
-                             style="float:right; position:relative; right: 36px; top: -50px">
+                             style="float:right; position:relative; right: 36px; top: -20px">
                           <div class="dropdown">
                             <button class="btn btn-bg-gradient-x-blue-purple-1 dropdown-toggle"
                                     type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
-                              Filtering
+                              필터링
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                               <a class="dropdown-item" onclick="selectSector('all')"
@@ -307,7 +318,7 @@
         <div class="sidebar-content card d-none d-lg-block">
           <div class="card-body">
             <div class="row">
-              <h4 class="card-title" style="padding-left: 10px">Sector List</h4>
+              <h4 class="card-title" style="padding-left: 10px">구역 목록</h4>
             </div>
             <div class="category-title pb-1">
             </div>
@@ -358,7 +369,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="sectorRegistModalLabel">Information</h5>
+        <h5 class="modal-title" id="sectorRegistModalLabel">알림</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -366,28 +377,24 @@
       <div class="modal-body">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title" id="basic-layout-colored-form-control">Sector Registration
-              Form</h4>
+            <h4 class="card-title" id="basic-layout-colored-form-control">구역 등록</h4>
           </div>
           <div class="card-content collapse show">
             <div class="card-body">
               <div class="card-text">
-                <p>Please enter the desired sector name and complete the sector registration</p>
+                <p>원하는 구역 이름을 입력하고 구역등록을 완료해 주십시오</p>
               </div>
               <form id="sectorRegistForm" action="/registSector" method="post">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <div class="form-group">
-                  <label for="sectorName">Sector Name</label>
+                  <label for="sectorName">구역 이름</label>
                   <input type="text" class="form-control" id="sectorNameInput"
                          name="sectorNameInput"
                          placeholder="Enter sector name">
                 </div>
                 <div class="form-actions right">
-                  <!--                    <button type="button" class="btn btn-danger mr-1" data-dismiss="modal">-->
-                  <!--                      <i class="ft-x"></i> Cancel-->
-                  <!--                    </button>-->
                   <button type="submit" class="btn btn-primary">
-                    <i class="la la-check-square-o"></i> Register
+                    <i class="la la-check-square-o"></i> 등록
                   </button>
                 </div>
               </form>
@@ -413,12 +420,12 @@
       <div class="modal-body">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title" id="basic-layout-colored-form-control2">Sector Edit Form</h4>
+            <h4 class="card-title" id="basic-layout-colored-form-control2">구역 편집</h4>
           </div>
           <div class="card-content collapse show">
             <div class="card-body">
               <div class="card-text">
-                <p>Please select the area you want to edit and the task you wish to perform.</p>
+                <p>편집을 원하는 구역을 선택하고 원하는 작업을 선택해 주십시오.</p>
               </div>
               <br>
               <div id="sectorEditForm" th:each="sector:${sectorInfo}">
@@ -426,20 +433,22 @@
                 <div class="form-group">
                   <h3 th:text="${sector.getSectorName()}"></h3>
                   <input type="hidden" name="sectorId" th:value="${sector.sectorId}">
-                </div>
-                <div class="form-actions right">
-                  <button type="button" class="btn btn-warning right btnModify"
-                          th:value="${sector.sectorId}"
-                          onclick="renameSector(this.value)"
-                          data-dismiss="modal">
-                    <i class="la la-check-square-o"></i> Rename
-                  </button>
-                  <button type="button" class="btn btn-danger right btnRemove"
-                          th:value="${sector.sectorId}"
-                          onclick="removeSector(this.value)"
-                          data-dismiss="modal">
-                    <i class="ft-x"></i> Remove
-                  </button>
+
+
+                  <div class="form-actions right">
+                    <button type="button" class="btn btn-warning right btnModify"
+                            th:value="${sector.sectorId}"
+                            onclick="renameSector(this.value)"
+                            data-dismiss="modal">
+                      <i class="la la-check-square-o"></i> 구역 이름 변경
+                    </button>
+                    <button type="button" class="btn btn-danger right btnRemove"
+                            th:value="${sector.sectorId}"
+                            onclick="removeSector(this.value)"
+                            data-dismiss="modal">
+                      <i class="ft-x"></i> 구역 삭제
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -500,6 +509,9 @@
               <form id="sectorRemoveForm" action="/removeSector" th:method="delete">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <input type="hidden" id="sectorIdForRemove" name="sectorId" value="">
+                <div class="card-text">
+                  <p>정말로 삭제하시겠습니까?</p>
+                </div>
                 <div class="form-actions right">
                   <button type="button" class="btn btn-warning mr-1" data-dismiss="modal">
                     <i class="ft-x"></i> Cancel
@@ -536,7 +548,7 @@
         - motorInfoOverview.totalNormalMotorCount;
     var totalMotors = motorInfoOverview.totalMotorCount;
     var totalIsOnMotors = motorInfoOverview.totalOnMotorCount;
-    var sectorName = 'Total Motor Status';
+    var sectorName = '종합 상태 요약';
 
     // 상단 Total Motor Status
     $('#totalMotors').text(totalMotors);
@@ -701,7 +713,7 @@
       $('#normalMotors').text(sector.normalCount);
       $('#runningMotors').text(sector.isOnCount);
       $('#anomalyMotors').text(sector.totalCount - sector.normalCount);
-      $('#sectorname').text(sector.sectorName + ' Motor Status');
+      $('#sectorname').text(sector.sectorName + ' 상태 요약');
 
       // 선택한 섹터의 isOn motor 퍼센트 업데이트
       $('#normalMotorPercent').text(sector.normalMotorPercent + '%');

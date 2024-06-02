@@ -11,6 +11,14 @@
           src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <title>log</title>
+  <style>
+    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+    body, p, h3, h4, h6 {
+      font-family: 'NanumSquare', sans-serif;
+      font-weight: 800;
+    }
+  </style>
 </head>
 <body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar"
       data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue"
@@ -30,7 +38,7 @@
   <div class="content-wrapper">
     <div class="content-header row">
       <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-        <h3 class="mb-0 d-inline-block">Log</h3>
+        <h3 class="mb-0 d-inline-block">이슈 로그</h3>
       </div>
     </div>
     <section id="horizontal-vertical">
@@ -38,7 +46,7 @@
         <div class="col-12">
           <div class="card col-9 mx-auto">
             <div class="card-header">
-              <h4 class="card-title">Motor warning Log</h4>
+              <h4 class="card-title">모터 이상 로그</h4>
             </div>
             <div class="card-content collapse show">
               <div class="card-body card-dashboard">
@@ -47,11 +55,11 @@
                          class="table display nowrap table-striped table-bordered scroll-horizontal-vertical">
                     <thead>
                     <tr>
-                      <th>Date</th>
-                      <th>Motor</th>
-                      <th>Sensor-Type</th>
-                      <th>score</th>
-                      <th>Time</th>
+                      <th>날짜</th>
+                      <th>모터 이름</th>
+                      <th>센서 종류</th>
+                      <th>점수</th>
+                      <th>발생 시간</th>
                     </tr>
                     </thead>
                     <tbody>

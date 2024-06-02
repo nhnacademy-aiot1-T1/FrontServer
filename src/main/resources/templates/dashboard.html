@@ -10,10 +10,7 @@
   <!-- BEGIN: Vendor CSS-->
   <link rel="stylesheet" type="text/css"
         href="https://aiotone.live/resources/app-assets/vendors/css/vendors.min.css">
-  <link rel="stylesheet" type="text/css"
-        href="https://aiotone.live/resources/app-assets/vendors/css/charts/chartist.css">
-  <link rel="stylesheet" type="text/css"
-        href="https://aiotone.live/resources/app-assets/vendors/css/charts/chartist-plugin-tooltip.css">
+
   <link rel="stylesheet" type="text/css"
         href="https://aiotone.live/resources/app-assets/vendors/css/forms/icheck/icheck.css">
   <link rel="stylesheet" type="text/css"
@@ -50,6 +47,13 @@
   <!-- BEGIN: Custom CSS-->
   <link rel="stylesheet" type="text/css" href="https://aiotone.live/resources/assets/css/style.css">
   <!-- END: Custom CSS-->
+  <style>
+    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+    body,h4.card-title,span.text-muted {
+      font-family: 'NanumSquare', sans-serif;
+      font-weight: 400;
+    }
+  </style>
 </head>
 <!-- END: Head-->
 
@@ -93,7 +97,7 @@
                   <li>
                     <h1 class="blue-grey lighten-1 text-bold-400">&nbsp;</h1>
                     <span class="info darken-2">
-                      <i class="ft-airplay"></i> Motors Registerd</span>
+                      <i class></i>개의 모터가 등록되어 있습니다</span>
                   </li>
                 </ul>
               </div>
@@ -127,7 +131,7 @@
                         (motorOverview.getTotalMotorCount()), 0, 2)
                         + '%'}"></h1>
                     <span class="warning darken-2">
-                      <i class="ft-airplay"></i> Anomaly Motors Percentage</span>
+                      <i class></i>비정상 모터비율</span>
                   </li>
                 </ul>
               </div>
@@ -159,7 +163,7 @@
                         th:text="${#numbers.formatDecimal((motorOverview.getTotalOnMotorCount() * 100.0) /
                         (motorOverview.getTotalMotorCount()), 0, 2) + '%'}"></h1>
                     <span class="danger darken-2">
-                      <i class="ft-airplay"></i> Running Motors Percentage</span>
+                      <i class></i> 모터 가동률</span>
                   </li>
                 </ul>
               </div>
@@ -226,15 +230,15 @@
                       <div class="media-body text-left mt-1">
                         <h3 class="font-large-2 white"
                             th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) /
-                            sector.getTotalCount(), 0, 2) + '%'}"></h3>
+                            sector.getTotalCount(), 0, 2) + '%'}" style="position: relative;top:-17px"></h3>
                         <h6 class="mt-1"><span class="text-muted white font-medium-5">정상 비율</span>
                         </h6>
                       </div>
                       <div class="media-body text-right mt-1">
                         <h3 class="font-large-2 white"
                             th:text="${#numbers.formatDecimal((sector.getIsOnCount() * 100.0) /
-                            sector.getTotalCount(), 0, 2) + '%'}"></h3>
-                        <h6 class="mt-1"><span class="text-muted white font-medium-5">가동 비율</span>
+                            sector.getTotalCount(), 0, 2) + '%'}" style="position: relative;top:-17px"></h3>
+                        <h6 class="mt-1"><span class="text-muted white font-medium-5 ">가동 비율</span>
                         </h6>
                       </div>
                     </div>
@@ -440,6 +444,7 @@
       },
       scales: {
         xAxes: [{
+
           display: true,
           gridLines: {
             color: "#f3f3f3",
@@ -538,7 +543,7 @@
       }),
       datasets: [
         {
-          label: "월간 가동률",
+          label: "월간  가동률",
           data: monthRunningRates.map(monthRunningRate => monthRunningRate.rate),
           lineTension: 0,
           fill: true,
@@ -586,10 +591,7 @@
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
-<script src="https://aiotone.live/resources/app-assets/vendors/js/charts/chartist.min.js"
-        type="text/javascript"></script>
-<script src="https://aiotone.live/resources/app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js"
-        type="text/javascript"></script>
+
 <script src="https://aiotone.live/resources/app-assets/vendors/js/forms/icheck/icheck.min.js"
         type="text/javascript"></script>
 <!-- END: Page Vendor JS-->
@@ -601,8 +603,7 @@
 <!-- END: Theme JS-->
 
 <!-- BEGIN: Page JS-->
-<script src="https://aiotone.live/resources/app-assets/js/scripts/cards/card-advanced.js"
-        type="text/javascript"></script>
+
 <script src="https://aiotone.live/resources/app-assets/js/scripts/pages/dashboard-analytics.js"
         type="text/javascript"></script>
 <script src="https://aiotone.live/resources/app-assets/js/scripts/charts/chartjs/line/line.js"
