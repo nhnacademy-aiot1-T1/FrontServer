@@ -21,5 +21,9 @@ public class ApiPathProperties {
   private final String sectorRegister;
   private final String sectorRename;
   private final String sectorRemove;
+  private final String userList;
+  private final String userInfo;
+  private final String editUserInfo;
+  private final String deactivateUserInfo;
 
 }
