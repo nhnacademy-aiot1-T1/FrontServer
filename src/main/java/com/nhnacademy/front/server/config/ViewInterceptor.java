@@ -34,7 +34,8 @@ public class ViewInterceptor implements HandlerInterceptor {
             .equals("Authorization"))
         .findFirst().orElse(new Cookie("Authorization", ""));
     String token = cookie.getValue();
-    String decodeToken = new String(Base64Utils.decodeFromUrlSafeString(token));
+    String payload = token.split("\\.")[1];
+    String decodeToken = new String(Base64Utils.decodeFromUrlSafeString(payload));
     log.info(decodeToken);
     if (StringUtils.containsIgnoreCase(decodeToken, "ADMIN")) {
       roleThreadLocal.set(UserRole.ADMIN);
