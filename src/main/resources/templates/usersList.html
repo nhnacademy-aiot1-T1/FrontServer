@@ -36,15 +36,31 @@
   </div>
   <div class="card-content collapse show">
     <div class="card-body">
-      <div th:each="user: ${users}">
-        <p class="form-control border-primary" th:text="${user.name}"></p>
-        <form id="updateRole" th:action="@{/mypage/user/update/role}" method="post">
-          <select name="role">
-            <option value="NONE" th:selected="${user.role == 'NONE'}">NONE</option>
-            <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
-          </select>
-          <button type="submit" class="btn btn-primary">Change Role</button>
-        </form>
+      <div class="row">
+        <div class="col-md-12 " th:each="user: ${users}">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Name: <span th:text="${user.name}">User Name</span></h5>
+              <p class="card-text">
+                <h5 class="card-title">Role: <span th:text="${user.role}"></span></h5>
+              </p>
+              <form id="updateRole" th:action="@{/mypage/user/update/role}" method="post">
+                <div class="form-row align-items-center">
+                  <div class="col-auto">
+                    <select class="form-control mb-2" name="role">
+                      <option value="NONE" th:selected="${user.role == 'NONE'}">NONE</option>
+                      <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
+                    </select>
+                  </div>
+                  <div class="col-auto">
+                    <input type="hidden" name="userId" th:value="${user.id}"/>
+                    <button type="submit" class="btn btn-primary mb-2">Change Role</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
