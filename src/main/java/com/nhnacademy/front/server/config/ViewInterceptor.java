@@ -38,7 +38,7 @@ public class ViewInterceptor implements HandlerInterceptor {
     log.info(decodeToken);
     if (StringUtils.containsIgnoreCase(decodeToken, "ADMIN")) {
       roleThreadLocal.set(UserRole.ADMIN);
-    }else {
+    } else {
       roleThreadLocal.set(UserRole.NONE);
     }
 
@@ -48,7 +48,9 @@ public class ViewInterceptor implements HandlerInterceptor {
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
       ModelAndView modelAndView) throws Exception {
-    modelAndView.addObject("userRole", roleThreadLocal.get());
+    if (modelAndView != null) {
+      modelAndView.addObject("userRole", roleThreadLocal.get());
+    }
     HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
   }
 
