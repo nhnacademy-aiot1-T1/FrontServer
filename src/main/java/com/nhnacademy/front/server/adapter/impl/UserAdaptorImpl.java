@@ -30,7 +30,8 @@ public class UserAdaptorImpl implements UserAdaptor {
   private static final String GET_USER_DETAIL_URL = "https://run.mocky.io/v3/1dc226c9-8189-49ef-8bbe-28616b6d2f1f";
   private static final String POST_USER_DETAIL_URL = "https://run.mocky.io/v3/cfd28bcd-01f2-4de3-9db2-53253d403a71";
   private static final String DELETE_USER_DETAIL_URL = "https://run.mocky.io/v3/30972868-a1ef-45f2-a5fc-7521dad46bd2";
-  private static final String GET_USER_LIST_URL = "https://run.mocky.io/v3/9993d726-682b-4fdd-9128-8c3d86520573";
+  private static final String GET_USER_LIST_URL = "https://run.mocky.io/v3/8848d746-18c6-4d71-b5af-0aa1b8b58968";
+
   private static final String JSON_PARSING_ERROR_MESSAGE = "JSON parsing error";
 
   @Override
