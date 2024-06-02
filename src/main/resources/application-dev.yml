@@ -28,3 +28,8 @@ api:
     sector-register: http://GATEWAY-SERVICE/api/monitor/sectors
     sector-rename: http://GATEWAY-SERVICE/api/monitor/sectors/
     sector-remove: http://GATEWAY-SERVICE/api/monitor/sectors/
+
+spring:
+  thymeleaf:
+    servlet:
+      produce-partial-output-while-processing: false

@@ -29,9 +29,11 @@
       <li class=" nav-item"><a href="/mypage"><i class="ft-aperture"></i><span class="menu-title"
                                                                                data-i18n="">My Page</span></a>
       </li>
-      <li class="nav-item" th:if="${userDetail != null and userDetail.role == 'ADMIN'}"><a
-          href="/mypage/admin/users"><i class="ft-aperture"></i><span class="menu-title"
-                                                                      data-i18n="">View Users</span></a>
+
+      <li class="nav-item" th:if="${userRole.toString().equals('ADMIN')}">
+        <a
+          href="/mypage/admin/users"><i class="ft-list"></i><span class="menu-title"
+                                                                      data-i18n="" th:text="${userRole}">View Users</span></a>
       </li>
     </ul>
   </div>
