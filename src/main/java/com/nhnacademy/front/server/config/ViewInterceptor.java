@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
@@ -33,8 +34,7 @@ public class ViewInterceptor implements HandlerInterceptor {
             .equals("Authorization"))
         .findFirst().orElse(new Cookie("Authorization", ""));
     String token = cookie.getValue();
-    Decoder decoder = Base64.getDecoder();
-    String decodeToken = new String(decoder.decode(token));
+    String decodeToken = new String(Base64Utils.decodeFromUrlSafeString(token));
     log.info(decodeToken);
     if (StringUtils.containsIgnoreCase(decodeToken, "ADMIN")) {
       roleThreadLocal.set(UserRole.ADMIN);
