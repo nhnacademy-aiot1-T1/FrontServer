@@ -53,10 +53,10 @@ public class WebConfig implements WebMvcConfigurer {
   }
 // TODO 실제 실행 테스트시 주석처리
 
-  @Bean
-  public ObjectMapper objectMapper() {
-    return new ObjectMapper().registerModule(new JavaTimeModule());
-  }
+//  @Bean
+//  public ObjectMapper objectMapper() {
+//    return new ObjectMapper().registerModule(new JavaTimeModule());
+//  }
 
   @Bean
   public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
