@@ -37,3 +37,7 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+
+management:
+  server:
+    port: 8888
