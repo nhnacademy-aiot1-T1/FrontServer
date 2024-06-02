@@ -13,6 +13,7 @@ import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.Duration;
@@ -22,6 +23,11 @@ import java.util.List;
 @Slf4j
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addRedirectViewController("/", "/login");
+  }
 
   @Bean
   @LoadBalanced
