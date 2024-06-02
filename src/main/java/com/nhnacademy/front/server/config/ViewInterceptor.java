@@ -24,7 +24,7 @@ import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 @Slf4j
 public class ViewInterceptor implements HandlerInterceptor {
 
-  private static ThreadLocal<UserRole> roleThreadLocal = new ThreadLocal<>();
+  private static final ThreadLocal<UserRole> roleThreadLocal = new ThreadLocal<>();
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

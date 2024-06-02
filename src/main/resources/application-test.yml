@@ -13,7 +13,7 @@ oauth:
 
 logging:
   level:
-    root: info
+    root: debug
 api:
   path:
     motor-overview: http://GATEWAY-SERVICE/api/monitor/overview
