@@ -32,12 +32,17 @@ public class ViewInterceptor implements HandlerInterceptor {
     Cookie cookie = Arrays.stream(request.getCookies())
         .filter(c -> c.getName()
             .equals("Authorization"))
-        .findFirst().orElse(new Cookie("Authorization", ""));
-    String token = cookie.getValue();
-    String payload = token.split("\\.")[1];
-    String decodeToken = new String(Base64Utils.decodeFromUrlSafeString(payload));
-    log.info(decodeToken);
-    if (StringUtils.containsIgnoreCase(decodeToken, "ADMIN")) {
+        .findFirst().orElse(null);
+
+    String payload = null;
+    if (cookie != null) {
+      String token = cookie.getValue();
+      payload = token.split("\\.")[1];
+      String decodeToken = new String(Base64Utils.decodeFromUrlSafeString(payload));
+      log.info(decodeToken);
+    }
+
+    if (StringUtils.containsIgnoreCase(payload, "ADMIN")) {
       roleThreadLocal.set(UserRole.ADMIN);
     } else {
       roleThreadLocal.set(UserRole.NONE);
@@ -60,5 +65,14 @@ public class ViewInterceptor implements HandlerInterceptor {
       Object handler, Exception ex) throws Exception {
     roleThreadLocal.remove();
     HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+  }
+
+
+  public static void main(String[] args) {
+    String token = "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjE1LCJuYW1lIjoi67CV66-47KCV7KCVIiwicm9sZSI6Ik5PTkUiLCJpYXQiOjE3MTcyNTE0NzIsImV4cCI6MTcxNzI1MTc3Mn0.TVtdkcKfEyKBmhl9al-5H9rABpjx5alC4THu41cU_C13yL8XDBySjcCLzisaa3d46eCy2wBwXsPEowgxVl795w.YEfEmyEwtRaVC51gT8mJhQAW-TMt0ZJujbfEZvkdeB6h9yLsC87P_8TzDciHZ7dQ6QltHM1JJcRduJes6X3DFA";
+    String payload = token.split("\\.")[1];
+
+    System.out.println(new String(Base64Utils.decodeFromUrlSafeString(payload)));
+
   }
 }
