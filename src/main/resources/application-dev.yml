@@ -26,8 +26,8 @@ api:
     running-rate-by-time: https://run.mocky.io/v3/fc91f26c-1883-41b3-a65d-406681cc7060
     individual-running-rate-by-time: https://run.mocky.io/v3/92a16e33-fc73-44b8-bf0a-c3b37f3c78eb
     sector-register: http://GATEWAY-SERVICE/api/monitor/sectors
-    sector-rename: http://GATEWAY-SERVICE/api/monitor/sectors/
-    sector-remove: http://GATEWAY-SERVICE/api/monitor/sectors/
+    sector-rename: http://GATEWAY-SERVICE/api/monitor/sectors/{sectorId}
+    sector-remove: http://GATEWAY-SERVICE/api/monitor/sectors/{sectorId}
 
 spring:
   thymeleaf:

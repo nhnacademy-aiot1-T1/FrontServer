@@ -38,7 +38,7 @@ public class SectorManagementController {
 
     SectorRenameRequest sectorRenameRequest = new SectorRenameRequest(sectorId, newSectorName);
 
-    sectorService.renameSector(sectorRenameRequest);
+    sectorService.renameSector(sectorId, sectorRenameRequest);
 
     return REDIRECT + "/SectorDetail";
   }

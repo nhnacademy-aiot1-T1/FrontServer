@@ -103,8 +103,11 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
+    String url = pathProperties.getIndividualRunningRateByTime()
+        .replace("{motorId}", motorId.toString());
+
     ResponseEntity<CommonResponse<MotorDetailDto>> exchange = restTemplateMocky.exchange(
-        pathProperties.getMotorDetail(), HttpMethod.GET, request,
+        url, HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -263,15 +266,17 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
     HttpEntity<Object> request = new HttpEntity<>(motorsRunningRateDataRequest, httpHeaders);
 
+    String url = pathProperties.getIndividualRunningRateByTime()
+        .replace("{motorId}", motorId.toString());
+
     ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-        pathProperties.getIndividualRunningRateByTime(), HttpMethod.GET, request,
+        url, HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
-        }, motorId);
+        });
     if (exchange.getStatusCode() != HttpStatus.OK) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
     return exchange.getBody();
-
   }
 
   @Override
@@ -298,7 +303,8 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
   }
 
   @Override
-  public CommonResponse<SectorManagementDto> renameSector(SectorRenameRequest sectorRenameRequest) {
+  public CommonResponse<SectorManagementDto> renameSector(Long sectorId,
+      SectorRenameRequest sectorRenameRequest) {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
@@ -306,8 +312,11 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<SectorRenameRequest> request = new HttpEntity<>(sectorRenameRequest,
         httpHeaders);
 
+    String url = pathProperties.getIndividualRunningRateByTime()
+        .replace("{sectorId}", sectorId.toString());
+
     ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
-        pathProperties.getSectorRename(), HttpMethod.POST, request,
+        url, HttpMethod.POST, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -327,8 +336,11 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<SectorRemoveRequest> HttpRequest = new HttpEntity<>(
         httpHeaders);
 
+    String url = pathProperties.getIndividualRunningRateByTime()
+        .replace("{sectorId}", sectorId.toString());
+
     ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
-        pathProperties.getSectorRemove() + sectorId, HttpMethod.DELETE, HttpRequest,
+        url, HttpMethod.DELETE, HttpRequest,
         new ParameterizedTypeReference<>() {
         });
 

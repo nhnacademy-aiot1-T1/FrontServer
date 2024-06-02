@@ -23,8 +23,8 @@ public class SectorService {
     return monitoringAdaptor.registSector(sectorRegisterRequest).getData();
   }
 
-  public SectorManagementDto renameSector(SectorRenameRequest sectorRenameRequest) {
-    return monitoringAdaptor.renameSector(sectorRenameRequest).getData();
+  public SectorManagementDto renameSector(Long sectorId, SectorRenameRequest sectorRenameRequest) {
+    return monitoringAdaptor.renameSector(sectorId, sectorRenameRequest).getData();
   }
 
   public SectorManagementDto removeSector(Long sectorId) {

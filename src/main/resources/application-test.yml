@@ -1,15 +1,16 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.71.99:8761/eureka
+      defaultZone: http://192.168.0.23:8761/eureka
 
 server:
   port: 8082
 
 oauth:
   payco:
-    redirect-uri: http://test-vm.com:8082/oauth-login
+    redirect-uri: https://aiotone.live/oauth/payco-login
     secret: 4nl1ZsBpejpz1VclsSRTD427
+
 logging:
   level:
     root: info
@@ -23,8 +24,8 @@ api:
     running-rate-by-time: http://GATEWAY-SERVICE/api/monitor/motors/running-rate
     individual-running-rate-by-time: http://GATEWAY-SERVICE/api/monitor/motors/{motorId}/running-rate
     sector-register: http://GATEWAY-SERVICE/api/monitor/sectors
-    sector-rename: http://GATEWAY-SERVICE/api/monitor/sectors/
-    sector-remove: http://GATEWAY-SERVICE/api/monitor/sectors/
+    sector-rename: http://GATEWAY-SERVICE/api/monitor/sectors/{sectorId}
+    sector-remove: http://GATEWAY-SERVICE/api/monitor/sectors/{sectorId}
 
 spring:
   mvc:
