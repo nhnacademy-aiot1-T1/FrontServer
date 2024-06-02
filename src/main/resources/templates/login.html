@@ -50,71 +50,90 @@
   <link rel="stylesheet" type="text/css" href="../vertical-menu-template/assets/css/style.css">
   <!-- END: Custom CSS-->
 
+  <style>
+    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+    body, p, h3, h4, h6 {
+      font-family: 'NanumSquare', sans-serif;
+      font-weight: 800;
+    }
+  </style>
+
 
 </head>
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu 1-column  bg-full-screen-image blank-page blank-page" data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="1-column">
-    <!-- BEGIN: Content-->
-    <div class="app-content content">
-        <div class="content-wrapper">
-            <div class="content-wrapper-before"></div>
-            <div class="content-header row">
-            </div>
-            <div class="content-body">
-                <section class="flexbox-container">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="col-lg-2 col-md-6 col-10 box-shadow-2 p-0">
+<body class="vertical-layout vertical-menu 1-column  bg-full-screen-image blank-page blank-page"
+      data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue"
+      data-col="1-column">
+<!-- BEGIN: Content-->
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-wrapper-before"></div>
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+      <section class="flexbox-container">
+        <div class="col-12 d-flex align-items-center justify-content-center">
+          <div class="col-lg-2 col-md-6 col-10 box-shadow-2 p-0">
 
-                            <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
+            <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
 
-                                <div class="card-header border-0">
-                                    <div class="text-center mb-1">
-                                        <img  src="https://aiotone.live/resources/logo/logo3.png" alt="branding logo" >
-                                    </div>
-                                    <div class="font-large-1  text-center">
-                                        로그인
-                                    </div>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        <form class="form-horizontal" th:action="@{/login}" method="post">
-                                            <fieldset class="form-group position-relative has-icon-left">
-                                                <input type="text" class="form-control round" id="user-id" name="loginId" placeholder="ID" required>
-                                                <div class="form-control-position">
-                                                    <i class="ft-user"></i>
-                                                </div>
-                                            </fieldset>
-                                            <fieldset class="form-group position-relative has-icon-left">
-                                                <input type="password" class="form-control round" id="user-password" name="password" placeholder="Password" required>
-                                                <div class="form-control-position">
-                                                    <i class="ft-lock"></i>
-                                                </div>
-                                            </fieldset>
-                                            <div class="form-group row">
-                                                <div class="col-md-6 col-12 text-center text-sm-left">
+              <div class="card-header border-0">
+                <div class="text-center mb-1">
+                  <img src="https://aiotone.live/resources/logo/logo3.png" alt="branding logo">
+                </div>
+                <div class="font-large-1  text-center">
+                  로그인
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="card-body">
+                  <form class="form-horizontal" th:action="@{/login}" method="post">
+                    <fieldset class="form-group position-relative has-icon-left">
+                      <input type="text" class="form-control round" id="user-id" name="loginId"
+                             placeholder="ID" required>
+                      <div class="form-control-position">
+                        <i class="ft-user"></i>
+                      </div>
+                    </fieldset>
+                    <fieldset class="form-group position-relative has-icon-left">
+                      <input type="password" class="form-control round" id="user-password"
+                             name="password" placeholder="Password" required>
+                      <div class="form-control-position">
+                        <i class="ft-lock"></i>
+                      </div>
+                    </fieldset>
+                    <div class="form-group row">
+                      <div class="col-md-6 col-12 text-center text-sm-left">
 
-                                                </div>
-                                            </div>
-                                            <div class="form-group text-center">
-                                                <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">로그인</button>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                    <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-2 "><span>OR Sign Up Using</span></p>
-                                    <div class="text-center">
-                                        <a th:href="${payco}" class="btn btn-social-icon round mr-1 mb-1"><img alt="payco" src="https://aiotone.live/resources/logo/payco.png"></a>
-                                    </div>
-
-                                    <p class="card-subtitle text-muted text-right font-small-3 mx-2 my-1"><span>아직 회원이 아니신가요? <a href="/register" class="card-link">회원가입</a></span></p>
-                                </div>
-                            </div>
-                        </div>
+                      </div>
                     </div>
-                </section>
+                    <div class="form-group text-center">
+                      <button type="submit"
+                              class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">
+                        로그인
+                      </button>
+                    </div>
+
+                  </form>
+                </div>
+                <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-2 ">
+                  <span>OR Sign Up Using</span></p>
+                <div class="text-center">
+                  <a th:href="${payco}" class="btn btn-social-icon round mr-1 mb-1"><img alt="payco"
+                                                                                         src="https://aiotone.live/resources/logo/payco.png"></a>
+                </div>
+
+                <p class="card-subtitle text-muted text-right font-small-3 mx-2 my-1"><span>아직 회원이 아니신가요? <a
+                    href="/register" class="card-link">회원가입</a></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </div>
