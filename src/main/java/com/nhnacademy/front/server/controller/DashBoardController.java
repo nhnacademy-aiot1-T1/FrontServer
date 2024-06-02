@@ -20,7 +20,7 @@ public class DashBoardController {
   private final MotorService motorService;
   private final SectorService sectorService;
 
-  @GetMapping("/home")
+  @GetMapping("/")
   public String home(Model model) {
 
     MotorInfoOverviewDto motorOverviewDTO = motorService.getMotorOverview();
