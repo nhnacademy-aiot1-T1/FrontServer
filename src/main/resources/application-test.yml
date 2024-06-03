@@ -20,7 +20,7 @@ api:
     sector-info: http://GATEWAY-SERVICE/api/monitor/sectors/overview
     motors: http://GATEWAY-SERVICE/api/monitor/motors
     motor-detail: http://GATEWAY-SERVICE/api/monitor/motors/{motorId}
-    control-logs: http://GATEWAY-SERVICE/api/monitor/log
+    control-logs: http://GATEWAY-SERVICE/api/monitor/logs/error
     running-rate-by-time: http://GATEWAY-SERVICE/api/monitor/motors/running-rate
     individual-running-rate-by-time: http://GATEWAY-SERVICE/api/monitor/motors/{motorId}/running-rate
     sector-register: http://GATEWAY-SERVICE/api/monitor/sectors
