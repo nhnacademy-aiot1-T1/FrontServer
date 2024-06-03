@@ -2,7 +2,8 @@ spring:
   application:
     name: FRONT-SERVICE
   profiles:
-    active: dev
+    active: test
+
   mvc:
     hiddenmethod:
       filter:
