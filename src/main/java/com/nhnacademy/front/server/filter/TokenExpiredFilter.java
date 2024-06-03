@@ -17,13 +17,12 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @Slf4j
-//@Component
+@Component
 @RequiredArgsConstructor
 public class TokenExpiredFilter extends OncePerRequestFilter {
 
   private final AuthService authService;
 
-  // todo, resource file config에서 제외하도록 수정
   private static final String[] EXCLUDE_PATH_PREFIX = { "/login", "/logout", "/register" };
 
   @Override
