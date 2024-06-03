@@ -91,7 +91,7 @@
     <div class="content-wrapper-before "></div>
     <div class="content-header row">
       <div class="content-header-left col-md-4 col-12 mb-2">
-        <h3 class="content-header-title font-large-2">모터 목록</h3>
+        <h3 class="content-header-title font-large-1">모터 목록</h3>
       </div>
 
       <div class="content-detached content-right">
@@ -102,6 +102,7 @@
                 <div class="card-head">
                   <div class="card-header">
                     <h4 class="card-title font-large-1" id=sectorname></h4>
+                    <br>
                     <div class="card-content collapse show">
                       <div class="card-body pt-300 pb-300">
                         <div class="row mb-1">
@@ -126,7 +127,7 @@
                             <th:p id="anomalyMotors" class="font-large-1 text-bold-400"></th:p>
                           </div>
                         </div>
-
+                        <br>
                         <h6 class="font-medium-5 text-bold-600"> 정상 모터 비율:
                           <span id="normalMotorPercent"></span>
                         </h6>
@@ -200,7 +201,7 @@
                           <div th:if="${motor.getIsNormal() == true}"
                                class="card bg-success" style="height: 70px;">
                             <div class="card bg-success" style="height: 20px">
-                              <h4 class="card-title white font-medium-5"
+                              <h4 class="card-title white font-medium-3"
                                   style="padding: 10px; height: 1px"
                                   th:text="${motor.getMotorName()}"></h4>
                             </div>
@@ -214,7 +215,7 @@
                                         alt="Your Image" class="img-fluid">
                                   </div>
                                 </div>
-                                <div class="media-body text-right mt-1">
+                                <div class="media-body text-center mt-1">
                                   <h3 class="font-large-0 white">NORMAL</h3>
                                 </div>
                               </div>
@@ -223,7 +224,7 @@
                           <div th:if="${motor.getIsNormal() == false }"
                                class="card bg-warning " style="height: 70px">
                             <div class="card bg-warning" style="height: 20px">
-                              <h4 class="card-title white font-medium-5"
+                              <h4 class="card-title white font-medium-4"
                                   style="padding: 10px;height: 1px"
                                   th:text="${motor.getMotorName()}"></h4>
                               <a class="heading-elements-toggle"><i
@@ -242,7 +243,7 @@
                                         alt="Your Image" class="img-fluid">
                                   </div>
                                 </div>
-                                <div class="media-body text-right mt-1">
+                                <div class="media-body text-center mt-1">
                                   <h3 class="font-large-0 white">WARNING</h3>
                                 </div>
                               </div>
@@ -254,7 +255,7 @@
                           <div th:if="${motor.getIsNormal() == true}"
                                class="card bg-blue-grey" style="height: 70px">
                             <div class="card bg-blue-grey" style="height: 20px">
-                              <h4 class="card-title white font-medium-5"
+                              <h4 class="card-title white font-medium-3"
                                   style="padding: 10px;height: 1px"
                                   th:text="${motor.getMotorName()}"></h4>
                             </div>
@@ -268,7 +269,7 @@
                                         alt="Your Image" class="img-fluid">
                                   </div>
                                 </div>
-                                <div class="media-body text-right mt-1">
+                                <div class="media-body text-center mt-1">
                                   <h3 class="font-large-0 white">NORMAL</h3>
                                 </div>
                               </div>
@@ -277,7 +278,7 @@
                           <div th:if="${motor.getIsNormal() == false }"
                                class="card  bg-blue-grey" style="height: 70px">
                             <div class="card  bg-blue-grey " style="height: 20px">
-                              <h4 class="card-title warning font-medium-5"
+                              <h4 class="card-title warning font-medium-3"
                                   style="padding: 10px;height: 1px"
                                   th:text="${motor.getMotorName()}"
                               ></h4>
@@ -297,7 +298,7 @@
                                         alt="Your Image" class="img-fluid">
                                   </div>
                                 </div>
-                                <div class="media-body text-right mt-1">
+                                <div class="media-body text-center mt-1">
                                   <h3 class="font-large-0 warning">
                                     WARNING</h3>
                                 </div>
