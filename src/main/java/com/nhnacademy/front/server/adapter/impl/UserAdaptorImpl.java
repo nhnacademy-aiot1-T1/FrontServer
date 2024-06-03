@@ -40,6 +40,8 @@ public class UserAdaptorImpl implements UserAdaptor {
     String url = pathProperties.getUserInfo()
         .replace("{id}", id.toString());
 
+    log.info("user detail url is : {}", url);
+
     ResponseEntity<CommonResponse<UserDetailDto>> exchange = restTemplateExchange(
         url, HttpMethod.GET, request);
 

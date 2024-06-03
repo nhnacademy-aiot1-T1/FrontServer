@@ -31,7 +31,10 @@ public class UserDetailController {
    */
   @GetMapping
   public String getUserDetail(Model model, @RequestParam(value = "id", required = false) Long id) {
+    log.info("id : {}", id);
     UserDetailDto userDetailDto = userService.getUserDetail(id);
+
+    log.info("user detail {}", userDetailDto.getId());
 
     model.addAttribute("userDetail", userDetailDto);
 
