@@ -59,15 +59,13 @@ public class WebUtils {
       return JWT.decode(jwt).getExpiresAt().after(now);
     } catch (JWTDecodeException e) {
       log.error(e.getMessage());
-
-//            throw new InvalidTokenException();
     }
     return false;
   }
 
   public static Optional<Cookie> findAuthorizationCookie(Cookie[] cookies) {
     if (cookies == null) {
-      throw new NotFoundTokenException();
+      return Optional.empty();
     }
 
     return Arrays.stream(cookies)
