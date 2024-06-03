@@ -37,7 +37,9 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-
+  thymeleaf:
+    servlet:
+      produce-partial-output-while-processing: false
 management:
   server:
     port: 8888
