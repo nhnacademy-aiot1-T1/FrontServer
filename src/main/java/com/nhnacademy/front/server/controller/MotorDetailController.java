@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 @Controller
@@ -59,7 +60,8 @@ public class MotorDetailController {
   }
 
   @GetMapping("/api/monitor/motors/{motorId}/sensors/{sensorId}/scores")
-  public ResponseEntity<CommonResponse<SensorScoreDto>> getSensorScores(Model model,
+  @ResponseBody
+  public SensorScoreDto getSensorScores(Model model,
       @PathVariable Long motorId,
       @PathVariable Long sensorId) {
 
@@ -71,11 +73,11 @@ public class MotorDetailController {
         .replace("{sensorId}", sensorId.toString());
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
-
     return restTemplate.exchange(
         url, HttpMethod.GET, request,
-        new ParameterizedTypeReference<>() {
-        });
+        new ParameterizedTypeReference<CommonResponse<SensorScoreDto>>() {
+        }).getBody().getData();
+
 
   }
 
@@ -92,7 +94,7 @@ public class MotorDetailController {
         .replace("{sensorId}", sensorId.toString());
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
-    
+
     return restTemplate.exchange(
         url, HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
