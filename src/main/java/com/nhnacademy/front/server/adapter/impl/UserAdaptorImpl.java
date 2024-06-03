@@ -90,7 +90,7 @@ public class UserAdaptorImpl implements UserAdaptor {
 
     ResponseEntity<CommonResponse<UserDetailDto>> exchange;
     try {
-      exchange = restTemplateExchange(url, HttpMethod.POST, request);
+      exchange = restTemplateExchange(url, HttpMethod.PUT, request);
     } catch (ResponseStatusException e) {
       log.error("RestTemplate exchange error :{}", e.getMessage());
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
