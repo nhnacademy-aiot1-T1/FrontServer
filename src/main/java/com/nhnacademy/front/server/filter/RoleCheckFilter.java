@@ -3,7 +3,6 @@ package com.nhnacademy.front.server.filter;
 import com.nhnacademy.front.server.exception.AuthenticationException;
 import com.nhnacademy.front.server.exception.AuthorizationException;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -15,9 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-@Component
 public class RoleCheckFilter extends OncePerRequestFilter {
-  private static final String[] EXCLUDE_PATH_PREFIX = { "/login", "/none" };
+  private static final String[] EXCLUDE_PATH_PREFIX = { "/login", "/none", "/" };
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
