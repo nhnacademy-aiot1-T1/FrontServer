@@ -59,6 +59,11 @@
       font-family: 'NanumSquare', sans-serif;
       font-weight: 800;
     }
+
+    p.blue-grey, p.font-medium-5 {
+      font-family: 'NanumSquare', sans-serif;
+      font-weight: 800;
+    }
   </style>
 
 </head>
@@ -86,7 +91,7 @@
     <div class="content-wrapper-before "></div>
     <div class="content-header row">
       <div class="content-header-left col-md-4 col-12 mb-2">
-        <h3 class="content-header-title">모터 목록</h3>
+        <h3 class="content-header-title font-large-2">모터 목록</h3>
       </div>
 
       <div class="content-detached content-right">
@@ -96,33 +101,33 @@
               <div class="card mx-auto" style="width: 90pc;">
                 <div class="card-head">
                   <div class="card-header">
-                    <h4 class="card-title" id=sectorname></h4>
+                    <h4 class="card-title font-large-1" id=sectorname></h4>
                     <div class="card-content collapse show">
                       <div class="card-body pt-300 pb-300">
                         <div class="row mb-1">
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">총 모터</p>
-                            <th:p id="totalMotors" class="font-medium-5 text-bold-400"></th:p>
+                            <p class="blue-grey lighten-2 mb-0 font-medium-5">총 모터</p>
+                            <th:p id="totalMotors" class="font-large-1 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">가동중인 모터</p>
-                            <th:p id="runningMotors" class="font-medium-5 text-bold-400"></th:p>
+                            <p class="blue-grey lighten-2 mb-0 font-medium-5">가동중인 모터</p>
+                            <th:p id="runningMotors" class="font-large-1 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">정상 모터</p>
-                            <th:p id="normalMotors" class="font-medium-5 text-bold-400"></th:p>
+                            <p class="blue-grey lighten-2 mb-0 font-medium-5">정상 모터</p>
+                            <th:p id="normalMotors" class="font-large-1 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">비정상 모터</p>
-                            <th:p id="anomalyMotors" class="font-medium-5 text-bold-400"></th:p>
+                            <p class="blue-grey lighten-2 mb-0 font-medium-5">비정상 모터</p>
+                            <th:p id="anomalyMotors" class="font-large-1 text-bold-400"></th:p>
                           </div>
                         </div>
 
-                        <h6 class="text-bold-600"> 정상 모터 비율:
+                        <h6 class="font-medium-5 text-bold-600"> 정상 모터 비율:
                           <span id="normalMotorPercent"></span>
                         </h6>
                         <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
@@ -131,7 +136,7 @@
                                aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <br>
-                        <h6 class="text-bold-600"> 가동중인 모터 비율:
+                        <h6 class="font-medium-5  text-bold-600"> 가동중인 모터 비율:
                           <span id="isOnMotorPercent"></span>
                         </h6>
                         <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
@@ -195,7 +200,8 @@
                           <div th:if="${motor.getIsNormal() == true}"
                                class="card bg-success" style="height: 70px;">
                             <div class="card bg-success" style="height: 20px">
-                              <h4 class="card-title white" style="padding: 10px; height: 1px"
+                              <h4 class="card-title white font-medium-5"
+                                  style="padding: 10px; height: 1px"
                                   th:text="${motor.getMotorName()}"></h4>
                             </div>
                             <div class="card bg-success">
@@ -217,7 +223,8 @@
                           <div th:if="${motor.getIsNormal() == false }"
                                class="card bg-warning " style="height: 70px">
                             <div class="card bg-warning" style="height: 20px">
-                              <h4 class="card-title white" style="padding: 10px;height: 1px"
+                              <h4 class="card-title white font-medium-5"
+                                  style="padding: 10px;height: 1px"
                                   th:text="${motor.getMotorName()}"></h4>
                               <a class="heading-elements-toggle"><i
                                   class="la la-ellipsis-v font-medium-3"></i></a>
@@ -247,7 +254,8 @@
                           <div th:if="${motor.getIsNormal() == true}"
                                class="card bg-blue-grey" style="height: 70px">
                             <div class="card bg-blue-grey" style="height: 20px">
-                              <h4 class="card-title white" style="padding: 10px;height: 1px"
+                              <h4 class="card-title white font-medium-5"
+                                  style="padding: 10px;height: 1px"
                                   th:text="${motor.getMotorName()}"></h4>
                             </div>
                             <div class="card bg-blue-grey">
@@ -269,7 +277,8 @@
                           <div th:if="${motor.getIsNormal() == false }"
                                class="card  bg-blue-grey" style="height: 70px">
                             <div class="card  bg-blue-grey " style="height: 20px">
-                              <h4 class="card-title warning" style="padding: 10px;height: 1px"
+                              <h4 class="card-title warning font-medium-5"
+                                  style="padding: 10px;height: 1px"
                                   th:text="${motor.getMotorName()}"
                               ></h4>
                               <a class="heading-elements-toggle"><i
@@ -318,7 +327,7 @@
         <div class="sidebar-content card d-none d-lg-block">
           <div class="card-body">
             <div class="row">
-              <h4 class="card-title" style="padding-left: 10px">구역 목록</h4>
+              <h4 class="card-title font-medium-5" style="padding-left: 10px">구역 목록</h4>
             </div>
             <div class="category-title pb-1">
             </div>
