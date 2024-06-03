@@ -1,28 +1,23 @@
 package com.nhnacademy.front.server.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.server.dto.UserDetailDto;
 import com.nhnacademy.front.server.dto.UserRole;
 import com.nhnacademy.front.server.service.UserDetailService;
 import com.nhnacademy.front.server.util.WebUtils;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Base64Utils;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -71,7 +66,7 @@ public class UserDetailController {
   }
 
   @PostMapping("/user/update/role")
-  public String updateUserRole(@ModelAttribute("updateRole") String role, Model model) {
+  public String updateUserRole(@RequestParam("role") String role, Model model) {
     log.info("role : {}", role);
     UserDetailDto userDetailDto = (UserDetailDto) model.getAttribute("userDetail");
 
