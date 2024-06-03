@@ -14,7 +14,7 @@ import org.springframework.security.web.firewall.HttpFirewall;
 
 @Configuration
 @EnableWebSecurity
-public class SecureConfig extends WebSecurityConfigurerAdapter {
+public class SecureConfig {
   
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -28,16 +28,5 @@ public class SecureConfig extends WebSecurityConfigurerAdapter {
         .frameOptions().disable();
 
     return http.build();
-  }
-
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-    super.configure(web);
-    web.httpFirewall(defaultHttpFirewall());
-  }
-
-  @Bean
-  public HttpFirewall defaultHttpFirewall() {
-    return new DefaultHttpFirewall();
   }
 }
