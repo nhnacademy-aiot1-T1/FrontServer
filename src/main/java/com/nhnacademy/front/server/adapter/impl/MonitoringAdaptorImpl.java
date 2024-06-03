@@ -316,11 +316,11 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<SectorRenameRequest> request = new HttpEntity<>(sectorRenameRequest,
         httpHeaders);
 
-    String url = pathProperties.getIndividualRunningRateByTime()
+    String url = pathProperties.getSectorRename()
         .replace("{sectorId}", sectorId.toString());
 
     ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplate.exchange(
-        url, HttpMethod.POST, request,
+        url, HttpMethod.PUT, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -340,7 +340,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<SectorRemoveRequest> HttpRequest = new HttpEntity<>(
         httpHeaders);
 
-    String url = pathProperties.getIndividualRunningRateByTime()
+    String url = pathProperties.getSectorRemove()
         .replace("{sectorId}", sectorId.toString());
 
     ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplate.exchange(

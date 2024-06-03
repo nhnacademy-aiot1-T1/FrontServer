@@ -516,7 +516,7 @@
           <div class="card-content collapse show">
             <div class="card-body">
               <!-- ... -->
-              <form id="sectorRemoveForm" action="/removeSector" th:method="delete">
+              <form id="sectorRemoveForm" th:action="@{/removeSector}" th:method="delete">
                 <input type="hidden" id="sectorIdForRemove" name="sectorId" value="">
                 <div class="card-text">
                   <p>정말로 삭제하시겠습니까?</p>

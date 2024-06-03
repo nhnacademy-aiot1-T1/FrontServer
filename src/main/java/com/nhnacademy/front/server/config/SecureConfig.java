@@ -20,7 +20,7 @@ public class SecureConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .cors().disable()
-        .csrf().csrfTokenRepository(new HttpSessionCsrfTokenRepository()).and()
+        .csrf().and()
         .httpBasic().disable()
         .formLogin().disable()
         .logout().disable()
