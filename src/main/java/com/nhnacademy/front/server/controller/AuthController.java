@@ -61,12 +61,12 @@ public class AuthController {
     log.info("access token : {}", accessToken);
 
     if (accessToken != null) {
-      Cookie cookie = new Cookie(AUTHORIZATION_KEY, authCode);
+      Cookie cookie = new Cookie(AUTHORIZATION_KEY, accessToken);
       cookie.setPath("/");
       res.addCookie(cookie);
     }
 
-    return WebUtils.REDIRECT_PREFIX + "/home";
+    return WebUtils.REDIRECT_PREFIX + "/" + HOME_PAGE;
   }
 
   /**
