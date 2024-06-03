@@ -24,8 +24,7 @@ public class TokenExpiredFilter extends OncePerRequestFilter {
   private final AuthService authService;
 
   // todo, resource file config에서 제외하도록 수정
-  private static final String[] EXCLUDE_PATH_PREFIX = {"/login", "/logout", "/register", "/test",
-      "/logo", "/vertical-menu-template"};
+  private static final String[] EXCLUDE_PATH_PREFIX = { "/login", "/logout", "/register" };
 
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
