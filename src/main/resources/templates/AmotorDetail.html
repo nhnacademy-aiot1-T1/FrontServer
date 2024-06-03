@@ -280,19 +280,19 @@
     chartId = 0;
     sensorList.forEach(function (sensor, index) {
 
-      // var sensorDataURL = "http://192.168.71.99:8080/api/monitor/motors/"
-      //     + urlParms.get("motorId")
-      //     + "/sensors/"
-      //     + sensor.sensorId + "/scores";
+      var sensorDataURL = "http://192.168.71.99:8080/api/monitor/motors/"
+          + urlParms.get("motorId")
+          + "/sensors/"
+          + sensor.sensorId + "/scores";
 
-      var sensorDataURL = "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb";
+      // var sensorDataURL = "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb";
 
-      // var sensorRawDataURL = "http://192.168.99.8080/api/monitor/motors/"
-      //     + urlParms.get("motorId")
-      //     + "/sensors/"
-      //     + sensor.sensorId + "/data";
+      var sensorRawDataURL = "http://192.168.99.8080/api/monitor/motors/"
+          + urlParms.get("motorId")
+          + "/sensors/"
+          + sensor.sensorId + "/data";
 
-      var sensorRawDataURL = "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a";
+      // var sensorRawDataURL = "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a";
 
       // var sensorType = sensorList[i].sensorType;
       var promise = new Promise((resolve, reject) => {
