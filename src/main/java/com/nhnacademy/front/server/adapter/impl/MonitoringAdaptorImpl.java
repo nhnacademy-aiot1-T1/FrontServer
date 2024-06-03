@@ -107,7 +107,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
-    String url = pathProperties.getIndividualRunningRateByTime()
+    String url = pathProperties.getMotorDetail()
         .replace("{motorId}", motorId.toString());
 
     ResponseEntity<CommonResponse<MotorDetailDto>> exchange = restTemplate.exchange(
