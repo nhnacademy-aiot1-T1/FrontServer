@@ -1,8 +1,7 @@
 package com.nhnacademy.front.server.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.nhnacademy.front.server.interceptor.AuthorizationInterceptor;
+import com.nhnacademy.front.server.interceptor.ViewInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.client.RestTemplateBuilder;
