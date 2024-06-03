@@ -59,6 +59,6 @@ public class CustomExceptionHandler {
   public String globalExceptionHandler(Exception e) {
     log.error(e.getMessage());
 
-    return "/500.html";
+    return "error/500";
   }
 }
