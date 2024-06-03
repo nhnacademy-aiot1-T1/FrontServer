@@ -36,6 +36,7 @@ public class AuthController {
   public String showLoginForm(
       @CookieValue(value = AUTHORIZATION_KEY, required = false) String token, Model model) {
 
+    log.warn("token : {} / hasText : {}", token, StringUtils.hasText(token));
     if (StringUtils.hasText(token)) {
       return HOME_PAGE;
     }
@@ -47,7 +48,6 @@ public class AuthController {
             + "&userLocale=ko_KR";
 
     model.addAttribute("payco", paycoOauthUrl);
-
 
     return LOGIN_PAGE;
   }
