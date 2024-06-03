@@ -55,7 +55,10 @@ public class AuthController {
   @GetMapping("/oauth/payco-login")
   public String doPaycoLogin(@RequestParam(name = "code") String authCode,
       HttpServletResponse res) {
+
+    log.info("code : {}", authCode);
     String accessToken = authService.paycoLogin(authCode).getAccessToken();
+    log.info("access token : {}", accessToken);
 
     if (accessToken != null) {
       Cookie cookie = new Cookie(AUTHORIZATION_KEY, authCode);

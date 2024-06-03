@@ -20,7 +20,7 @@ public class AuthServiceImpl implements AuthService {
   @Override
   public LoginResponseDto login(UserLoginRequestDto requestDto) {
     CommonResponse<LoginResponseDto> response = authAdapter.login(requestDto);
-    log.info(response.getMessage());
+    log.info("login : {}", response.getMessage());
 
     return response.getData();
   }
@@ -28,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
   @Override
   public LoginResponseDto paycoLogin(String authCode) {
     CommonResponse<LoginResponseDto> response = authAdapter.paycoLogin(authCode);
-    log.info(response.getMessage());
+    log.info("payco login : {}",response.getMessage());
 
     return response.getData();
   }

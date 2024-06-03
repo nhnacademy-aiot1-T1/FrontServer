@@ -65,6 +65,8 @@ public class AuthAdapterImpl implements AuthAdapter {
         }
     );
 
+    log.info("payco login response : {}", response);
+
     if (!Objects.equals(response.getStatusCode(), HttpStatus.OK)) {
       throw new LoginFailedException("로그인에 실패했습니다.");
     }
