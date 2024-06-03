@@ -84,7 +84,7 @@ public class AuthController {
     return WebUtils.REDIRECT_PREFIX + HOME_PAGE;
   }
 
-  @PostMapping("/logout")
+  @GetMapping("/logout")
   public String doLogout(
       @CookieValue(value = AUTHORIZATION_KEY, required = false) Cookie authorizationCookie,
       HttpServletResponse res) {
