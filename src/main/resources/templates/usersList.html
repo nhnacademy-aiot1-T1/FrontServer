@@ -50,6 +50,7 @@
                   <div class="col-auto">
                     <select class="form-control mb-2" name="role">
                       <option value="NONE" th:selected="${user.role == 'NONE'}">NONE</option>
+                      <option value="NONE" th:selected="${user.role == 'USER'}">USER</option>
                       <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
                     </select>
                   </div>
