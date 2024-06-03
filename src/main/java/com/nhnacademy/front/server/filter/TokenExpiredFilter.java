@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @Slf4j
-@Component
+//@Component
 @RequiredArgsConstructor
 public class TokenExpiredFilter extends OncePerRequestFilter {
 
