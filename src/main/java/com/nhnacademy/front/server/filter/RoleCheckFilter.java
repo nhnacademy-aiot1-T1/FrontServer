@@ -17,9 +17,15 @@ import java.util.Arrays;
 
 @Component
 public class RoleCheckFilter extends OncePerRequestFilter {
+  private static final String[] EXCLUDE_PATH_PREFIX = { "/login", "/none" };
+
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain filterChain) throws ServletException, IOException {
+
+    if (Arrays.stream(EXCLUDE_PATH_PREFIX).anyMatch(path -> path.equals(request.getRequestURI()))) {
+      filterChain.doFilter(request, response);
+    }
 
     Cookie cookie = Arrays.stream(request.getCookies())
         .filter(c -> c.getName()
