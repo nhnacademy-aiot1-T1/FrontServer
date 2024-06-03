@@ -38,7 +38,12 @@ public class TokenExpiredFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain filterChain) throws ServletException, IOException {
     Cookie authorizationCookie = WebUtils.findAuthorizationCookie(request.getCookies())
-        .orElseThrow(NotFoundTokenException::new);
+        .orElse(null);
+
+    if (authorizationCookie == null) {
+      response.sendRedirect("/login");
+    }
+
     final String accessToken = authorizationCookie.getValue();
 
     if (!WebUtils.isTokenExpired(accessToken)) {
