@@ -38,7 +38,7 @@ public class AuthController {
 
     log.warn("token : {} / hasText : {}", token, StringUtils.hasText(token));
     if (StringUtils.hasText(token)) {
-      return HOME_PAGE;
+      return WebUtils.REDIRECT_PREFIX + HOME_PAGE;
     }
 
     final String paycoOauthUrl = "https://id.payco.com/oauth2.0/authorize?response_type=code"
