@@ -71,8 +71,8 @@ public class UserDetailController {
   }
 
   @PostMapping("/user/update/role")
-  public String updateUserRole(@RequestParam("role") String role, Model model) {
-
+  public String updateUserRole(@ModelAttribute("updateRole") String role, Model model) {
+    log.info("role : {}", role);
     UserDetailDto userDetailDto = (UserDetailDto) model.getAttribute("userDetail");
 
 
