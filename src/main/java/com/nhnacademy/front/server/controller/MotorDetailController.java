@@ -1,18 +1,30 @@
 package com.nhnacademy.front.server.controller;
 
+import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.dto.motorDetail.MotorDetailDto;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateData;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateDataRequest;
 import com.nhnacademy.front.server.dto.sector.SectorDto;
 import com.nhnacademy.front.server.dto.motorDetail.SensorDto;
+import com.nhnacademy.front.server.dto.sector.SectorManagementDto;
+import com.nhnacademy.front.server.dto.sensor.SensorDataDto;
+import com.nhnacademy.front.server.dto.sensor.SensorScoreDto;
 import com.nhnacademy.front.server.service.MotorService;
 import com.nhnacademy.front.server.service.SectorService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,6 +32,9 @@ public class MotorDetailController {
 
   private final MotorService motorService;
   private final SectorService sectorService;
+  private final String SENSOR_SCORE_URL = "/api/monitor/motors/{motorId}/sensors/{sensorId}/scores";
+  private final String SENSOR_DATA_URL = "/api/monitor/motors/{motorId}/sensors/{sensorId}/data";
+  private final RestTemplate restTemplate;
 
   @GetMapping("/SectorDetail/MotorDetail")
   public String motorDetail(Model model, @RequestParam("motorId") Long motorId) {
@@ -43,5 +58,45 @@ public class MotorDetailController {
     return "AmotorDetail";
   }
 
+  @GetMapping("/api/monitor/motors/{motorId}/sensors/{sensorId}/scores")
+  public ResponseEntity<CommonResponse<SensorScoreDto>> getSensorScores(Model model,
+      @PathVariable Long motorId,
+      @PathVariable Long sensorId) {
+
+    HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+    String url = SENSOR_SCORE_URL.replace("{motorId}", motorId.toString())
+        .replace("{sensorId}", sensorId.toString());
+
+    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
+
+    return restTemplate.exchange(
+        url, HttpMethod.GET, request,
+        new ParameterizedTypeReference<>() {
+        });
+
+  }
+
+  @GetMapping("/api/monitor/motors/{motorId}/sensors/{sensorId}/data")
+  public ResponseEntity<CommonResponse<SensorDataDto>> getSensorData(Model model,
+      @PathVariable Long motorId,
+      @PathVariable Long sensorId) {
+
+    HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+    String url = SENSOR_DATA_URL.replace("{motorId}", motorId.toString())
+        .replace("{sensorId}", sensorId.toString());
+
+    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
+    
+    return restTemplate.exchange(
+        url, HttpMethod.GET, request,
+        new ParameterizedTypeReference<>() {
+        });
+  }
 
 }
