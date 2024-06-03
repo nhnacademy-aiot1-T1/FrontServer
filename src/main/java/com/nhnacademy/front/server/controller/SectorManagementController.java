@@ -47,17 +47,17 @@ public class SectorManagementController {
   }
 
   @DeleteMapping("/deleteSector")
-  public void removeSector(@ModelAttribute("sectorId") Long sectorId) {
+  public void removeSector(Long sectorId) {
 
     log.info("Removing sector inside {}", sectorId);
     sectorService.removeSector(sectorId);
     log.info("Removed sector log {}", sectorId);
-
   }
 
   @PostMapping("/removeSector")
   public String removeSectorTemp(@ModelAttribute("sectorId") Long sectorId) {
 
+    log.info("Removing sector Temp inside {}", sectorId);
     removeSector(sectorId);
 
     return REDIRECT + "/SectorDetail";
