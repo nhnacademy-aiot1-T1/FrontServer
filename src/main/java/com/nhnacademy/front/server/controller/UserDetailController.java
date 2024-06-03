@@ -66,18 +66,14 @@ public class UserDetailController {
   }
 
   @PostMapping("/user/update/role")
-  public String updateUserRole(@RequestParam("role") String role, Model model) {
-    log.info("role : {}", role);
-    UserDetailDto userDetailDto = (UserDetailDto) model.getAttribute("userDetail");
+  public String updateUserRole(@RequestParam("role") String role,
+                               @RequestParam("userId") Long userId) {
 
-
-    if (userDetailDto == null) {
-      userDetailDto = userService.getUserDetail(userDetailDto.getId());
-    }
-
+    UserDetailDto userDetailDto = userService.getUserDetail(userId);
     userDetailDto.setRole(UserRole.valueOf(role));
-    userService.updateUserDetail(userDetailDto.getId(), userDetailDto);
 
+    log.info("role : {} / userId : {}", role, userId);
+    userService.updateUserDetail(userId, userDetailDto);
     log.info("Updated user: {}", userDetailDto);
 
     return WebUtils.REDIRECT_PREFIX + "/mypage/admin/users";
