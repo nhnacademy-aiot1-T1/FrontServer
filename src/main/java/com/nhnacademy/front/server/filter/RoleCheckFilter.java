@@ -1,18 +1,19 @@
 package com.nhnacademy.front.server.filter;
 
+import com.nhnacademy.front.server.exception.AuthenticationException;
 import com.nhnacademy.front.server.exception.AuthorizationException;
-import com.nhnacademy.front.server.exception.NotFoundTokenException;
-import java.io.IOException;
-import java.util.Arrays;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Base64Utils;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Base64Utils;
-import org.springframework.web.filter.OncePerRequestFilter;
+import java.io.IOException;
+import java.util.Arrays;
 
 @Component
 public class RoleCheckFilter extends OncePerRequestFilter {
@@ -23,7 +24,7 @@ public class RoleCheckFilter extends OncePerRequestFilter {
     Cookie cookie = Arrays.stream(request.getCookies())
         .filter(c -> c.getName()
             .equals("Authorization"))
-        .findFirst().orElseThrow(NotFoundTokenException::new);
+        .findFirst().orElseThrow(AuthenticationException::new);
 
     String token = cookie.getValue();
     String payload = token.split("\\.")[1];
