@@ -1,15 +1,22 @@
 package com.nhnacademy.front.server.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.front.server.dto.UserDetailDto;
 import com.nhnacademy.front.server.dto.UserRole;
 import com.nhnacademy.front.server.service.UserDetailService;
 import com.nhnacademy.front.server.util.WebUtils;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,19 +33,18 @@ public class UserDetailController {
   private final UserDetailService userService;
 
   /**
-   * @param id AccountId. not user login id
    * @return
    */
   @GetMapping
-  public String getUserDetail(Model model, @RequestParam(value = "id", required = false) Long id) {
-    log.info("id : {}", id);
-    UserDetailDto userDetailDto = userService.getUserDetail(id);
+  public String getUserDetail(Model model, HttpServletRequest request) {
+
+    UserDetailDto userDetailDto = userService.getUserDetail(getUserId(request));
 
     log.info("user detail {}", userDetailDto.getId());
 
     model.addAttribute("userDetail", userDetailDto);
 
-    log.warn(" is :{}", userDetailDto.getId());
+    log.info("userDetail dto is :{}", userDetailDto.getId());
 
     return "users-edit";
   }
@@ -65,16 +71,17 @@ public class UserDetailController {
   }
 
   @PostMapping("/user/update/role")
-  public String updateUserRole(@RequestParam(value = "id", required = false) Long id, @RequestParam("role") String role, Model model) {
+  public String updateUserRole(@RequestParam("role") String role, Model model) {
 
     UserDetailDto userDetailDto = (UserDetailDto) model.getAttribute("userDetail");
 
+
     if (userDetailDto == null) {
-      userDetailDto = userService.getUserDetail(id);
+      userDetailDto = userService.getUserDetail(userDetailDto.getId());
     }
 
     userDetailDto.setRole(UserRole.valueOf(role));
-    userService.updateUserDetail(id, userDetailDto);
+    userService.updateUserDetail(userDetailDto.getId(), userDetailDto);
 
     log.info("Updated user: {}", userDetailDto);
 
@@ -87,5 +94,30 @@ public class UserDetailController {
     userService.deleteUserDetail(id);
 
     return "pages/auth/login";
+  }
+
+  private static Long getUserId(HttpServletRequest request) {
+    Cookie cookie = Arrays.stream(request.getCookies())
+        .filter(c -> c.getName()
+            .equals("Authorization"))
+        .findFirst().orElse(null);
+
+    String decodeToken = null;
+
+    if (cookie != null) {
+      String token = cookie.getValue();
+      String payload = token.split("\\.")[1];
+      decodeToken = new String(Base64Utils.decodeFromUrlSafeString(payload));
+    }
+
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    try {
+      JsonNode jsonNode = objectMapper.readTree(decodeToken);
+      return jsonNode.get("userId").asLong();
+    }catch (IOException e) {
+      log.error(e.getMessage());
+      return null;
+    }
   }
 }
