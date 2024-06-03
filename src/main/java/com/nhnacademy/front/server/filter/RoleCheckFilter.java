@@ -23,7 +23,10 @@ public class RoleCheckFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain filterChain) throws ServletException, IOException {
 
-    if (Arrays.stream(EXCLUDE_PATH_PREFIX).anyMatch(path -> path.equals(request.getRequestURI()))) {
+    boolean isExcludePath = Arrays.stream(EXCLUDE_PATH_PREFIX)
+            .anyMatch(prefix -> request.getRequestURI().startsWith(prefix));
+
+    if (isExcludePath) {
       filterChain.doFilter(request, response);
     }
 
