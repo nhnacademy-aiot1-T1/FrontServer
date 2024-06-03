@@ -1,5 +1,7 @@
 package com.nhnacademy.front.server.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.nhnacademy.front.server.interceptor.AuthorizationInterceptor;
 import com.nhnacademy.front.server.interceptor.ViewInterceptor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,10 +54,10 @@ public class WebConfig implements WebMvcConfigurer {
   }
 // TODO 실제 실행 테스트시 주석처리
 
-//  @Bean
-//  public ObjectMapper objectMapper() {
-//    return new ObjectMapper().registerModule(new JavaTimeModule());
-//  }
+  @Bean
+  public ObjectMapper objectMapper() {
+    return new ObjectMapper().registerModule(new JavaTimeModule());
+  }
 
   @Bean
   public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
