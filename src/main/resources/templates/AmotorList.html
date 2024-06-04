@@ -616,6 +616,8 @@
 
       // 전체 모터의 normal motor 퍼센트 계산 및 표시
       var totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+      totalNormalMotorPercent = isNaN(totalNormalMotorPercent) ? 0 : totalNormalMotorPercent;
+
       $('#normalMotorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
       // 전체 모터의 normal motor 퍼센트를 progress bar에 적용
       $('#progressBar').css('width', totalNormalMotorPercent + '%').attr('aria-valuenow',
@@ -623,6 +625,7 @@
 
       // 전체 모터의 running motor 퍼센트 계산 및 표시
       var totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+      totalRunningMotorPercent = isNaN(totalRunningMotorPercent) ? 0 : totalRunningMotorPercent;
       $('#isOnMotorPercent').text(totalRunningMotorPercent.toFixed(2) + '%');
       // 전체 모터의 running motor 퍼센트를 progress bar에 적용
       $('#progressBar1').css('width', totalRunningMotorPercent + '%').attr('aria-valuenow',
