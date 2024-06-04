@@ -132,7 +132,7 @@
                     <h1 class="blue-grey lighten-1 text-bold-400"
                         th:text="${#numbers.formatDecimal(((motorOverview.getTotalMotorCount() -
                         motorOverview.getTotalNormalMotorCount()) * 100.0) /
-                        (motorOverview.getTotalMotorCount()), 0, 2)
+                        (motorOverview.getTotalMotorCount()), 0, 0)
                         + '%'}"></h1>
                     <span class="warning darken-2">
                       <i class></i>비정상 모터비율</span>
@@ -166,7 +166,7 @@
                   <li>
                     <h1 class="blue-grey lighten-1 text-bold-400"
                         th:text="${#numbers.formatDecimal((motorOverview.getTotalOnMotorCount() * 100.0) /
-                        (motorOverview.getTotalMotorCount()), 0, 2) + '%'}"></h1>
+                        (motorOverview.getTotalMotorCount()), 0, 0) + '%'}"></h1>
                     <span class="danger darken-2">
                       <i class></i> 모터 가동률</span>
                   </li>
@@ -226,14 +226,14 @@
                   <div class="media d-flex">
                     <div class="media-body text-left mt-1">
                       <h3 class="font-large-2 white"
-                          th:text="${sector.getNormalCount() == null || (sector.getNormalCount() == 0) ? '0%' : #numbers.formatDecimal((sector.getNormalCount() * 100.0) / sector.getTotalCount(), 0, 2) + '%'}"
+                          th:text="${sector.getNormalCount() == null || (sector.getNormalCount() == 0) ? '0%' : #numbers.formatDecimal((sector.getNormalCount() * 100.0) / sector.getTotalCount(), 0, 0) + '%'}"
                           style="position: relative;top:-17px"></h3>
                       <h6 class="mt-1"><span class="text-muted white font-medium-5">정상 비율</span>
                       </h6>
                     </div>
                     <div class="media-body text-right mt-1">
                       <h3 class="font-large-2 white"
-                          th:text="${sector.getNormalCount() == null || (sector.getNormalCount() == 0) ? '0%' : #numbers.formatDecimal((sector.getNormalCount() * 100.0) / sector.getTotalCount(), 0, 2) + '%'}"
+                          th:text="${sector.getNormalCount() == null || (sector.getNormalCount() == 0) ? '0%' : #numbers.formatDecimal((sector.getNormalCount() * 100.0) / sector.getTotalCount(), 0, 0) + '%'}"
                           style="position: relative;top:-17px"></h3>
                       <h6 class="mt-1"><span class="text-muted white font-medium-5 ">가동 비율</span>
                       </h6>
