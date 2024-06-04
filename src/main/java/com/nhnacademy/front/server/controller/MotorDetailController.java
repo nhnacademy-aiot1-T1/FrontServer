@@ -33,8 +33,8 @@ public class MotorDetailController {
 
   private final MotorService motorService;
   private final SectorService sectorService;
-  private final String SENSOR_SCORE_URL = "/api/monitor/motors/{motorId}/sensors/{sensorId}/scores";
-  private final String SENSOR_DATA_URL = "/api/monitor/motors/{motorId}/sensors/{sensorId}/data";
+  private final String SENSOR_SCORE_URL = "http://GATEWAY-SERVICE/api/monitor/motors/{motorId}/sensors/{sensorId}/scores";
+  private final String SENSOR_DATA_URL = "http://GATEWAY-SERVICE/api/monitor/motors/{motorId}/sensors/{sensorId}/data";
   private final RestTemplate restTemplate;
 
   @GetMapping("/SectorDetail/MotorDetail")
