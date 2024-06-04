@@ -246,8 +246,8 @@
     $('#motorId').text(motorDetail.motorId);
 
     // 상단에 모터 구역, 이름 표출
-    var motorSector = getSectorNameById(motorDetail.motorId);
-    $('#topMotorArea').text(motorSector);
+
+    $('#topMotorArea').text(motorDetail.sectorName);
     $('#topMotorName').text(motorDetail.motorName);
   });
 
