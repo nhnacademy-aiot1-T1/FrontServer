@@ -2,11 +2,10 @@ package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.dto.motorDetail.MotorDetailDto;
+import com.nhnacademy.front.server.dto.motorDetail.SensorDto;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateData;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateDataRequest;
 import com.nhnacademy.front.server.dto.sector.SectorDto;
-import com.nhnacademy.front.server.dto.motorDetail.SensorDto;
-import com.nhnacademy.front.server.dto.sector.SectorManagementDto;
 import com.nhnacademy.front.server.dto.sensor.SensorDataDto;
 import com.nhnacademy.front.server.dto.sensor.SensorScoreDto;
 import com.nhnacademy.front.server.service.MotorService;

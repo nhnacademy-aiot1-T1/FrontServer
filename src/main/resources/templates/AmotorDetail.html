@@ -71,6 +71,7 @@
                    class="mb-2" width="200">
               <div class="col-1font-large-1" id="motorname"></div>
             </div>
+
             <!-- 현재 모터 상태치 -->
             <!--          <div class="invoice stat" style="position: absolute; top: 0px; right:50px; width: 1100px">-->
             <div class="col-md-8 invoice stat align-content-center ">
@@ -86,6 +87,7 @@
                       </li>
                     </ul>
                   </div>
+
                 </div>
                 <div class="card-content collapse show">
                   <div class="card-body pt-0 pb-1 position top">
@@ -121,8 +123,8 @@
                         <!--                                            <p class="font-medium-5 text-bold-400" th:text="${sensor.getHourMean()}"></p>-->
                       </div>
 
-                    </div>
 
+                    </div>
                   </div>
                 </div>
               </div>
@@ -142,7 +144,6 @@
         <div class="card">
           <div class="card-header">
             <h3>시간대 별 모터 가동률</h3>
-            <!--            <h4 class="card-title">Motor Ruuning Rate by Time Zone</h4>-->
             <a class="heading-elements-toggle"><i
                 class="la la-ellipsis-v font-medium-3"></i></a>
           </div>
@@ -192,7 +193,6 @@
                     <div class="card-body chartjs">
                       <div class="chart-container1">
                         <canvas th:id="lineChartOfSensor+${sensorStat.index}"></canvas>
-                        <!--                <canvas id = "lineChartOfSensor0"></canvas>-->
                       </div>
                     </div>
                   </div>
@@ -207,19 +207,14 @@
                 </div>
               </div>
             </div>
-
             <a class="heading-elements-toggle"><i
                 class="la la-ellipsis-v font-medium-3"></i></a>
-
           </div>
-
         </div>
       </div>
-
     </div>
   </div>
 </div>
-
 <!-- END: Content-->
 
 
@@ -260,7 +255,7 @@
   function getSectorNameById(sectorId) {
     var sectors = [[${sectorsInfo}]]; // 서버에서 받아온 섹터 정보
     for (var i = 0; i < sectors.length; i++) {
-      if (sectors[i].sectorId == sectorId) {
+      if (sectors[i].sectorId === sectorId) {
         return sectors[i].sectorName;
       }
     }
@@ -270,7 +265,7 @@
   // isOn의 ture false -> 화면출력시 ON , OFF로 변환
   function getOnOffInfo(isOn) {
 
-    if (isOn == true) {
+    if (isOn === true) {
       return 'ON';
     } else {
       return 'OFF';
@@ -279,7 +274,7 @@
   }
 
   function getNormalWarningInfo(isNormal) {
-    if (isNormal == true) {
+    if (isNormal === true) {
       return 'NORMAL';
     } else {
       return 'WARNING';
@@ -301,11 +296,6 @@
 
     // 센서 데이터 호출부분
     var sensorList = [[${sensorList}]];
-    // TODO.1 타임리프 반복문으로 motorDetail에서 sensorType 추출 -> 차트 제목으로 사용하기 위함
-    // TODO.2 자바스크립트 반복문으로 motorDetail에서 sensorId 추출 -> 각 센서들의 그래프정보를 받아오기 위한 URL 생성
-    // TODO 3. URL은 쿼리스트링의 MOTORID와 sensorList에서 추출한 sensorId를 매개변수로 넣어줌
-    // TODO.4 요청을 보낼때 default startTime은 : -1h , default endTime은 : now()
-    // TODO.5 반복문으로 모든 센서의 그래프 그려주기
 
     var promises = [];
     chartId = 0;
@@ -320,16 +310,12 @@
           + "/sensors/"
           + sensor.sensorId + "/scores";
 
-      // var sensorDataURL = "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb";
-
       var sensorRawDataURL = host + "/api/monitor/motors/"
+
           + urlParms.get("motorId")
           + "/sensors/"
           + sensor.sensorId + "/data";
 
-      // var sensorRawDataURL = "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a";
-
-      // var sensorType = sensorList[i].sensorType;
       var promise = new Promise((resolve, reject) => {
         var sensorDatarequest = new XMLHttpRequest();
         var sensorRawDatarequest = new XMLHttpRequest();
@@ -375,10 +361,8 @@
 
     // 받아온 그래프 정보 json 응답에서 그래프 그리기 쉽게 데이터 추출해내고 차트 그리기 [score]
     function showSensorDataChart(jsonObj, chartId) {
-      // var dataOfSensorDataResponse = jsonObj;
-      // var startDate = dataOfSensorDataResponse["startDate"];
+
       var scores = jsonObj["scores"];
-      // var sensorType = dataOfSensorDataResponse[];
 
       var chartOfSensorOptions = {
         responsive: true,
@@ -465,14 +449,11 @@
 
     }
 
-    //////////////////////////////////////////////////////////////
 
     // 받아온 그래프 정보 json 응답에서 그래프 그리기 쉽게 데이터 추출해내고 차트 그리기 [rawData]
     function showSensorRawDataChart(jsonObj, chartId) {
-      // var dataOfSensorDataResponse = jsonObj;
-      // var startDate = dataOfSensorDataResponse["startDate"];
+
       var values = jsonObj["sensorData"];
-      // var sensorType = dataOfSensorDataResponse[];
 
       var chartOfSensorOptions = {
         responsive: true,
@@ -559,7 +540,6 @@
 
     }
 
-    //////////////////////////////////////////////////////////////
     // Chart Options
     var chartOptions = {
       responsive: true,

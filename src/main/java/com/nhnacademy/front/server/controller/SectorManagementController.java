@@ -3,6 +3,7 @@ package com.nhnacademy.front.server.controller;
 import com.nhnacademy.front.server.dto.sector.SectorRegisterRequest;
 import com.nhnacademy.front.server.dto.sector.SectorRenameRequest;
 import com.nhnacademy.front.server.service.SectorService;
+import com.nhnacademy.front.server.util.WebUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -19,8 +20,7 @@ public class SectorManagementController {
 
   private final SectorService sectorService;
 
-  private String REDIRECT = "redirect:";
-
+  private static final String SECTOR_DETAIL = "/SectorDetail";
 
   @PostMapping("/registSector")
   public String registSector(@RequestParam String sectorNameInput) {
@@ -29,7 +29,7 @@ public class SectorManagementController {
 
     sectorService.registSector(sectorRegisterRequest);
 
-    return REDIRECT + "/SectorDetail";
+    return WebUtils.REDIRECT_PREFIX + SECTOR_DETAIL;
   }
 
   @PutMapping("/renameSector")
@@ -40,7 +40,7 @@ public class SectorManagementController {
 
     sectorService.renameSector(sectorId, sectorRenameRequest);
 
-    return REDIRECT + "/SectorDetail";
+    return WebUtils.REDIRECT_PREFIX + SECTOR_DETAIL;
   }
 
 
@@ -50,6 +50,6 @@ public class SectorManagementController {
     log.info("Removing sector Temp inside {}", sectorId);
     sectorService.removeSector(sectorId);
 
-    return REDIRECT + "/SectorDetail";
+    return WebUtils.REDIRECT_PREFIX + SECTOR_DETAIL;
   }
 }

@@ -4,8 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.nhnacademy.front.server.enums.DeviceType;
 import com.nhnacademy.front.server.enums.UserAgent;
-//import com.nhnacademy.front.server.exception.InvalidTokenException;
-import com.nhnacademy.front.server.exception.NotFoundTokenException;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.Cookie;
