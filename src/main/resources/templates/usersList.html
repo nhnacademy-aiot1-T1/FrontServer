@@ -7,7 +7,7 @@
   <style>
     @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
-    option,span ,body, p, h3, h4, h6 {
+    h5.card-title,option,span ,body, p, h3, h4, h6 {
       font-family: 'NanumSquare', sans-serif;
       font-weight: 800;
     }
@@ -36,7 +36,7 @@
             <div class="card-body">
               <h5 class="card-title">이름: <span th:text="${user.name}">User Name</span></h5>
               <p class="card-text">
-              <h5 class="card-title">구역: <span th:text="${user.role}"></span></h5>
+              <h5 class="card-title">권한: <span th:text="${user.role}"></span></h5>
               </p>
               <form id="updateRole" th:action="@{/mypage/user/update/role}" method="post">
                 <div class="form-row align-items-center">
