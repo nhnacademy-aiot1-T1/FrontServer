@@ -12,9 +12,9 @@ oauth:
     redirect-uri: http://test-vm.com:8082/oauth-login
     secret: 4nl1ZsBpejpz1VclsSRTD427
 
-#logging:
-#  level:
-#    root: info
+logging:
+  level:
+    root: debug
 
 api:
   path:

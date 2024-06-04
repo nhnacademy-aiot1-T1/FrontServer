@@ -74,7 +74,7 @@ public class MotorDetailController {
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
     return restTemplate.exchange(
-        "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb", HttpMethod.GET, request,
+        url, HttpMethod.GET, request,
         new ParameterizedTypeReference<CommonResponse<SensorScoreDto>>() {
         }).getBody().getData();
 
@@ -82,7 +82,8 @@ public class MotorDetailController {
   }
 
   @GetMapping("/api/monitor/motors/{motorId}/sensors/{sensorId}/data")
-  public ResponseEntity<CommonResponse<SensorDataDto>> getSensorData(Model model,
+  @ResponseBody
+  public SensorDataDto getSensorData(Model model,
       @PathVariable Long motorId,
       @PathVariable Long sensorId) {
 
@@ -96,9 +97,9 @@ public class MotorDetailController {
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     return restTemplate.exchange(
-        "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a", HttpMethod.GET, request,
-        new ParameterizedTypeReference<>() {
-        });
+        url, HttpMethod.GET, request,
+        new ParameterizedTypeReference<CommonResponse<SensorDataDto>>() {
+        }).getBody().getData();
   }
 
 }
