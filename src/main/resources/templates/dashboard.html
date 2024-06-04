@@ -229,15 +229,15 @@
                     <div class="media d-flex">
                       <div class="media-body text-left mt-1">
                         <h3 class="font-large-2 white"
-                            th:text="${#numbers.formatDecimal((sector.getNormalCount() * 100.0) /
-                            sector.getTotalCount(), 0, 2) + '%'}" style="position: relative;top:-17px"></h3>
+                            th:text="${sector.getNormalCount() == null || #numbers.formatDecimal((sector.getNormalCount() == 0)) ? '0%' : #numbers.formatDecimal((sector.getNormalCount() * 100.0) / sector.getTotalCount(), 0, 2) + '%'}"
+                            style="position: relative;top:-17px"></h3>
                         <h6 class="mt-1"><span class="text-muted white font-medium-5">정상 비율</span>
                         </h6>
                       </div>
                       <div class="media-body text-right mt-1">
                         <h3 class="font-large-2 white"
-                            th:text="${#numbers.formatDecimal((sector.getIsOnCount() * 100.0) /
-                            sector.getTotalCount(), 0, 2) + '%'}" style="position: relative;top:-17px"></h3>
+                            th:text="${sector.getNormalCount() == null || #numbers.formatDecimal((sector.getNormalCount() == 0)) ? '0%' : #numbers.formatDecimal((sector.getNormalCount() * 100.0) / sector.getTotalCount(), 0, 2) + '%'}"
+                            style="position: relative;top:-17px"></h3>
                         <h6 class="mt-1"><span class="text-muted white font-medium-5 ">가동 비율</span>
                         </h6>
                       </div>
