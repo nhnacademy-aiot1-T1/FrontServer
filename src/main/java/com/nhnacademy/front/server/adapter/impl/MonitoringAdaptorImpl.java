@@ -146,12 +146,12 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
   @Override
   public CommonResponse<MotorsRunningRatesByTimePeriod> getMotorsRunningRatesByTimePeriod(
-      MotorsRunningRateDataRequest motorsRunningRateDataRequest) {
+      String duration) {
 
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-    HttpEntity<Object> request = new HttpEntity<>(motorsRunningRateDataRequest, httpHeaders);
+    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplate.exchange(
         pathProperties.getRunningRateByTime(), HttpMethod.GET, request,

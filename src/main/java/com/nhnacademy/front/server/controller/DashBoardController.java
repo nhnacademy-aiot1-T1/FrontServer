@@ -29,11 +29,11 @@ public class DashBoardController {
     List<SectorDto> sectorsInfo = sectorService.getSectorsInfo().getSectors();
 
     List<MotorsRunningRateData> dayRunningRates = motorService.getMotorsRunningRatesByTimePeriod(
-        new MotorsRunningRateDataRequest("day")).getRates();
+        "day").getRates();
     List<MotorsRunningRateData> weekRunningRates = motorService.getMotorsRunningRatesByTimePeriod(
-        new MotorsRunningRateDataRequest("week")).getRates();
+        "week").getRates();
     List<MotorsRunningRateData> monthRunningRates = motorService.getMotorsRunningRatesByTimePeriod(
-        new MotorsRunningRateDataRequest("month")).getRates();
+        "month").getRates();
 
     model.addAttribute("motorOverview", motorOverviewDTO);
     model.addAttribute("sectorsInfo", sectorsInfo);
