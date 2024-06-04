@@ -43,7 +43,7 @@
             <div class="card-body">
               <h5 class="card-title">Name: <span th:text="${user.name}">User Name</span></h5>
               <p class="card-text">
-                <h5 class="card-title">Role: <span th:text="${user.role}"></span></h5>
+              <h5 class="card-title">Role: <span th:text="${user.role}"></span></h5>
               </p>
               <form id="updateRole" th:action="@{/mypage/user/update/role}" method="post">
                 <div class="form-row align-items-center">
@@ -96,7 +96,8 @@
 <!-- BEGIN: Theme JS-->
 <script src="https://aiotone.live/resources/app-assets/js/core/app-menu.js"
         type="text/javascript"></script>
-<script src="https://aiotone.live/resources/app-assets/js/core/app.js" type="text/javascript"></script>
+<script src="https://aiotone.live/resources/app-assets/js/core/app.js"
+        type="text/javascript"></script>
 <!-- END: Theme JS-->
 
 <script src="https://aiotone.live/resources/app-assets/js/scripts/pages/users-contacts.js"

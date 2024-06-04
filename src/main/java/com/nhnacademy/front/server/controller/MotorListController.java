@@ -5,13 +5,11 @@ import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
 import com.nhnacademy.front.server.dto.sector.SectorDto;
 import com.nhnacademy.front.server.service.MotorService;
 import com.nhnacademy.front.server.service.SectorService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequiredArgsConstructor

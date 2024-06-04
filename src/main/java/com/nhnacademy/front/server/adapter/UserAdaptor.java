@@ -11,6 +11,6 @@ public interface UserAdaptor {
   CommonResponse<List<UserDetailDto>> getUsers();
 
   CommonResponse<UserDetailDto> updateUserDetail(Long id, UserDetailDto userDetailDto);
-  
+
   CommonResponse<UserDetailDto> deleteUserDetail(Long id);
 }
