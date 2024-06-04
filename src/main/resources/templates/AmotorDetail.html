@@ -78,15 +78,6 @@
               <!--            <div class="card" style="height: 40px">-->
               <div class="card">
                 <div class="card-header">
-                  <!--                <span class="text-medium-1 info line-height-2 text-uppercase">요약 정보</span>-->
-                  <div class="heading-elements">
-                    <ul class="list-inline mb-0 display-block">
-                      <li>
-                        <a class="btn btn-md btn-info box-shadow-2 round btn-min-width pull-right"
-                           href="/SectorDetail" target="_blank">Back to List</a>
-                      </li>
-                    </ul>
-                  </div>
 
                 </div>
                 <div class="card-content collapse show">
@@ -244,6 +235,15 @@
     $('#motorBelong').text(getSectorNameById(motorDetail.sectorId));
     $('#motorPower').text(getOnOffInfo(motorDetail.isOn));
     $('#motorId').text(motorDetail.motorId);
+
+    if (motorDetail.isNormal == true) {
+    } else {
+      document.getElementById("motorStatus").style.color = "red";
+    }
+
+    if (motorDetail.isOn == true) {
+      document.getElementById("motorPower").style.color = "limegreen"
+    }
 
     // 상단에 모터 구역, 이름 표출
 
