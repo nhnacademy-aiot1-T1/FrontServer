@@ -4,7 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <link th:include="fixedTemplate/defaultCSS.html" rel="stylesheet"/>
-  <!-- 상단바의 드롭다운을 위한 -->
+  <style>
+    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+    option,span ,body, p, h3, h4, h6 {
+      font-family: 'NanumSquare', sans-serif;
+      font-weight: 800;
+    }
+  </style>
 </head>
 
 <body class="vertical-layout vertical-menu content-detached-left-sidebar fixed-navbar"
@@ -27,22 +34,22 @@
         <div class="col-md-12 " th:each="user: ${users}">
           <div class="card mb-3">
             <div class="card-body">
-              <h5 class="card-title">Name: <span th:text="${user.name}">User Name</span></h5>
+              <h5 class="card-title">이름: <span th:text="${user.name}">User Name</span></h5>
               <p class="card-text">
-              <h5 class="card-title">Role: <span th:text="${user.role}"></span></h5>
+              <h5 class="card-title">구역: <span th:text="${user.role}"></span></h5>
               </p>
               <form id="updateRole" th:action="@{/mypage/user/update/role}" method="post">
                 <div class="form-row align-items-center">
                   <div class="col-auto">
                     <select class="form-control mb-2" name="role">
-                      <option value="NONE" th:selected="${user.role == 'NONE'}">NONE</option>
-                      <option value="USER" th:selected="${user.role == 'USER'}">USER</option>
-                      <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
+                      <option value="NONE" th:selected="${user.role == 'NONE'}">권한 없음</option>
+                      <option value="USER" th:selected="${user.role == 'USER'}">사용자</option>
+                      <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">관리자</option>
                     </select>
                   </div>
                   <div class="col-auto">
                     <input type="hidden" name="userId" th:value="${user.id}"/>
-                    <button type="submit" class="btn btn-primary mb-2">Change Role</button>
+                    <button type="submit" class="btn btn-primary mb-2">권한 변경</button>
                   </div>
                 </div>
               </form>
