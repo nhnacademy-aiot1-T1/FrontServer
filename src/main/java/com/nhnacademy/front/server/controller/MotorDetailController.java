@@ -43,11 +43,11 @@ public class MotorDetailController {
     List<SensorDto> sensorList = motorService.getMotorDetail(motorId).getSensors();
     List<SectorDto> sectorsInfo = sectorService.getSectorsInfo().getSectors();
     List<MotorsRunningRateData> individualMotorRunningRates_day = motorService.getIndividualMotorsRunningRatesByTimePeriod(
-        motorId, new MotorsRunningRateDataRequest("day")).getRates();
+        motorId, "day").getRates();
     List<MotorsRunningRateData> individualMotorRunningRates_week = motorService.getIndividualMotorsRunningRatesByTimePeriod(
-        motorId, new MotorsRunningRateDataRequest("week")).getRates();
+        motorId, "week").getRates();
     List<MotorsRunningRateData> individualMotorRunningRates_month = motorService.getIndividualMotorsRunningRatesByTimePeriod(
-        motorId, new MotorsRunningRateDataRequest("month")).getRates();
+        motorId, "month").getRates();
 
     model.addAttribute("sensorList", sensorList);
     model.addAttribute("sectorsInfo", sectorsInfo);

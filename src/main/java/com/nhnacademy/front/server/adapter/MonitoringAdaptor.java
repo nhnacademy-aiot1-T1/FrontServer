@@ -29,7 +29,7 @@ public interface MonitoringAdaptor {
       String duration);
 
   CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
-      Long motorId, MotorsRunningRateDataRequest motorsRunningRateDataRequest);
+      Long motorId, String duration);
 
   CommonResponse<SectorManagementDto> registSector(SectorRegisterRequest sectorRegisterRequest);
 
