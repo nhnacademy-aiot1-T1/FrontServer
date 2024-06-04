@@ -99,7 +99,6 @@ public class MotorDetailController {
     String url = SENSOR_DATA_URL.replace("{motorId}", motorId.toString())
         .replace("{sensorId}", sensorId.toString());
     String localTestUrl = "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a";
-
     String requestUrl = url;
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
