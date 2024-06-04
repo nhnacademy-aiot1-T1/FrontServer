@@ -194,10 +194,9 @@
                            style="padding-bottom: 120px">
                         <div class="card pull-up" th:if="${motor.getIsOn()== true}">
                           <div th:if="${motor.getIsNormal() == true}"
-                               class="card bg-success" style="height: 70px;">
+                               class="card bg-success" style="height: 70px">
                             <div class="card bg-success" style="height: 20px">
-                              <h4 class="card-title white font-medium-3"
-                                  style="padding: 10px; height: 1px"
+                              <h4 class="card-title padding-top white font-medium-2 pt-1 pl-1"
                                   th:text="${motor.getMotorName()}"></h4>
                             </div>
                             <div class="card bg-success">
@@ -219,8 +218,7 @@
                           <div th:if="${motor.getIsNormal() == false }"
                                class="card bg-warning " style="height: 70px">
                             <div class="card bg-warning" style="height: 20px">
-                              <h4 class="card-title white font-medium-4"
-                                  style="padding: 10px;height: 1px"
+                              <h4 class="card-title white font-medium-2 pt-1 pl-1"
                                   th:text="${motor.getMotorName()}"></h4>
                               <a class="heading-elements-toggle"><i
                                   class="la la-ellipsis-v font-medium-3"></i></a>
@@ -250,8 +248,7 @@
                           <div th:if="${motor.getIsNormal() == true}"
                                class="card bg-blue-grey" style="height: 70px">
                             <div class="card bg-blue-grey" style="height: 20px">
-                              <h4 class="card-title white font-medium-3"
-                                  style="padding: 10px;height: 1px"
+                              <h4 class="card-title white font-medium-2 pt-1 pl-1"
                                   th:text="${motor.getMotorName()}"></h4>
                             </div>
                             <div class="card bg-blue-grey">
@@ -273,8 +270,7 @@
                           <div th:if="${motor.getIsNormal() == false }"
                                class="card  bg-blue-grey" style="height: 70px">
                             <div class="card  bg-blue-grey " style="height: 20px">
-                              <h4 class="card-title warning font-medium-3"
-                                  style="padding: 10px;height: 1px"
+                              <h4 class="card-title warning font-medium-2 pt-1 pl-1"
                                   th:text="${motor.getMotorName()}"
                               ></h4>
                               <a class="heading-elements-toggle"><i
