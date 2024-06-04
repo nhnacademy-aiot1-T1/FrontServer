@@ -74,7 +74,7 @@ public class MotorDetailController {
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
     return restTemplate.exchange(
-        url, HttpMethod.GET, request,
+        "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb", HttpMethod.GET, request,
         new ParameterizedTypeReference<CommonResponse<SensorScoreDto>>() {
         }).getBody().getData();
 
@@ -96,7 +96,7 @@ public class MotorDetailController {
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     return restTemplate.exchange(
-        url, HttpMethod.GET, request,
+        "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a", HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
   }
