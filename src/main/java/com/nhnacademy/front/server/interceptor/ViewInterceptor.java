@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Component
 @Slf4j
@@ -21,7 +22,12 @@ public class ViewInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
-    Cookie cookie = Arrays.stream(request.getCookies())
+
+    Cookie[] cookies = request.getCookies();
+    if (cookies == null) {
+      cookies = new Cookie[0];
+    }
+    Cookie cookie = Arrays.stream(cookies)
         .filter(c -> c.getName()
             .equals("Authorization"))
         .findFirst().orElse(null);
@@ -48,8 +54,9 @@ public class ViewInterceptor implements HandlerInterceptor {
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
       ModelAndView modelAndView) throws Exception {
-    if (modelAndView != null) {
-      modelAndView.getModel().put("userRole", roleThreadLocal.get());
+
+    if (modelAndView != null && (!(modelAndView.getView() instanceof RedirectView))){
+        modelAndView.addObject("userRole", roleThreadLocal.get());
     }
     HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
   }
