@@ -229,7 +229,7 @@
 
     // 모터의 기본 정보
     $('#motorname').text(motorDetail.motorName);
-    $('#motorStatus').text(motorDetail.status);
+    $('#motorStatus').text(motorDetail.isNormal);
     $('#motorBelong').text(getSectorNameById(motorDetail.sectorId));
     $('#motorPower').text(getOnOffInfo(motorDetail.isOn));
   });
