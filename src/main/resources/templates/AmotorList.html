@@ -751,8 +751,13 @@
       if (sectors[i].sectorId == sectorId) {
         // Normal motor 퍼센트 계산
         var totalMotors = sectors[i].totalCount;
+
         var isOnMotorPercent = (sectors[i].isOnCount / totalMotors) * 100;
+        isOnMotorPercent = isNaN(isOnMotorPercent) ? 0 : isOnMotorPercent;
+
         var normalMotorPercent = (sectors[i].normalCount / totalMotors) * 100;
+        normalMotorPercent = isNaN(normalMotorPercent) ? 0 : normalMotorPercent;
+
         sectors[i].isOnMotorPercent = isOnMotorPercent.toFixed(2); // 소수점 둘째 자리까지 표시
         sectors[i].normalMotorPercent = normalMotorPercent.toFixed(2); // 소수점 둘째 자리까지 표시
         return sectors[i];
