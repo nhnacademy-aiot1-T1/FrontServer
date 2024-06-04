@@ -229,7 +229,7 @@
 
     // 모터의 기본 정보
     $('#motorname').text(motorDetail.motorName);
-    $('#motorStatus').text(motorDetail.isNormal);
+    $('#motorStatus').text(getNormalWarningInfo(motorDetail.isNormal));
     $('#motorBelong').text(getSectorNameById(motorDetail.sectorId));
     $('#motorPower').text(getOnOffInfo(motorDetail.isOn));
   });
@@ -252,6 +252,15 @@
       return 'ON';
     } else {
       return 'OFF';
+    }
+
+  }
+
+  function getNormalWarningInfo(isNormal) {
+    if (isNormal == true) {
+      return 'NORMAL';
+    } else {
+      return 'WARNING';
     }
 
   }
