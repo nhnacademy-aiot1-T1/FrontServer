@@ -3,8 +3,8 @@
 <!-- BEGIN: Head-->
 
 <head>
-<!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+  <!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
+  <!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
 
   <div th:include="fixedTemplate/defaultCSS.html"></div>
   <!-- BEGIN: Vendor CSS-->
@@ -567,14 +567,20 @@
     $('#sectorname').text(sectorName);
 
     // 전체 모터의 normal motor 퍼센트 계산 및 표시
-    var totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+    let totalNormalMotorPercent = 0;
+    if (totalNormalMotors != null) {
+      totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+    }
     $('#normalMotorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
     // 전체 모터의 normal motor 퍼센트를 progress bar에 적용
     $('#progressBar').css('width', totalNormalMotorPercent + '%').attr('aria-valuenow',
         totalNormalMotorPercent);
 
     // 전체 모터의 running motor 퍼센트 계산 및 표시
-    var totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+    let totalRunningMotorPercent = 0;
+    if (totalIsOnMotors != null) {
+      totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+    }
     $('#isOnMotorPercent').text(totalRunningMotorPercent.toFixed(2) + '%');
     // 전체 모터의 running motor 퍼센트를 progress bar에 적용
     $('#progressBar1').css('width', totalRunningMotorPercent + '%').attr('aria-valuenow',
