@@ -26,7 +26,7 @@ public interface MonitoringAdaptor {
   CommonResponse<ControlLogsDto> getControlLogs();
 
   CommonResponse<MotorsRunningRatesByTimePeriod> getMotorsRunningRatesByTimePeriod(
-      MotorsRunningRateDataRequest motorsRunningRateDataRequest);
+      String duration);
 
   CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
       Long motorId, MotorsRunningRateDataRequest motorsRunningRateDataRequest);
