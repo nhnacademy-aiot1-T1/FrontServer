@@ -69,48 +69,48 @@
     </div>
 
     <!-- 구역관리 -->
-      <div class="sidebar">
-        <button id="addArea" class="btn btn-primary mb-2"><i class="ft-plus"></i>&nbsp;
-          구역 추가
+    <div class="sidebar">
+      <button id="addArea" class="btn btn-primary mb-2"><i class="ft-plus"></i>&nbsp;
+        구역 추가
+      </button>
+      <hr style="border: 0">
+
+      <!-- 구역 List Group -->
+      <li id="newAreaInput" class="list-group-item dropdown-menu p-2" style="display:none;">
+        <input type="text" class="form-control" id="newAreaName"
+               placeholder="Enter new area name">
+        <br>
+        <button id="addAreaSubmitButton" class="btn btn-primary mb-3">
+          확인
         </button>
-        <hr style="border: 0">
+      </li>
 
-        <!-- 구역 List Group -->
-            <li id="newAreaInput" class="list-group-item dropdown-menu p-2" style="display:none;">
-              <input type="text" class="form-control" id="newAreaName"
-                     placeholder="Enter new area name">
-              <br>
-              <button id="addAreaSubmitButton" class="btn btn-primary mb-3">
-                확인
-              </button>
-            </li>
-
-            <div class="col-xl-8 col-lg-6 col-md-12">
-              <h5 class="card-title text-bold-700 my-2">Registered Sector</h5>
-              <div class="card">
-                <div class="card-content">
-                  <div id="recent-projects" class="media-list position-relative">
-                    <div class="table-responsive">
-                      <table class="table table-padded table-xl mb-0" id="recent-project-table">
-                        <tbody>
-                        <tr>
-                          <td class="text-truncate align-middle">
-                            <a href="#">전체</a>
-                          </td>
-                        </tr>
-                        </tbody>
-                        <tbody th:each= "sector:${sectors}">
-                        <tr>
-                          <td class="text-truncate align-middle">
-                            <a href="#" th:text="${sector.sectorName}"></a>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+      <div class="col-xl-8 col-lg-6 col-md-12">
+        <h5 class="card-title text-bold-700 my-2">Registered Sector</h5>
+        <div class="card">
+          <div class="card-content">
+            <div id="recent-projects" class="media-list position-relative">
+              <div class="table-responsive">
+                <table class="table table-padded table-xl mb-0" id="recent-project-table">
+                  <tbody>
+                  <tr>
+                    <td class="text-truncate align-middle">
+                      <a href="#">전체</a>
+                    </td>
+                  </tr>
+                  </tbody>
+                  <tbody th:each="sector:${sectors}">
+                  <tr>
+                    <td class="text-truncate align-middle">
+                      <a href="#" th:text="${sector.sectorName}"></a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
+            </div>
+          </div>
+        </div>
         <!-- /구역 List group -->
 
       </div>
@@ -118,151 +118,154 @@
     <!--/ 구역관리 -->
 
   </div>
-<!-- END: Content-->
+  <!-- END: Content-->
 
-<!-- BEGIN: Vendor JS-->
-<script src="https://aiotone.live/resources/app-assets/vendors/js/vendors.min.js"
-        type="text/javascript"></script>
-<!-- BEGIN Vendor JS-->
+  <!-- BEGIN: Vendor JS-->
+  <script src="https://aiotone.live/resources/app-assets/vendors/js/vendors.min.js"
+          type="text/javascript"></script>
+  <!-- BEGIN Vendor JS-->
 
-<!-- BEGIN: Page Vendor JS-->
-<script type="text/javascript"
-        src="https://aiotone.live/resources/app-assets/vendors/js/ui/jquery.sticky.js"></script>
-<script src="https://aiotone.live/resources/app-assets/vendors/js/tables/datatable/datatables.min.js"
-        type="text/javascript"></script>
-<script
-    src="https://aiotone.live/resources/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"
-    type="text/javascript"></script>
-<!-- END: Page Vendor JS-->
+  <!-- BEGIN: Page Vendor JS-->
+  <script type="text/javascript"
+          src="https://aiotone.live/resources/app-assets/vendors/js/ui/jquery.sticky.js"></script>
+  <script
+      src="https://aiotone.live/resources/app-assets/vendors/js/tables/datatable/datatables.min.js"
+      type="text/javascript"></script>
+  <script
+      src="https://aiotone.live/resources/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"
+      type="text/javascript"></script>
+  <!-- END: Page Vendor JS-->
 
-<!-- BEGIN: Theme JS-->
-<script src="https://aiotone.live/resources/app-assets/js/core/app.js" type="text/javascript"></script>
-<!-- END: Theme JS-->
+  <!-- BEGIN: Theme JS-->
+  <script src="https://aiotone.live/resources/app-assets/js/core/app.js"
+          type="text/javascript"></script>
+  <!-- END: Theme JS-->
 
-<!-- BEGIN: Page JS-->
-<script type="text/javascript"
-        src="https://aiotone.live/resources/app-assets/js/scripts/pages/sk-content-sidebar.js"></script>
-<!-- END: Page JS-->
+  <!-- BEGIN: Page JS-->
+  <script type="text/javascript"
+          src="https://aiotone.live/resources/app-assets/js/scripts/pages/sk-content-sidebar.js"></script>
+  <!-- END: Page JS-->
 
-<script>
-  $(document).ready(function () {
-    // 구역 추가 및 삭제 동작
-    $('#addArea').click(function () {
-      toggleNewAreaInput();
-    });
+  <script>
+    $(document).ready(function () {
+      // 구역 추가 및 삭제 동작
+      $('#addArea').click(function () {
+        toggleNewAreaInput();
+      });
 
-    $('#addAreaSubmitButton').click(function () {
-      var areaName = $('#newAreaName').val().trim(); // 입력된 구역 이름 가져오기
-      if (areaName !== "") {
-        addNewArea(areaName); // 입력된 이름으로 섹터 추가 함수 호출
-      } else {
-        alert('구역 이름을 입력해주세요.');
-      }
-    });
-
-    $('#areaList').on('click', '.delete-area', function () {
-      deleteArea($(this));
-    });
-
-    // 모터 추가 및 삭제 동작
-    $('#toggleMotorForm').click(function () {
-      $('#motorForm').toggle();
-    });
-
-    $('#addMotor').click(function () {
-      addMotor();
-    });
-
-    $('#checkAll').click(function () {
-      toggleCheckAll();
-    });
-
-    $('#deleteSelected').click(function () {
-      deleteSelectedMotors();
-    });
-  });
-
-  // 구역 추가 입력 필드 토글
-  function toggleNewAreaInput() {
-    $('#newAreaInput').toggle();
-    $('#newAreaName').focus();
-  }
-
-  // 구역 추가
-  function addNewArea(areaName) {
-    if (areaName.trim() !== "") {
-      $.ajax({
-        url: '/addSector',
-        type: 'POST',
-        data: {areaName: areaName},
-        success: function (response) {
-          // 섹터 추가에 성공한 경우, 서버로부터 반환된 데이터를 기반으로 클라이언트 측에서 리스트에 섹터를 추가합니다.
-          // 이 예제에서는 간단하게 새로운 섹터를 리스트에 동적으로 추가하는 방법을 사용합니다.
-          $('#areaList').append('<li class="list-group-item">' + areaName + '</li>');
-
-          // 입력 필드 숨기기
-          $('#newAreaInput').hide();
-        },
-        error: function () {
-          alert('Error saving the area.');
+      $('#addAreaSubmitButton').click(function () {
+        var areaName = $('#newAreaName').val().trim(); // 입력된 구역 이름 가져오기
+        if (areaName !== "") {
+          addNewArea(areaName); // 입력된 이름으로 섹터 추가 함수 호출
+        } else {
+          alert('구역 이름을 입력해주세요.');
         }
       });
+
+      $('#areaList').on('click', '.delete-area', function () {
+        deleteArea($(this));
+      });
+
+      // 모터 추가 및 삭제 동작
+      $('#toggleMotorForm').click(function () {
+        $('#motorForm').toggle();
+      });
+
+      $('#addMotor').click(function () {
+        addMotor();
+      });
+
+      $('#checkAll').click(function () {
+        toggleCheckAll();
+      });
+
+      $('#deleteSelected').click(function () {
+        deleteSelectedMotors();
+      });
+    });
+
+    // 구역 추가 입력 필드 토글
+    function toggleNewAreaInput() {
+      $('#newAreaInput').toggle();
+      $('#newAreaName').focus();
     }
-  }
 
-  // 구역 삭제
-  function deleteArea(deleteButton) {
-    var listItem = deleteButton.closest('li');
-    listItem.remove();
-  }
+    // 구역 추가
+    function addNewArea(areaName) {
+      if (areaName.trim() !== "") {
+        $.ajax({
+          url: '/addSector',
+          type: 'POST',
+          data: {areaName: areaName},
+          success: function (response) {
+            // 섹터 추가에 성공한 경우, 서버로부터 반환된 데이터를 기반으로 클라이언트 측에서 리스트에 섹터를 추가합니다.
+            // 이 예제에서는 간단하게 새로운 섹터를 리스트에 동적으로 추가하는 방법을 사용합니다.
+            $('#areaList').append('<li class="list-group-item">' + areaName + '</li>');
 
-  // 모터 추가
-  function addMotor() {
-    var motorName = $('#motorName').val();
-    var motorArea = $('#motorArea').val();
-    var isDuplicate = checkDuplicateMotor(motorName, motorArea);
-
-    if (isDuplicate) {
-      alert('동일한 구역에 같은 이름의 모터가 이미 존재합니다.');
-    } else if (motorName.trim() != "" && motorArea != "") {
-      $('#motorTableBody').append(
-          `<tr><td class="checkbox-column"><input type="checkbox" class="delete-checkbox"></td><td>${motorName}</td><td>${motorArea}</td></tr>`);
-      $('#motorName').val('');
-      $('#motorArea').val('구역 A'); // Reset to default or first area
-    } else {
-      alert('모터 이름과 구역을 입력해주세요.');
-    }
-  }
-
-  // 중복된 모터 체크
-  function checkDuplicateMotor(motorName, motorArea) {
-    var isDuplicate = false;
-    $('#motorTableBody tr').each(function () {
-      var existingName = $(this).find('td:eq(1)').text();
-      var existingArea = $(this).find('td:eq(2)').text();
-      if (motorName === existingName && motorArea === existingArea) {
-        isDuplicate = true;
-        return false; // break the loop
+            // 입력 필드 숨기기
+            $('#newAreaInput').hide();
+          },
+          error: function () {
+            alert('Error saving the area.');
+          }
+        });
       }
-    });
-    return isDuplicate;
-  }
+    }
 
-  // 모든 체크박스 선택/해제 토글
-  function toggleCheckAll() {
-    $('input:checkbox').not(this).prop('checked', this.checked);
-  }
+    // 구역 삭제
+    function deleteArea(deleteButton) {
+      var listItem = deleteButton.closest('li');
+      listItem.remove();
+    }
 
-  // 선택된 모터 삭제
-  function deleteSelectedMotors() {
-    $('.delete-checkbox:checked').each(function () {
-      $(this).closest('tr').remove();
-    });
-  }
-</script>
+    // 모터 추가
+    function addMotor() {
+      var motorName = $('#motorName').val();
+      var motorArea = $('#motorArea').val();
+      var isDuplicate = checkDuplicateMotor(motorName, motorArea);
+
+      if (isDuplicate) {
+        alert('동일한 구역에 같은 이름의 모터가 이미 존재합니다.');
+      } else if (motorName.trim() != "" && motorArea != "") {
+        $('#motorTableBody').append(
+            `<tr><td class="checkbox-column"><input type="checkbox" class="delete-checkbox"></td><td>${motorName}</td><td>${motorArea}</td></tr>`);
+        $('#motorName').val('');
+        $('#motorArea').val('구역 A'); // Reset to default or first area
+      } else {
+        alert('모터 이름과 구역을 입력해주세요.');
+      }
+    }
+
+    // 중복된 모터 체크
+    function checkDuplicateMotor(motorName, motorArea) {
+      var isDuplicate = false;
+      $('#motorTableBody tr').each(function () {
+        var existingName = $(this).find('td:eq(1)').text();
+        var existingArea = $(this).find('td:eq(2)').text();
+        if (motorName === existingName && motorArea === existingArea) {
+          isDuplicate = true;
+          return false; // break the loop
+        }
+      });
+      return isDuplicate;
+    }
+
+    // 모든 체크박스 선택/해제 토글
+    function toggleCheckAll() {
+      $('input:checkbox').not(this).prop('checked', this.checked);
+    }
+
+    // 선택된 모터 삭제
+    function deleteSelectedMotors() {
+      $('.delete-checkbox:checked').each(function () {
+        $(this).closest('tr').remove();
+      });
+    }
+  </script>
 
 
-<div th:include="fixedTemplate/defaultJS.html"></div>
+  <div th:include="fixedTemplate/defaultJS.html"></div>
+</div>
 
 </body>
 <!-- END: Body-->

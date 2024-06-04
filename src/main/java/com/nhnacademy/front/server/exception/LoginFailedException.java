@@ -8,11 +8,11 @@ import lombok.Getter;
 @Getter
 public class LoginFailedException extends AuthenticationException {
 
-    public LoginFailedException() {
-        super();
-    }
+  public LoginFailedException() {
+    super();
+  }
 
-    public LoginFailedException(String message) {
-        super(message);
-    }
+  public LoginFailedException(String message) {
+    super(message);
+  }
 }

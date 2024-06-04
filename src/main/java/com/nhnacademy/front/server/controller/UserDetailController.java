@@ -6,18 +6,22 @@ import com.nhnacademy.front.server.dto.UserDetailDto;
 import com.nhnacademy.front.server.dto.UserRole;
 import com.nhnacademy.front.server.service.UserDetailService;
 import com.nhnacademy.front.server.util.WebUtils;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Base64Utils;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -50,7 +54,7 @@ public class UserDetailController {
 
     model.addAttribute("users", users);
 
-    log.warn("get user list is :{}", users);
+    log.info("get user list is :{}", users);
     return "usersList";
   }
 
@@ -67,7 +71,7 @@ public class UserDetailController {
 
   @PostMapping("/user/update/role")
   public String updateUserRole(@RequestParam("role") String role,
-                               @RequestParam("userId") Long userId) {
+      @RequestParam("userId") Long userId) {
 
     UserDetailDto userDetailDto = userService.getUserDetail(userId);
     userDetailDto.setRole(UserRole.valueOf(role));
@@ -106,7 +110,7 @@ public class UserDetailController {
     try {
       JsonNode jsonNode = objectMapper.readTree(decodeToken);
       return jsonNode.get("userId").asLong();
-    }catch (IOException e) {
+    } catch (IOException e) {
       log.error(e.getMessage());
       return null;
     }
