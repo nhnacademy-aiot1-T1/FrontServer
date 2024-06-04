@@ -237,11 +237,14 @@
     $('#motorId').text(motorDetail.motorId);
 
     if (motorDetail.isNormal == true) {
+      document.getElementById("motorStatus").style.color = "limegreen";
+
     } else {
       document.getElementById("motorStatus").style.color = "red";
     }
 
     if (motorDetail.isOn == true) {
+      document.getElementById("motorStatus").style.color = "limegreen";
     } else {
       document.getElementById("motorPower").style.color = "red";
     }
