@@ -49,7 +49,7 @@ public class ViewInterceptor implements HandlerInterceptor {
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
       ModelAndView modelAndView) throws Exception {
     if (modelAndView != null) {
-      modelAndView.addObject("userRole", roleThreadLocal.get());
+      modelAndView.getModel().put("userRole", roleThreadLocal.get());
     }
     HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
   }
