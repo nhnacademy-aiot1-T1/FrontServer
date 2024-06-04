@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequiredArgsConstructor
@@ -70,10 +71,15 @@ public class MotorDetailController {
 
     String url = SENSOR_SCORE_URL.replace("{motorId}", motorId.toString())
         .replace("{sensorId}", sensorId.toString());
+    String localTestUrl = "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb";
+    String requestUrl = url;
+
+    UriComponentsBuilder componentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
+    componentsBuilder.pathSegment("motorId", "sensorId").build(motorId, sensorId);
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
     return restTemplate.exchange(
-        "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb", HttpMethod.GET, request,
+        requestUrl, HttpMethod.GET, request,
         new ParameterizedTypeReference<CommonResponse<SensorScoreDto>>() {
         }).getBody().getData();
 
@@ -81,7 +87,8 @@ public class MotorDetailController {
   }
 
   @GetMapping("/api/monitor/motors/{motorId}/sensors/{sensorId}/data")
-  public ResponseEntity<CommonResponse<SensorDataDto>> getSensorData(Model model,
+  @ResponseBody
+  public SensorDataDto getSensorData(Model model,
       @PathVariable Long motorId,
       @PathVariable Long sensorId) {
 
@@ -91,13 +98,16 @@ public class MotorDetailController {
 
     String url = SENSOR_DATA_URL.replace("{motorId}", motorId.toString())
         .replace("{sensorId}", sensorId.toString());
+    String localTestUrl = "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a";
+
+    String requestUrl = url;
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     return restTemplate.exchange(
-        "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a", HttpMethod.GET, request,
-        new ParameterizedTypeReference<>() {
-        });
+        requestUrl, HttpMethod.GET, request,
+        new ParameterizedTypeReference<CommonResponse<SensorDataDto>>() {
+        }).getBody().getData();
   }
 
 }

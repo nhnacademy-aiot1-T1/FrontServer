@@ -269,14 +269,19 @@
 
     var promises = [];
     chartId = 0;
+    const local = "http://localhost:8082";
+    const prod = "https://aiotone.live";
+    let host = prod;
+
     sensorList.forEach(function (sensor, index) {
 
-      var sensorDataURL = "https://aiotone.live/api/monitor/motors/"
+      var sensorDataURL = host + "/api/monitor/motors/"
           + urlParms.get("motorId")
           + "/sensors/"
           + sensor.sensorId + "/scores";
 
-      var sensorRawDataURL = "https://aiotone.live/api/monitor/motors/"
+      var sensorRawDataURL = host + "/api/monitor/motors/"
+
           + urlParms.get("motorId")
           + "/sensors/"
           + sensor.sensorId + "/data";
@@ -326,8 +331,8 @@
 
     // 받아온 그래프 정보 json 응답에서 그래프 그리기 쉽게 데이터 추출해내고 차트 그리기 [score]
     function showSensorDataChart(jsonObj, chartId) {
-      var dataOfSensorDataResponse = jsonObj["data"];
-      var scores = dataOfSensorDataResponse["scores"];
+
+      var scores = jsonObj["scores"];
 
       var chartOfSensorOptions = {
         responsive: true,
@@ -417,8 +422,8 @@
 
     // 받아온 그래프 정보 json 응답에서 그래프 그리기 쉽게 데이터 추출해내고 차트 그리기 [rawData]
     function showSensorRawDataChart(jsonObj, chartId) {
-      var dataOfSensorDataResponse = jsonObj["data"];
-      var values = dataOfSensorDataResponse["sensorData"];
+
+      var values = jsonObj["sensorData"];
 
       var chartOfSensorOptions = {
         responsive: true,

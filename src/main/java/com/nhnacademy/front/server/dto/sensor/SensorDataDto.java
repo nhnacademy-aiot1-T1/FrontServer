@@ -16,6 +16,6 @@ public class SensorDataDto {
   private LocalDateTime startDate;
   private LocalDateTime endDate;
   private Long sensorId;
-  private List<ScoreDto> scores;
+  private List<ValueDto> sensorData;
 
 }
