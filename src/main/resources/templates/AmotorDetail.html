@@ -242,7 +242,8 @@
     }
 
     if (motorDetail.isOn == true) {
-      document.getElementById("motorPower").style.color = "limegreen"
+    } else {
+      document.getElementById("motorPower").style.color = "red";
     }
 
     // 상단에 모터 구역, 이름 표출
