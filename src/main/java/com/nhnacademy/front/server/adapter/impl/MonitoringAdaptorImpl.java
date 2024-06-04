@@ -193,6 +193,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 //  }
 
   // 총 모터 가동률
+  // TODO  쿼리쓰트링으로 쑤쩡
   @Override
   public CommonResponse<MotorsRunningRatesByTimePeriod> getMotorsRunningRatesByTimePeriod(
       MotorsRunningRateDataRequest motorsRunningRateDataRequest) {
@@ -262,6 +263,8 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 //  }
 
   // 개별 모터 가동률
+
+  // TODO  쿼리쓰트링으로 쑤쩡
   @Override
   public CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
       Long motorId, MotorsRunningRateDataRequest motorsRunningRateDataRequest) {
@@ -274,7 +277,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
         .replace("{motorId}", motorId.toString());
 
     ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplate.exchange(
-        url, HttpMethod.GET, request,
+        url + "?duration=", HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
     if (exchange.getStatusCode() != HttpStatus.OK) {
@@ -354,4 +357,5 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
     return exchange.getBody();
   }
+
 }

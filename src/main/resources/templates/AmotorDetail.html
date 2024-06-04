@@ -45,7 +45,13 @@
     <div class="content-wrapper-before"></div>
     <div class="content-header row">
       <div class="content-header-left col-md-4 col-12 mb-2">
-        <h3 class="content-header-title font-large-1">모터 상세</h3>
+        <h3 class="content-header-title font-large-1" id="topMotorArea"
+            style="display: inline-block"></h3>
+        <h3 class="content-header-title font-medium-5"
+            style="display: inline-block">&nbsp&nbsp-&nbsp&nbsp</h3>
+        <h3 class="content-header-title font-large-1" id="topMotorName"
+            style="display: inline-block"></h3>
+
       </div>
 
       <div class="content-header-right col-md-8 col-12">
@@ -56,65 +62,75 @@
     <div class="content-body">
       <section class="card">
 
-        <div id="invoice-template" class="card-body">
+        <div id="invoice-template" class="card-body top-0 start-0">
           <!-- Invoice Company Details -->
           <div id="invoice-company-details" class="row">
-            <div class="col-md-6 col-sm-12 text-left text-md-left">
+            <div class="col-md-3 col-sm-12 text-left text-md-left">
               <img src="https://aiotone.live/resources/app-assets/images/logo/motor.png"
                    alt="company logo"
                    class="mb-2" width="200">
-              <h1 id="motorname"></h1>
+              <div class="col-1font-large-1" id="motorname"></div>
             </div>
-          </div>
-          <!-- 현재 모터 상태치 -->
-          <div class="invoice stat" style="position: absolute; top: 0px; right:50px; width: 1100px">
-            <div class="card" style="height: 40px">
-              <div class="card-header">
-                <h4 class="card-title font-large-1">모터 상태</h4>
-                <!--                <span class="text-medium-1 info line-height-2 text-uppercase">요약 정보</span>-->
-                <div class="heading-elements">
-                  <ul class="list-inline mb-0 display-block">
-                    <li>
-                      <a class="btn btn-md btn-info box-shadow-2 round btn-min-width pull-right"
-                         href="/SectorDetail" target="_blank">Back to List</a>
-                    </li>
-                  </ul>
+            <!-- 현재 모터 상태치 -->
+            <!--          <div class="invoice stat" style="position: absolute; top: 0px; right:50px; width: 1100px">-->
+            <div class="col-md-8 invoice stat align-content-center ">
+              <!--            <div class="card" style="height: 40px">-->
+              <div class="card">
+                <div class="card-header">
+                  <!--                <span class="text-medium-1 info line-height-2 text-uppercase">요약 정보</span>-->
+                  <div class="heading-elements">
+                    <ul class="list-inline mb-0 display-block">
+                      <li>
+                        <a class="btn btn-md btn-info box-shadow-2 round btn-min-width pull-right"
+                           href="/SectorDetail" target="_blank">Back to List</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-              <div class="card-content collapse show">
-                <div class="card-body pt-0 pb-1">
+                <div class="card-content collapse show">
+                  <div class="card-body pt-0 pb-1 position top">
+                    <br>
+                    <br>
+                    <div class="row mb-1">
+                      <div
+                          class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-4 text-center ">
+                        <p class="blue-grey lighten-2 mb-0 font-large-2">
+                          상태</p>
+                        <p class="font-large-1 text-bold-400" id="motorStatus"></p>
+                      </div>
+                      <div
+                          class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-4 text-center">
+                        <p class="blue-grey lighten-2 mb-0 font-large-2">소속 구역</p>
+                        <p class="font-large-1 text-bold-400" id="motorBelong"></p>
+                      </div>
+                      <div
+                          class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-4 text-center">
+                        <p class="blue-grey lighten-2 mb-0 font-large-2">전원</p>
+                        <p class="font-large-1 text-bold-400" id="motorPower"></p>
+                      </div>
+                      <div
+                          class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-4 text-center">
+                        <p class="blue-grey lighten-2 mb-0 font-large-2">모터ID</p>
+                        <p class="font-large-1 text-bold-400" id="motorId"></p>
+                      </div>
+                      <div
+                          class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center"
+                          th:each=" sensor :${sensorList}">
+                        <!--                      <p class="blue-grey lighten-2 mb-0"-->
+                        <!--                         th:text="${sensor.getSensorType()}"></p>-->
+                        <!--                                            <p class="font-medium-5 text-bold-400" th:text="${sensor.getHourMean()}"></p>-->
+                      </div>
 
-                  <div class="row mb-1">
-
-                    <div
-                        class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                      <p class="blue-grey lighten-2 mb-0 font-medium-5">상태</p>
-                      <p class="font-medium-5 text-bold-400" id="motorStatus"></p>
-                    </div>
-                    <div
-                        class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                      <p class="blue-grey lighten-2 mb-0 font-medium-5">소속 구역</p>
-                      <p class="font-medium-5 text-bold-400" id="motorBelong"></p>
-                    </div>
-                    <div
-                        class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                      <p class="blue-grey lighten-2 mb-0 font-medium-5">전원</p>
-                      <p class="font-medium-5 text-bold-400" id="motorPower"></p>
-                    </div>
-                    <div
-                        class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center"
-                        th:each=" sensor :${sensorList}">
-                      <!--                      <p class="blue-grey lighten-2 mb-0"-->
-                      <!--                         th:text="${sensor.getSensorType()}"></p>-->
-                      <!--                                            <p class="font-medium-5 text-bold-400" th:text="${sensor.getHourMean()}"></p>-->
                     </div>
 
                   </div>
-
                 </div>
               </div>
             </div>
+
+
           </div>
+
         </div>
 
       </section>
@@ -225,13 +241,19 @@
     const url = new URL(window.location.href);
     const urlParms = url.searchParams;
 
-    var motorDetail = [[${motorDetail}]]
+    var motorDetail = [[${motorDetail}]];
 
     // 모터의 기본 정보
     $('#motorname').text(motorDetail.motorName);
     $('#motorStatus').text(getNormalWarningInfo(motorDetail.isNormal));
     $('#motorBelong').text(getSectorNameById(motorDetail.sectorId));
     $('#motorPower').text(getOnOffInfo(motorDetail.isOn));
+    $('#motorId').text(motorDetail.motorId);
+
+    // 상단에 모터 구역, 이름 표출
+    var motorSector = getSectorNameById(motorDetail.motorId);
+    $('#topMotorArea').text(motorSector);
+    $('#topMotorName').text(motorDetail.motorName);
   });
 
   // 섹터 ID로 섹터 정보를 가져오는 함수
