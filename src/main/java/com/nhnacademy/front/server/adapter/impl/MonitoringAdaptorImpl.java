@@ -154,7 +154,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplate.exchange(
-        pathProperties.getRunningRateByTime(), HttpMethod.GET, request,
+        pathProperties.getRunningRateByTime() + "?duration=" + duration, HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
     if (exchange.getStatusCode() != HttpStatus.OK) {
@@ -169,17 +169,17 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
   // TODO  쿼리쓰트링으로 쑤쩡
   @Override
   public CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
-      Long motorId, MotorsRunningRateDataRequest motorsRunningRateDataRequest) {
+      Long motorId, String duration) {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-    HttpEntity<Object> request = new HttpEntity<>(motorsRunningRateDataRequest, httpHeaders);
+    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     String url = pathProperties.getIndividualRunningRateByTime()
         .replace("{motorId}", motorId.toString());
 
     ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplate.exchange(
-        url + "?duration=", HttpMethod.GET, request,
+        url + "?duration=" + duration, HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
     if (exchange.getStatusCode() != HttpStatus.OK) {
