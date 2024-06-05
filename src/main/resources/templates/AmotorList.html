@@ -3,8 +3,6 @@
 <!-- BEGIN: Head-->
 
 <head>
-<!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
 
   <div th:include="fixedTemplate/defaultCSS.html"></div>
   <!-- BEGIN: Vendor CSS-->
@@ -42,9 +40,6 @@
         href="https://aiotone.live/resources/app-assets/vendors/css/timeline/vertical-timeline.css">
   <!-- END: Page CSS-->
 
-  <!-- BEGIN: Custom CSS-->
-  <!--  <link rel="stylesheet" type="text/css" href="https://aiotone.live/resources/assets/css/style.css">-->
-  <!-- END: Custom CSS-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <link href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquareNeo@1.0/nanumsquareneo.css"
@@ -176,8 +171,6 @@
                                 꺼진 모터만</a>
                               <a class="dropdown-item" onclick="selectSector('powerOn')">전원이
                                 켜진 모터만</a>
-                              <a class="dropdown-item" onclick="selectSector('undefined')">구역
-                                미지정 모터만</a>
                             </div>
                           </div>
                         </div>
@@ -199,10 +192,9 @@
                            style="padding-bottom: 120px">
                         <div class="card pull-up" th:if="${motor.getIsOn()== true}">
                           <div th:if="${motor.getIsNormal() == true}"
-                               class="card bg-success" style="height: 70px;">
+                               class="card bg-success" style="height: 70px">
                             <div class="card bg-success" style="height: 20px">
-                              <h4 class="card-title white font-medium-3"
-                                  style="padding: 10px; height: 1px"
+                              <h4 class="card-title padding-top white font-medium-2 pt-1 pl-1"
                                   th:text="${motor.getMotorName()}"></h4>
                             </div>
                             <div class="card bg-success">
@@ -224,8 +216,7 @@
                           <div th:if="${motor.getIsNormal() == false }"
                                class="card bg-warning " style="height: 70px">
                             <div class="card bg-warning" style="height: 20px">
-                              <h4 class="card-title white font-medium-4"
-                                  style="padding: 10px;height: 1px"
+                              <h4 class="card-title white font-medium-2 pt-1 pl-1"
                                   th:text="${motor.getMotorName()}"></h4>
                               <a class="heading-elements-toggle"><i
                                   class="la la-ellipsis-v font-medium-3"></i></a>
@@ -255,8 +246,7 @@
                           <div th:if="${motor.getIsNormal() == true}"
                                class="card bg-blue-grey" style="height: 70px">
                             <div class="card bg-blue-grey" style="height: 20px">
-                              <h4 class="card-title white font-medium-3"
-                                  style="padding: 10px;height: 1px"
+                              <h4 class="card-title white font-medium-2 pt-1 pl-1"
                                   th:text="${motor.getMotorName()}"></h4>
                             </div>
                             <div class="card bg-blue-grey">
@@ -278,8 +268,7 @@
                           <div th:if="${motor.getIsNormal() == false }"
                                class="card  bg-blue-grey" style="height: 70px">
                             <div class="card  bg-blue-grey " style="height: 20px">
-                              <h4 class="card-title warning font-medium-3"
-                                  style="padding: 10px;height: 1px"
+                              <h4 class="card-title warning font-medium-2 pt-1 pl-1"
                                   th:text="${motor.getMotorName()}"
                               ></h4>
                               <a class="heading-elements-toggle"><i
@@ -379,7 +368,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="sectorRegistModalLabel">알림</h5>
+        <!--        <h5 class="modal-title" id="sectorRegistModalLabel">알림</h5>-->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -422,7 +411,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="sectorEditModalLabel">Information</h5>
+        <!--        <h5 class="modal-title" id="sectorEditModalLabel">Information</h5>-->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -516,7 +505,7 @@
           <div class="card-content collapse show">
             <div class="card-body">
               <!-- ... -->
-              <form id="sectorRemoveForm" action="/removeSector" th:method="delete">
+              <form id="sectorRemoveForm" th:action="@{/removeSector}" th:method="delete">
                 <input type="hidden" id="sectorIdForRemove" name="sectorId" value="">
                 <div class="card-text">
                   <p>정말로 삭제하시겠습니까?</p>
@@ -567,14 +556,22 @@
     $('#sectorname').text(sectorName);
 
     // 전체 모터의 normal motor 퍼센트 계산 및 표시
-    var totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+    let totalNormalMotorPercent = 0;
+
+    totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+    totalNormalMotorPercent = isNaN(totalNormalMotorPercent) ? 0 : totalNormalMotorPercent;
+
     $('#normalMotorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
     // 전체 모터의 normal motor 퍼센트를 progress bar에 적용
     $('#progressBar').css('width', totalNormalMotorPercent + '%').attr('aria-valuenow',
         totalNormalMotorPercent);
 
     // 전체 모터의 running motor 퍼센트 계산 및 표시
-    var totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+    let totalRunningMotorPercent = 0;
+
+    totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+    totalRunningMotorPercent = isNaN(totalRunningMotorPercent) ? 0 : totalRunningMotorPercent;
+
     $('#isOnMotorPercent').text(totalRunningMotorPercent.toFixed(2) + '%');
     // 전체 모터의 running motor 퍼센트를 progress bar에 적용
     $('#progressBar1').css('width', totalRunningMotorPercent + '%').attr('aria-valuenow',
@@ -608,6 +605,8 @@
 
       // 전체 모터의 normal motor 퍼센트 계산 및 표시
       var totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+      totalNormalMotorPercent = isNaN(totalNormalMotorPercent) ? 0 : totalNormalMotorPercent;
+      console.log("select sector total normal motor percent is :{} ", totalNormalMotorPercent)
       $('#normalMotorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
       // 전체 모터의 normal motor 퍼센트를 progress bar에 적용
       $('#progressBar').css('width', totalNormalMotorPercent + '%').attr('aria-valuenow',
@@ -615,6 +614,9 @@
 
       // 전체 모터의 running motor 퍼센트 계산 및 표시
       var totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+      totalRunningMotorPercent = isNaN(totalRunningMotorPercent) ? 0 : totalRunningMotorPercent;
+      console.log("select sector total running motor percent is :{} ", totalRunningMotorPercent)
+
       $('#isOnMotorPercent').text(totalRunningMotorPercent.toFixed(2) + '%');
       // 전체 모터의 running motor 퍼센트를 progress bar에 적용
       $('#progressBar1').css('width', totalRunningMotorPercent + '%').attr('aria-valuenow',
@@ -738,8 +740,13 @@
       if (sectors[i].sectorId == sectorId) {
         // Normal motor 퍼센트 계산
         var totalMotors = sectors[i].totalCount;
+
         var isOnMotorPercent = (sectors[i].isOnCount / totalMotors) * 100;
+        isOnMotorPercent = isNaN(isOnMotorPercent) ? 0 : isOnMotorPercent;
+
         var normalMotorPercent = (sectors[i].normalCount / totalMotors) * 100;
+        normalMotorPercent = isNaN(normalMotorPercent) ? 0 : normalMotorPercent;
+
         sectors[i].isOnMotorPercent = isOnMotorPercent.toFixed(2); // 소수점 둘째 자리까지 표시
         sectors[i].normalMotorPercent = normalMotorPercent.toFixed(2); // 소수점 둘째 자리까지 표시
         return sectors[i];

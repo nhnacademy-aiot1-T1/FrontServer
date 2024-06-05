@@ -23,15 +23,13 @@ public interface MonitoringAdaptor {
 
   CommonResponse<MotorDetailDto> getMotorDetail(Long motorId);
 
-//  CommonResponse<MotorScoresDto> getMotorScores(Long motorId);
-
   CommonResponse<ControlLogsDto> getControlLogs();
 
   CommonResponse<MotorsRunningRatesByTimePeriod> getMotorsRunningRatesByTimePeriod(
-      MotorsRunningRateDataRequest motorsRunningRateDataRequest);
+      String duration);
 
   CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
-      Long motorId, MotorsRunningRateDataRequest motorsRunningRateDataRequest);
+      Long motorId, String duration);
 
   CommonResponse<SectorManagementDto> registSector(SectorRegisterRequest sectorRegisterRequest);
 

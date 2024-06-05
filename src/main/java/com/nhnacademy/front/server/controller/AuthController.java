@@ -5,15 +5,18 @@ import com.nhnacademy.front.server.exception.NotFoundTokenException;
 import com.nhnacademy.front.server.properties.PaycoProperties;
 import com.nhnacademy.front.server.service.AuthService;
 import com.nhnacademy.front.server.util.WebUtils;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
@@ -38,14 +41,14 @@ public class AuthController {
 
     log.warn("token : {} / hasText : {}", token, StringUtils.hasText(token));
     if (StringUtils.hasText(token)) {
-      return WebUtils.REDIRECT_PREFIX + "/" +HOME_PAGE;
+      return WebUtils.REDIRECT_PREFIX + "/" + HOME_PAGE;
     }
 
     final String paycoOauthUrl = "https://id.payco.com/oauth2.0/authorize?response_type=code"
-            + "&client_id=" + paycoProperties.getClientId()
-            + "&serviceProviderCode=FRIENDS"
-            + "&redirect_uri=" + paycoProperties.getRedirectUri()
-            + "&userLocale=ko_KR";
+        + "&client_id=" + paycoProperties.getClientId()
+        + "&serviceProviderCode=FRIENDS"
+        + "&redirect_uri=" + paycoProperties.getRedirectUri()
+        + "&userLocale=ko_KR";
 
     model.addAttribute("payco", paycoOauthUrl);
 

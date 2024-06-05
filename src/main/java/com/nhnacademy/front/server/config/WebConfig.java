@@ -2,6 +2,9 @@ package com.nhnacademy.front.server.config;
 
 import com.nhnacademy.front.server.interceptor.AuthorizationInterceptor;
 import com.nhnacademy.front.server.interceptor.ViewInterceptor;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -17,10 +20,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.io.IOException;
-import java.time.Duration;
-import java.util.List;
 
 
 @Slf4j

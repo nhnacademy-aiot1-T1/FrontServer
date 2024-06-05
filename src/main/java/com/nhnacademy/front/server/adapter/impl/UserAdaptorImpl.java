@@ -26,7 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserAdaptorImpl implements UserAdaptor {
 
   private final ApiPathProperties pathProperties;
-  private final RestTemplate restTemplateMocky;
+  private final RestTemplate restTemplate;
 
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON;
 
@@ -61,7 +61,7 @@ public class UserAdaptorImpl implements UserAdaptor {
         pathProperties.getUserList(), HttpMethod.GET, request
     );
 
-    log.info(":{}", exchange.getBody());
+    log.info("get user list is :{}", exchange.getBody());
 
     if (isStatusNotOk(exchange)) {
       throw new ResponseStatusException(exchange.getStatusCode());
@@ -90,7 +90,7 @@ public class UserAdaptorImpl implements UserAdaptor {
 
     ResponseEntity<CommonResponse<UserDetailDto>> exchange;
     try {
-      exchange = restTemplateExchange(url, HttpMethod.POST, request);
+      exchange = restTemplateExchange(url, HttpMethod.PUT, request);
     } catch (ResponseStatusException e) {
       log.error("RestTemplate exchange error :{}", e.getMessage());
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
@@ -133,7 +133,7 @@ public class UserAdaptorImpl implements UserAdaptor {
 
   private ResponseEntity<CommonResponse<UserDetailDto>> restTemplateExchange(String url,
       HttpMethod httpMethod, HttpEntity<String> request) {
-    return restTemplateMocky.exchange(
+    return restTemplate.exchange(
         url,
         httpMethod,
         request,
@@ -143,7 +143,7 @@ public class UserAdaptorImpl implements UserAdaptor {
 
   private ResponseEntity<CommonResponse<List<UserDetailDto>>> restTemplateListExchange(String url,
       HttpMethod httpMethod, HttpEntity<String> request) {
-    return restTemplateMocky.exchange(
+    return restTemplate.exchange(
         url,
         httpMethod,
         request,

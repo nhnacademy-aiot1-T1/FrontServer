@@ -13,7 +13,8 @@ public class MotorDetailDto {
   private Long motorId;
   private String motorName;
   private Long sectorId;
+  private String sectorName;
   private Boolean isOn;
-  private String status;
+  private Boolean isNormal;
   private List<SensorDto> sensors;
 }

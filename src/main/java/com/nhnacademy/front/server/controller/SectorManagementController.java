@@ -1,18 +1,16 @@
 package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.sector.SectorRegisterRequest;
-import com.nhnacademy.front.server.dto.sector.SectorRemoveRequest;
 import com.nhnacademy.front.server.dto.sector.SectorRenameRequest;
 import com.nhnacademy.front.server.service.SectorService;
+import com.nhnacademy.front.server.util.WebUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -22,8 +20,7 @@ public class SectorManagementController {
 
   private final SectorService sectorService;
 
-  private String REDIRECT = "redirect:";
-
+  private static final String SECTOR_DETAIL = "/SectorDetail";
 
   @PostMapping("/registSector")
   public String registSector(@RequestParam String sectorNameInput) {
@@ -32,7 +29,7 @@ public class SectorManagementController {
 
     sectorService.registSector(sectorRegisterRequest);
 
-    return REDIRECT + "/SectorDetail";
+    return WebUtils.REDIRECT_PREFIX + SECTOR_DETAIL;
   }
 
   @PutMapping("/renameSector")
@@ -43,24 +40,16 @@ public class SectorManagementController {
 
     sectorService.renameSector(sectorId, sectorRenameRequest);
 
-    return REDIRECT + "/SectorDetail";
+    return WebUtils.REDIRECT_PREFIX + SECTOR_DETAIL;
   }
 
-  @DeleteMapping("/deleteSector")
-  public void removeSector(Long sectorId) {
 
-    log.info("Removing sector inside {}", sectorId);
-    sectorService.removeSector(sectorId);
-    log.info("Removed sector log {}", sectorId);
-  }
-
-  @PostMapping("/removeSector")
+  @DeleteMapping("/removeSector")
   public String removeSectorTemp(@ModelAttribute("sectorId") Long sectorId) {
 
     log.info("Removing sector Temp inside {}", sectorId);
-    removeSector(sectorId);
+    sectorService.removeSector(sectorId);
 
-    return REDIRECT + "/SectorDetail";
+    return WebUtils.REDIRECT_PREFIX + SECTOR_DETAIL;
   }
-
 }
