@@ -74,9 +74,6 @@ public class MotorDetailController {
     String localTestUrl = "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb";
     String requestUrl = url;
 
-    UriComponentsBuilder componentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
-    componentsBuilder.pathSegment("motorId", "sensorId").build(motorId, sensorId);
-
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
     return restTemplate.exchange(
         requestUrl, HttpMethod.GET, request,
