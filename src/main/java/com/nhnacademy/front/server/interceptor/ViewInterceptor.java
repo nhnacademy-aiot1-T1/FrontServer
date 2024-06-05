@@ -50,9 +50,8 @@ public class ViewInterceptor implements HandlerInterceptor {
 
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-                         ModelAndView modelAndView) throws Exception {
-    if (modelAndView != null && !HttpStatus.valueOf(response.getStatus()).is3xxRedirection()
-            && !(modelAndView.getView() instanceof RedirectView)) {
+                         ModelAndView modelAndView) {
+    if (modelAndView != null) {
       modelAndView.addObject("userRole", roleThreadLocal.get());
     }
   }
