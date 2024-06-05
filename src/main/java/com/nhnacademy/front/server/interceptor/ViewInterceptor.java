@@ -54,12 +54,6 @@ public class ViewInterceptor implements HandlerInterceptor {
     if (modelAndView != null && !HttpStatus.valueOf(response.getStatus()).is3xxRedirection()
             && !(modelAndView.getView() instanceof RedirectView)) {
       modelAndView.addObject("userRole", roleThreadLocal.get());
-    } else if (modelAndView != null && modelAndView.getView() instanceof RedirectView) {
-      RedirectView redirectView = (RedirectView) modelAndView.getView();
-      if (redirectView == null) {
-        return;
-      }
-      redirectView.setExposeModelAttributes(false);
     }
   }
 
