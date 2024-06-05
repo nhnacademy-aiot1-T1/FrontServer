@@ -8,7 +8,7 @@
           class="brand-logo" alt="Chameleon admin logo"
           src="https://aiotone.live/resources/logo/sidebarLogo.png"
           style="width: 50px; height: auto;"/>
-        <h3 class="brand-text">T1 MotorManger</h3>
+        <h3 class="brand-text">AIOTONE</h3>
       </a></li>
       <li class="nav-item d-md-none"><a class="nav-link close-navbar"><i class="ft-x"></i></a></li>
     </ul>
@@ -17,24 +17,24 @@
   <div class="main-menu-content">
     <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
       <li class=" nav-item"><a href="/"><i class="ft-layers"></i><span class="menu-title"
-                                                                       data-i18n="">DashBoard</span></a>
+                                                                       data-i18n="">대시보드</span></a>
       </li>
       <li class=" nav-item"><a href="/SectorDetail"><i class="ft-monitor"></i><span
-          class="menu-title" data-i18n="">Motor List</span></a>
+          class="menu-title" data-i18n="">모터 목록</span></a>
       </li>
 
       <li class=" nav-item"><a href="/home/controlLog"><i class="ft-zap"></i><span
-          class="menu-title" data-i18n="">Issue Log</span></a>
+          class="menu-title" data-i18n="">이슈 로그</span></a>
       </li>
       <li class=" nav-item"><a href="/mypage"><i class="ft-aperture"></i><span class="menu-title"
-                                                                               data-i18n="">My Page</span></a>
+                                                                               data-i18n="">마이페이지</span></a>
       </li>
 
       <li class="nav-item" th:if="${userRole.toString().equals('ADMIN')}">
         <a
             href="/mypage/admin/users"><i class="ft-list"></i><span class="menu-title"
                                                                     data-i18n=""
-                                                                    th:text="${userRole}">View Users</span></a>
+                                                                    th:text="${userRole}">사용자 리스트</span></a>
       </li>
     </ul>
   </div>
