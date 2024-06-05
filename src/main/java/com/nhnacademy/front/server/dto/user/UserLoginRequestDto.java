@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserLoginRequestDto {
+
   private String loginId;
   private String password;
 }

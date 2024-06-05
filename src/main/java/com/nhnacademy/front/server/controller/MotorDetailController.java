@@ -2,11 +2,10 @@ package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.dto.motorDetail.MotorDetailDto;
+import com.nhnacademy.front.server.dto.motorDetail.SensorDto;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateData;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateDataRequest;
 import com.nhnacademy.front.server.dto.sector.SectorDto;
-import com.nhnacademy.front.server.dto.motorDetail.SensorDto;
-import com.nhnacademy.front.server.dto.sector.SectorManagementDto;
 import com.nhnacademy.front.server.dto.sensor.SensorDataDto;
 import com.nhnacademy.front.server.dto.sensor.SensorScoreDto;
 import com.nhnacademy.front.server.service.MotorService;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,8 +33,8 @@ public class MotorDetailController {
 
   private final MotorService motorService;
   private final SectorService sectorService;
-  private final String SENSOR_SCORE_URL = "/api/monitor/motors/{motorId}/sensors/{sensorId}/scores";
-  private final String SENSOR_DATA_URL = "/api/monitor/motors/{motorId}/sensors/{sensorId}/data";
+  private final String SENSOR_SCORE_URL = "http://GATEWAY-SERVICE/api/monitor/motors/{motorId}/sensors/{sensorId}/scores";
+  private final String SENSOR_DATA_URL = "http://GATEWAY-SERVICE/api/monitor/motors/{motorId}/sensors/{sensorId}/data";
   private final RestTemplate restTemplate;
 
   @GetMapping("/SectorDetail/MotorDetail")
@@ -43,11 +43,11 @@ public class MotorDetailController {
     List<SensorDto> sensorList = motorService.getMotorDetail(motorId).getSensors();
     List<SectorDto> sectorsInfo = sectorService.getSectorsInfo().getSectors();
     List<MotorsRunningRateData> individualMotorRunningRates_day = motorService.getIndividualMotorsRunningRatesByTimePeriod(
-        motorId, new MotorsRunningRateDataRequest("day")).getRates();
+        motorId, "day").getRates();
     List<MotorsRunningRateData> individualMotorRunningRates_week = motorService.getIndividualMotorsRunningRatesByTimePeriod(
-        motorId, new MotorsRunningRateDataRequest("week")).getRates();
+        motorId, "week").getRates();
     List<MotorsRunningRateData> individualMotorRunningRates_month = motorService.getIndividualMotorsRunningRatesByTimePeriod(
-        motorId, new MotorsRunningRateDataRequest("month")).getRates();
+        motorId, "month").getRates();
 
     model.addAttribute("sensorList", sensorList);
     model.addAttribute("sectorsInfo", sectorsInfo);
@@ -71,10 +71,15 @@ public class MotorDetailController {
 
     String url = SENSOR_SCORE_URL.replace("{motorId}", motorId.toString())
         .replace("{sensorId}", sensorId.toString());
+    String localTestUrl = "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb";
+    String requestUrl = url;
+
+    UriComponentsBuilder componentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
+    componentsBuilder.pathSegment("motorId", "sensorId").build(motorId, sensorId);
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
     return restTemplate.exchange(
-        "https://run.mocky.io/v3/2556d6eb-cde1-4ca5-aa91-e02d36ff96fb", HttpMethod.GET, request,
+        requestUrl, HttpMethod.GET, request,
         new ParameterizedTypeReference<CommonResponse<SensorScoreDto>>() {
         }).getBody().getData();
 
@@ -82,7 +87,8 @@ public class MotorDetailController {
   }
 
   @GetMapping("/api/monitor/motors/{motorId}/sensors/{sensorId}/data")
-  public ResponseEntity<CommonResponse<SensorDataDto>> getSensorData(Model model,
+  @ResponseBody
+  public SensorDataDto getSensorData(Model model,
       @PathVariable Long motorId,
       @PathVariable Long sensorId) {
 
@@ -92,13 +98,15 @@ public class MotorDetailController {
 
     String url = SENSOR_DATA_URL.replace("{motorId}", motorId.toString())
         .replace("{sensorId}", sensorId.toString());
+    String localTestUrl = "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a";
+    String requestUrl = url;
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
     return restTemplate.exchange(
-        "https://run.mocky.io/v3/08b164d4-e6e4-49aa-b0e9-1281404bf52a", HttpMethod.GET, request,
-        new ParameterizedTypeReference<>() {
-        });
+        requestUrl, HttpMethod.GET, request,
+        new ParameterizedTypeReference<CommonResponse<SensorDataDto>>() {
+        }).getBody().getData();
   }
 
 }

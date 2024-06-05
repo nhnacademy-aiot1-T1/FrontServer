@@ -12,15 +12,15 @@ oauth:
     redirect-uri: http://test-vm.com:8082/oauth-login
     secret: 4nl1ZsBpejpz1VclsSRTD427
 
-#logging:
-#  level:
-#    root: info
+logging:
+  level:
+    root: debug
 
 api:
   path:
     motor-overview: https://run.mocky.io/v3/08ec999b-5345-4075-84b9-2ce8619d71fc
     sector-info: https://run.mocky.io/v3/60b8f744-27ca-44d4-924a-f63119ed8d3e
-    motors: https://run.mocky.io/v3/da4d361e-37ee-487a-a9c8-8c471a114638
+    motors: https://run.mocky.io/v3/5106c658-c9bb-44fb-bc5c-d0622fe01646
     motor-detail: https://run.mocky.io/v3/21547def-ce33-46f4-9295-0221dcfb5761
     control-logs: https://run.mocky.io/v3/c7658e0a-073b-4d83-bd1e-24abea2ba4ed
     running-rate-by-time: https://run.mocky.io/v3/fc91f26c-1883-41b3-a65d-406681cc7060

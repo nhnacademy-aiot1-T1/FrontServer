@@ -1,19 +1,18 @@
 package com.nhnacademy.front.server.controller;
 
 import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
+import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateData;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateDataRequest;
 import com.nhnacademy.front.server.dto.sector.SectorDto;
-import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateData;
 import com.nhnacademy.front.server.service.MotorService;
 import com.nhnacademy.front.server.service.SectorService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,11 +29,11 @@ public class DashBoardController {
     List<SectorDto> sectorsInfo = sectorService.getSectorsInfo().getSectors();
 
     List<MotorsRunningRateData> dayRunningRates = motorService.getMotorsRunningRatesByTimePeriod(
-        new MotorsRunningRateDataRequest("day")).getRates();
+        "day").getRates();
     List<MotorsRunningRateData> weekRunningRates = motorService.getMotorsRunningRatesByTimePeriod(
-        new MotorsRunningRateDataRequest("week")).getRates();
+        "week").getRates();
     List<MotorsRunningRateData> monthRunningRates = motorService.getMotorsRunningRatesByTimePeriod(
-        new MotorsRunningRateDataRequest("month")).getRates();
+        "month").getRates();
 
     model.addAttribute("motorOverview", motorOverviewDTO);
     model.addAttribute("sectorsInfo", sectorsInfo);
