@@ -229,25 +229,22 @@
 
     var motorDetail = [[${motorDetail}]];
 
+    if (motorDetail.isNormal == true) {
+    } else {
+      document.getElementById("motorStatus").style.color = "red";
+    }
+
+    if (motorDetail.isOn == true) {
+    } else {
+      document.getElementById("motorPower").style.color = "red";
+    }
+
     // 모터의 기본 정보
     $('#motorname').text(motorDetail.motorName);
     $('#motorStatus').text(getNormalWarningInfo(motorDetail.isNormal));
     $('#motorBelong').text(getSectorNameById(motorDetail.sectorId));
     $('#motorPower').text(getOnOffInfo(motorDetail.isOn));
     $('#motorId').text(motorDetail.motorId);
-
-    if (motorDetail.isNormal == true) {
-      document.getElementById("motorStatus").style.color = "limegreen";
-
-    } else {
-      document.getElementById("motorStatus").style.color = "red";
-    }
-
-    if (getOnOffInfo(motorDetail.isOn) == 'ON') {
-      document.getElementById("motorStatus").style.color = "limegreen";
-    } else {
-      document.getElementById("motorPower").style.color = "red";
-    }
 
     // 상단에 모터 구역, 이름 표출
 
