@@ -243,7 +243,7 @@
       document.getElementById("motorStatus").style.color = "red";
     }
 
-    if (getOnOffInfo(motorDetail.isOn == 'ON')) {
+    if (getOnOffInfo(motorDetail.isOn) == 'ON') {
       document.getElementById("motorStatus").style.color = "limegreen";
     } else {
       document.getElementById("motorPower").style.color = "red";
