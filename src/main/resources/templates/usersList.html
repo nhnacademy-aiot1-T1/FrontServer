@@ -41,11 +41,27 @@
               <form id="updateRole" th:action="@{/mypage/user/update/role}" method="post">
                 <div class="form-row align-items-center">
                   <div class="col-auto">
+                    <th:block th:if="${user.role == 'NONE'}">
                     <select class="form-control mb-2" name="role">
-                      <option value="NONE" th:selected="${user.role == 'NONE'}">권한 없음</option>
-                      <option value="USER" th:selected="${user.role == 'USER'}">사용자</option>
-                      <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">관리자</option>
+                      <option value="NONE" selected>권한 없음</option>
+                      <option value="USER">사용자</option>
+                      <option value="ADMIN">관리자</option>
                     </select>
+                    </th:block>
+                    <th:block th:if="${user.role == 'USER'}">
+                      <select class="form-control mb-2" name="role">
+                        <option value="NONE"  >권한 없음</option>
+                        <option value="USER" selected>사용자</option>
+                        <option value="ADMIN">관리자</option>
+                      </select>
+                    </th:block>
+                    <th:block th:if="${user.role == 'ADMIN'}">
+                      <select class="form-control mb-2" name="role">
+                        <option value="NONE">권한 없음</option>
+                        <option value="USER" >사용자</option>
+                        <option value="ADMIN" selected>관리자</option>
+                      </select>
+                    </th:block>
                   </div>
                   <div class="col-auto">
                     <input type="hidden" name="userId" th:value="${user.id}"/>
