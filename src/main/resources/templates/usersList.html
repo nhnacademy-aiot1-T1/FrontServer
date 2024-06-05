@@ -40,24 +40,26 @@
               </p>
               <form id="updateRole" th:action="@{/mypage/user/update/role}" method="post">
                 <div class="form-row align-items-center">
-                  <div th:if="${user.role == 'NONE'}" class="col-auto">
+                  <div th:if="${user.role}=='NONE'"  class="col-auto">
                     <select class="form-control mb-2" name="role">
                       <option value="NONE" selected>권한 없음</option>
                       <option value="USER" >사용자</option>
-                      <option value="ADMIN" >관리자</option>
+                      <option value="ADMIN">관리자</option>
                     </select>
-                    <div th:if="${user.role == 'USER'}" class="col-auto">
-                      <select class="form-control mb-2" name="role">
-                        <option value="NONE" >권한 없음</option>
-                        <option value="USER" selected>사용자</option>
-                        <option value="ADMIN">관리자</option>
-                      </select>
-                      <div th:if="${user.role == 'ADMIN'}" class="col-auto">
-                        <select class="form-control mb-2" name="role">
-                          <option value="NONE" >권한 없음</option>
-                          <option value="USER" >사용자</option>
-                          <option value="ADMIN" selected>관리자</option>
-                        </select>
+                  </div>
+                  <div th:if="${user.role}=='USER'" class="col-auto">
+                    <select class="form-control mb-2" name="role">
+                      <option value="NONE" >권한 없음</option>
+                      <option value="USER" selected>사용자</option>
+                      <option value="ADMIN">관리자</option>
+                    </select>
+                  </div>
+                  <div th:if="${user.role}=='ADMIN'" class="col-auto">
+                    <select class="form-control mb-2" name="role">
+                      <option value="NONE" >권한 없음</option>
+                      <option value="USER" >사용자</option>
+                      <option value="ADMIN" selected>관리자</option>
+                    </select>
                   </div>
                   <div class="col-auto">
                     <input type="hidden" name="userId" th:value="${user.id}"/>
