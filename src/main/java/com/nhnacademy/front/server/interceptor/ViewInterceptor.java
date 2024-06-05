@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Component
 @Slf4j
@@ -47,11 +49,17 @@ public class ViewInterceptor implements HandlerInterceptor {
 
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-      ModelAndView modelAndView) throws Exception {
-    if (modelAndView != null) {
-      modelAndView.getModel().put("userRole", roleThreadLocal.get());
+                         ModelAndView modelAndView) {
+    View view;
+    if(modelAndView == null || null == (view = modelAndView.getView())) {
+      return;
     }
-    HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+    modelAndView.addObject("userRole", roleThreadLocal.get());
+
+    if (view instanceof RedirectView){
+      RedirectView redirectView = (RedirectView) view;
+      redirectView.setExposeModelAttributes(false);
+    }
   }
 
   @Override
