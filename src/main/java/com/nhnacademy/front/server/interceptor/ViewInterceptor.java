@@ -1,18 +1,19 @@
 package com.nhnacademy.front.server.interceptor;
 
 import com.nhnacademy.front.server.dto.UserRole;
-import java.util.Arrays;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 @Component
 @Slf4j
@@ -49,15 +50,15 @@ public class ViewInterceptor implements HandlerInterceptor {
 
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-                         ModelAndView modelAndView) {
-    View view;
-    if(modelAndView == null || null == (view = modelAndView.getView())) {
-      return;
-    }
-    modelAndView.addObject("userRole", roleThreadLocal.get());
-
-    if (view instanceof RedirectView){
-      RedirectView redirectView = (RedirectView) view;
+                         ModelAndView modelAndView) throws Exception {
+    if (modelAndView != null && !HttpStatus.valueOf(response.getStatus()).is3xxRedirection()
+            && !(modelAndView.getView() instanceof RedirectView)) {
+      modelAndView.addObject("userRole", roleThreadLocal.get());
+    } else if (modelAndView != null && modelAndView.getView() instanceof RedirectView) {
+      RedirectView redirectView = (RedirectView) modelAndView.getView();
+      if (redirectView == null) {
+        return;
+      }
       redirectView.setExposeModelAttributes(false);
     }
   }
