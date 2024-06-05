@@ -24,7 +24,13 @@ public class ViewInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
-    Cookie cookie = Arrays.stream(request.getCookies())
+
+    Cookie[] cookies =request.getCookies();
+
+    if (cookies == null) {
+      cookies = new Cookie[0];
+    }
+    Cookie cookie = Arrays.stream(cookies)
         .filter(c -> c.getName()
             .equals("Authorization"))
         .findFirst().orElse(null);
