@@ -60,10 +60,10 @@ public class ViewInterceptor implements HandlerInterceptor {
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                          ModelAndView modelAndView) {
-    if (modelAndView == null) {
+    if (modelAndView == null){
       return;
     }
-    if (modelAndView.getView() instanceof RedirectView) {
+    if (modelAndView.getView() instanceof RedirectView || StringUtils.containsIgnoreCase(modelAndView.getViewName(), "redirect:")) {
       FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
       flashMap.put("userRole", roleThreadLocal.get());
       FlashMapManager flashMapManager = RequestContextUtils.getFlashMapManager(request);
