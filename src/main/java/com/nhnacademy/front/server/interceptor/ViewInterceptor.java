@@ -1,13 +1,16 @@
 package com.nhnacademy.front.server.interceptor;
 
 import com.nhnacademy.front.server.dto.UserRole;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
@@ -57,7 +60,15 @@ public class ViewInterceptor implements HandlerInterceptor {
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                          ModelAndView modelAndView) {
-    if (modelAndView != null) {
+    if (modelAndView == null) {
+      return;
+    }
+    if (modelAndView.getView() instanceof RedirectView) {
+      FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
+      flashMap.put("userRole", roleThreadLocal.get());
+      FlashMapManager flashMapManager = RequestContextUtils.getFlashMapManager(request);
+      Objects.requireNonNull(flashMapManager).saveOutputFlashMap(flashMap, request, response);
+    } else {
       modelAndView.addObject("userRole", roleThreadLocal.get());
     }
   }
