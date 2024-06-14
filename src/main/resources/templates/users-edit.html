@@ -125,7 +125,8 @@
         저장되었습니다.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="updateUserInfo()">확인</button>
+        ]
       </div>
     </div>
   </div>
@@ -215,5 +216,20 @@
         alert("저장 중 에러가 발생하였습니다.")
       }
     });
+  }
+
+  function updateUserInfo() {
+    let form = document.getElementById('editForm');
+    let formData = new FormData(form);
+    let formElements = form.elements;
+
+    for (let element of formElements) {
+      if (element.name) {
+        let pElement = document.getElementById(element.name);
+        if (pElement) {
+          pElement.textContent = formData.get(element.name);
+        }
+      }
+    }
   }
 </script>
