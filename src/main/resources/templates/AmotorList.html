@@ -182,11 +182,11 @@
 
                   <!-- 모터 리스트 박스 -->
                   <!-- 모터 시작-->
-                  <div class="container">
-                    <div class="row">
+<!--                  <div class="container">-->
+                    <div class="row mx-5 px-4">
                       <div th:each="motor : ${motors}"
                            class="motorbox p-1"
-                           style="width:160px"
+                           style="width:160px;"
                            th:data-sector-id="${motor.getSectorId()}"
                            th:data-motor-id="${motor.getMotorId()}"
                            onclick="goToMotorDetail(this)">
@@ -293,7 +293,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+<!--                  </div>-->
                   <!-- 모터 끝-->
                 </div>
               </div>
@@ -309,7 +309,7 @@
       </div>
 
       <!-- 구역선택 사이드 바 -->
-      <div class="sidebar" style="position: fixed;right: 20px">
+      <div class="sidebar" style="position: fixed;right: 10px">
         <div class="sidebar-content card d-none d-lg-block">
           <div class="card-body">
             <div class="row">
