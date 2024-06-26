@@ -4,7 +4,7 @@ eureka:
       defaultZone: http://192.168.0.23:8761/eureka
 
 server:
-  port: 8082
+  port: 8080
 
 oauth:
   payco:
