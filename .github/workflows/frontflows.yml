@@ -49,4 +49,4 @@ jobs:
             docker pull "${{ secrets.DOCKER_USERNAME }}"/front
             docker stop front || true
             docker rm front || true 
-            docker run -d -p 8080:8080 --network t1bridge --name front "${{ secrets.DOCKER_USERNAME }}"/front
+            docker run -d -p 8888:8080 --network t1bridge --name front "${{ secrets.DOCKER_USERNAME }}"/front
