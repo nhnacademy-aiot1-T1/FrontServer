@@ -1,0 +1,45 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka
+
+server:
+  port: 8080
+
+oauth:
+  payco:
+    redirect-uri: https://aiotone.live/oauth/payco-login
+    secret: 4nl1ZsBpejpz1VclsSRTD427
+
+logging:
+  level:
+    root: debug
+api:
+  path:
+    motor-overview: http://GATEWAY-SERVICE/api/monitor/overview
+    sector-info: http://GATEWAY-SERVICE/api/monitor/sectors/overview
+    motors: http://GATEWAY-SERVICE/api/monitor/motors
+    motor-detail: http://GATEWAY-SERVICE/api/monitor/motors/{motorId}
+    control-logs: http://GATEWAY-SERVICE/api/monitor/logs/error
+    running-rate-by-time: http://GATEWAY-SERVICE/api/monitor/motors/running-rate
+    individual-running-rate-by-time: http://GATEWAY-SERVICE/api/monitor/motors/{motorId}/running-rate
+    sector-register: http://GATEWAY-SERVICE/api/monitor/sectors
+    sector-rename: http://GATEWAY-SERVICE/api/monitor/sectors/{sectorId}
+    sector-remove: http://GATEWAY-SERVICE/api/monitor/sectors/{sectorId}
+    user-list: http://GATEWAY-SERVICE/api/account/users
+    user-info: http://GATEWAY-SERVICE/api/account/users/{id}
+    edit-user-info: http://GATEWAY-SERVICE/api/account/users/{id}
+    deactivate-user-info: http://GATEWAY-SERVICE/api/account/users/{id}
+
+
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  thymeleaf:
+    servlet:
+      produce-partial-output-while-processing: false
+management:
+  server:
+    port: 8888

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html class="loading" lang="en">
+
+<!-- BEGIN: Head-->
+<head>
+  <meta charset="UTF-8">
+  <title>dashboard</title>
+  <div th:include="fixedTemplate/defaultCSS.html"></div>
+  <!--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> &lt;!&ndash; jQuery 라이브러리 추가 &ndash;&gt;-->
+  <!-- BEGIN: Vendor CSS-->
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/vendors/css/vendors.min.css">
+
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/vendors/css/forms/icheck/icheck.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/vendors/css/forms/icheck/custom.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/vendors/css/timeline/vertical-timeline.css">
+  <!-- END: Vendor CSS-->
+
+  <!-- BEGIN: Theme CSS-->
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/css/bootstrap-extended.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/css/colors.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/css/components.css">
+  <!-- END: Theme CSS-->
+
+  <!-- BEGIN: Page CSS-->
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/css/core/menu/menu-types/vertical-menu.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/css/core/colors/palette-gradient.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/css/core/colors/palette-gradient.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/fonts/simple-line-icons/style.min.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/css/pages/chat-application.css">
+  <link rel="stylesheet" type="text/css"
+        href="https://aiotone.live/resources/app-assets/css/pages/advanced-cards.css">
+  <!-- END: Page CSS-->
+
+  <!-- BEGIN: Custom CSS-->
+  <link rel="stylesheet" type="text/css" href="https://aiotone.live/resources/assets/css/style.css">
+  <!-- END: Custom CSS-->
+  <style>
+    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+    body, h4.card-title, span.text-muted {
+      font-family: 'NanumSquare', sans-serif;
+      font-weight: 400;
+    }
+  </style>
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu content-detached-left-sidebar   fixed-navbar"
+      data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue"
+      data-col="content-detached-left-sidebar">
+
+<!-- BEGIN: FixedTop-->
+<div th:include="fixedTemplate/fixed-top.html"></div>
+<!-- END: Header-->
+
+<!-- BEGIN: Main Menu-->
+<div th:include="fixedTemplate/side-navigation.html"></div>
+<!-- END: Main Menu-->
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-wrapper-before"></div>
+
+    <div class="row">
+      <div class="col-xl-4 col-lg-12">
+        <div class="card">
+          <div class="card-header ">
+            <a class="heading-elements-toggle">
+              <i class="la la-ellipsis-v font-medium-3"></i>
+            </a>
+          </div>
+          <!--여기가 대시보드 위에-->
+          <div class="card-content">
+            <div class="card-body text-center">
+              <div class="pt-0 pb-0">
+                <p class="info darken-2 font-large-2 " style="position: relative; top: -20px">총
+                  모터</p>
+                <h3 class="display-4 blue-grey lighten-1"
+                    th:text="${motorOverview.getTotalMotorCount()}"></h3>
+              </div>
+              <div class="card-content">
+                <ul class="list-inline clearfix mt-2">
+                  <li>
+                    <h1 class="blue-grey lighten-1 text-bold-400">&nbsp;</h1>
+                    <span class="info darken-2">
+                      <i class></i>&nbsp</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-12">
+        <div class="card">
+          <div class="card-header ">
+            <!-- <h4 class="card-title">New Customers</h4> -->
+            <a class="heading-elements-toggle">
+              <i class="la la-ellipsis-v font-medium-3"></i>
+            </a>
+          </div>
+          <!--여기가 대시보드 위에-->
+          <div class="card-content">
+            <div class="card-body text-center">
+              <div class=" pt-0 pb-0">
+                <p class="warning darken-2 font-large-2" style="position: relative; top: -20px">비정상
+                  모터</p>
+                <h3 class="display-4 blue-grey lighten-1"
+                    th:text="${(motorOverview.getTotalMotorCount() - motorOverview.getTotalNormalMotorCount())}"></h3>
+              </div>
+              <div class="card-content">
+                <ul class="list-inline clearfix mt-2">
+                  <li>
+                    <h1 class="blue-grey lighten-1 text-bold-400"
+                        th:text="${#numbers.formatDecimal(((motorOverview.getTotalMotorCount() -
+                        motorOverview.getTotalNormalMotorCount()) * 100.0) /
+                        (motorOverview.getTotalMotorCount()), 0, 0)
+                        + '%'}"></h1>
+                    <span class="warning darken-2">
+                      <i class></i>비정상 모터비율</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-12">
+        <div class="card">
+          <div class="card-header ">
+            <!-- <h4 class="card-title">New Customers</h4> -->
+            <a class="heading-elements-toggle">
+              <i class="la la-ellipsis-v font-medium-3"></i>
+            </a>
+          </div>
+          <!--여기가 대시보드 위에-->
+          <div class="card-content">
+            <div class="card-body text-center">
+              <div class=" pt-0 pb-0">
+                <p class="danger darken-2 font-large-2" style="position: relative; top: -20px">가동중인
+                  모터</p>
+                <h3 class="display-4 blue-grey lighten-1"
+                    th:text="${motorOverview.getTotalOnMotorCount()}"></h3>
+              </div>
+              <div class="card-content">
+                <ul class="list-inline clearfix mt-2">
+                  <li>
+                    <h1 class="blue-grey lighten-1 text-bold-400"
+                        th:text="${#numbers.formatDecimal((motorOverview.getTotalOnMotorCount() * 100.0) /
+                        (motorOverview.getTotalMotorCount()), 0, 0) + '%'}"></h1>
+                    <span class="danger darken-2">
+                      <i class></i> 모터 가동률</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- row end-->
+
+    <div class="row">
+      <div class="col-12">
+
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">시간대별 모터 가동률</h4>
+            <a class="heading-elements-toggle"><i
+                class="la la-ellipsis-v font-medium-3"></i></a>
+          </div>
+          <div class="card-content collapse show">
+            <div class="card-body chartjs">
+              <div class="chart-container">
+                <canvas id="line-chart"></canvas>
+              </div>
+              <div class="chart-container">
+                <canvas id="line-chart1"></canvas>
+              </div>
+              <div class="chart-container">
+                <canvas id="line-chart2"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- row end-->
+
+
+    <div class="row">
+      <!--section start-->
+      <div class="col-xl-4 col-lg-12 sectorSection" th:each="sector : ${sectorsInfo}">
+        <div class="row">
+          <div class="col-12">
+
+            <div class="card pull-up bg-gradient-directional-blue">
+              <div class="card-header bg-gradient-x-purple-blue">
+                <h4 class="card-title white font-medium-5" th:text="${sector.getSectorName()}"></h4>
+                <a class="heading-elements-toggle"><i
+                    class="la la-ellipsis-v font-medium-3"></i></a>
+                <div class="heading-elements"></div>
+              </div>
+              <div class="card-content collapse show bg-gradient-x-purple-blue">
+                <div class="card-body">
+                  <div class="media d-flex">
+                    <div class="media-body text-left mt-1">
+                      <h3 class="font-large-2 white"
+                          th:text="${sector.getNormalCount() == null || (sector.getNormalCount() == 0) ? '0%' : #numbers.formatDecimal((sector.getNormalCount() * 100.0) / sector.getTotalCount(), 0, 0) + '%'}"
+                          style="position: relative;top:-17px"></h3>
+                      <h6 class="mt-1"><span class="text-muted white font-medium-5">정상 비율</span>
+                      </h6>
+                    </div>
+                    <div class="media-body text-right mt-1">
+                      <h3 class="font-large-2 white"
+                          th:text="${sector.getNormalCount() == null || (sector.getNormalCount() == 0) ? '0%' : #numbers.formatDecimal((sector.getNormalCount() * 100.0) / sector.getTotalCount(), 0, 0) + '%'}"
+                          style="position: relative;top:-17px"></h3>
+                      <h6 class="mt-1"><span class="text-muted white font-medium-5 ">가동 비율</span>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+    <!--row end-->
+
+  </div>
+</div>
+
+<div th:include="fixedTemplate/defaultJS.html"></div>
+
+
+<!-- END: Body-->
+</div>
+</body>
+</html>
+<script>
+  (function () {
+    var ws = new WebSocket('ws://' + window.location.host +
+        '/jb-server-page?reloadMode=RELOAD_ON_SAVE&' +
+        'referrer=' + encodeURIComponent(window.location.pathname));
+    ws.onmessage = function (msg) {
+      if (msg.data === 'reload') {
+        window.location.reload();
+      }
+      if (msg.data.startsWith('update-css ')) {
+        var messageId = msg.data.substring(11);
+        var links = document.getElementsByTagName('link');
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          if (link.rel !== 'stylesheet') {
+            continue;
+          }
+          var clonedLink = link.cloneNode(true);
+          var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/,
+              "$1jbUpdateLinksId=" + messageId);
+          if (newHref !== link.href) {
+            clonedLink.href = newHref;
+          } else {
+            var indexOfQuest = newHref.indexOf('?');
+            if (indexOfQuest >= 0) {
+              // to support ?foo#hash
+              clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId='
+                  + messageId + '&' +
+                  newHref.substring(indexOfQuest + 1);
+            } else {
+              clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+            }
+          }
+          link.replaceWith(clonedLink);
+        }
+      }
+    };
+  })();
+</script>
+<script>
+  (function () {
+    var ws = new WebSocket('ws://' + window.location.host +
+        '/jb-server-page?reloadMode=RELOAD_ON_SAVE&' +
+        'referrer=' + encodeURIComponent(window.location.pathname));
+    ws.onmessage = function (msg) {
+      if (msg.data === 'reload') {
+        window.location.reload();
+      }
+      if (msg.data.startsWith('update-css ')) {
+        var messageId = msg.data.substring(11);
+        var links = document.getElementsByTagName('link');
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          if (link.rel !== 'stylesheet') {
+            continue;
+          }
+          var clonedLink = link.cloneNode(true);
+          var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/,
+              "$1jbUpdateLinksId=" + messageId);
+          if (newHref !== link.href) {
+            clonedLink.href = newHref;
+          } else {
+            var indexOfQuest = newHref.indexOf('?');
+            if (indexOfQuest >= 0) {
+              // to support ?foo#hash
+              clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId='
+                  + messageId + '&' +
+                  newHref.substring(indexOfQuest + 1);
+            } else {
+              clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+            }
+          }
+          link.replaceWith(clonedLink);
+        }
+      }
+    };
+  })();
+</script>
+<script>
+  (function () {
+    var ws = new WebSocket('ws://' + window.location.host +
+        '/jb-server-page?reloadMode=RELOAD_ON_SAVE&' +
+        'referrer=' + encodeURIComponent(window.location.pathname));
+    ws.onmessage = function (msg) {
+      if (msg.data === 'reload') {
+        window.location.reload();
+      }
+      if (msg.data.startsWith('update-css ')) {
+        var messageId = msg.data.substring(11);
+        var links = document.getElementsByTagName('link');
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          if (link.rel !== 'stylesheet') {
+            continue;
+          }
+          var clonedLink = link.cloneNode(true);
+          var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/,
+              "$1jbUpdateLinksId=" + messageId);
+          if (newHref !== link.href) {
+            clonedLink.href = newHref;
+          } else {
+            var indexOfQuest = newHref.indexOf('?');
+            if (indexOfQuest >= 0) {
+              // to support ?foo#hash
+              clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId='
+                  + messageId + '&' +
+                  newHref.substring(indexOfQuest + 1);
+            } else {
+              clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+            }
+          }
+          link.replaceWith(clonedLink);
+        }
+      }
+    };
+  })();
+</script>
+<script>
+  (function () {
+    var ws = new WebSocket('ws://' + window.location.host +
+        '/jb-server-page?reloadMode=RELOAD_ON_SAVE&' +
+        'referrer=' + encodeURIComponent(window.location.pathname));
+    ws.onmessage = function (msg) {
+      if (msg.data === 'reload') {
+        window.location.reload();
+      }
+      if (msg.data.startsWith('update-css ')) {
+        var messageId = msg.data.substring(11);
+        var links = document.getElementsByTagName('link');
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          if (link.rel !== 'stylesheet') {
+            continue;
+          }
+          var clonedLink = link.cloneNode(true);
+          var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/,
+              "$1jbUpdateLinksId=" + messageId);
+          if (newHref !== link.href) {
+            clonedLink.href = newHref;
+          } else {
+            var indexOfQuest = newHref.indexOf('?');
+            if (indexOfQuest >= 0) {
+              // to support ?foo#hash
+              clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId='
+                  + messageId + '&' +
+                  newHref.substring(indexOfQuest + 1);
+            } else {
+              clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+            }
+          }
+          link.replaceWith(clonedLink);
+        }
+      }
+    };
+  })();
+</script>
+
+<script th:inline="javascript">
+  $(window).on("load", function () {
+
+    var dayRunningRates = [[${dayRunningRates}]];
+    var weekRunningRates = [[${weekRunningRates}]];
+    var monthRunningRates = [[${monthRunningRates}]];
+
+    //Get the context of the Chart canvas element we want to select
+    var ctx = $("#line-chart");
+    var ctx1 = $("#line-chart1");
+    var ctx2 = $("#line-chart2");
+
+    // Chart Options
+    var chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+        position: 'bottom',
+      },
+      hover: {
+        mode: 'label'
+      },
+      scales: {
+        xAxes: [{
+
+          display: true,
+          gridLines: {
+            color: "#f3f3f3",
+            drawTicks: false,
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Time'
+          },
+          ticks: {
+            padding: 10,
+            callback: function (value, index, values) {
+              return value;
+            }
+          }
+        }],
+        yAxes: [{
+          display: true,
+          gridLines: {
+            color: "#f3f3f3",
+            drawTicks: false,
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Score'
+          },
+          ticks: {
+            min: 0,  // y축 최소값
+            max: 100  // y축 최대값
+          }
+        }]
+      },
+      title: {
+        display: true,
+        text: ''
+      }
+    };
+
+    // Chart Data
+    var chartData = {
+      labels: dayRunningRates.map(dayRunningRate => {
+        var date = new Date(dayRunningRate.timestamp);
+        var monthDay = (date.getMonth() + 1).toString().padStart(2, '0') + '-'
+            + date.getDate().toString().padStart(2, '0');
+        var hour = date.getHours().toString() + '시';
+        return [monthDay, hour];
+      }),
+      datasets: [
+        {
+          label: "일간 가동률",
+          data: dayRunningRates.map(dayRunningRate => dayRunningRate.rate),
+          lineTension: 0,
+          fill: true,
+          backgroundColor: "rgba(30, 144, 255, 0.2)", // 채워지는 색상 지정
+          borderColor: "#1E90FF",
+          pointBorderColor: "#1E90FF",
+          pointBackgroundColor: "#FFF",
+          pointBorderWidth: 2,
+          pointHoverBorderWidth: 2,
+          pointRadius: 4,
+        }
+      ]
+    };
+
+    var chartData1 = {
+      labels: weekRunningRates.map(weekRunningRate => {
+        var date = new Date(weekRunningRate.timestamp);
+        var year = (date.getFullYear()).toString().padStart(2, '0')
+        var monthDay = (date.getMonth() + 1).toString().padStart(2, '0') + '-'
+            + date.getDate().toString().padStart(2, '0');
+        return [monthDay];
+      }),
+      datasets: [
+        {
+          label: "주간 가동률",
+          data: weekRunningRates.map(weekRunningRate => weekRunningRate.rate),
+          lineTension: 0,
+          fill: true,
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderColor: "#4BC0C0",
+          pointBorderColor: "#4BC0C0",
+          pointBackgroundColor: "#FFF",
+          pointBorderWidth: 2,
+          pointHoverBorderWidth: 2,
+          pointRadius: 4,
+        }
+      ]
+    };
+
+    var chartData2 = {
+      labels: monthRunningRates.map(monthRunningRate => {
+        var date = new Date(monthRunningRate.timestamp);
+        var monthDay = (date.getMonth() + 1).toString().padStart(2, '0') + '-'
+            + date.getDate().toString().padStart(2, '0');
+        return [monthDay];
+      }),
+      datasets: [
+        {
+          label: "월간  가동률",
+          data: monthRunningRates.map(monthRunningRate => monthRunningRate.rate),
+          lineTension: 0,
+          fill: true,
+          backgroundColor: "rgba(255, 99, 132, 0.2)",
+          borderColor: "#FF6384",
+          pointBorderColor: "#FF6384",
+          pointBackgroundColor: "#FFF",
+          pointBorderWidth: 2,
+          pointHoverBorderWidth: 2,
+          pointRadius: 4,
+        }
+      ]
+    };
+
+    var config = {
+      type: 'line',
+      options: chartOptions,
+      data: chartData
+    };
+
+    var config1 = {
+      type: 'line',
+      options: chartOptions,
+      data: chartData1
+    };
+
+    var config2 = {
+      type: 'line',
+      options: chartOptions,
+      data: chartData2
+    };
+
+    // Create the charts
+    var lineChart = new Chart(ctx, config);
+    var lineChart1 = new Chart(ctx1, config1);
+    var lineChart2 = new Chart(ctx2, config2);
+
+  });
+</script>
+
+
+<!-- BEGIN: Vendor JS-->
+<script src="https://aiotone.live/resources/app-assets/vendors/js/vendors.min.js"
+        type="text/javascript"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+
+<script src="https://aiotone.live/resources/app-assets/vendors/js/forms/icheck/icheck.min.js"
+        type="text/javascript"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="https://aiotone.live/resources/app-assets/js/core/app-menu.js"
+        type="text/javascript"></script>
+<script src="https://aiotone.live/resources/app-assets/js/core/app.js"
+        type="text/javascript"></script>
+<!-- END: Theme JS-->
+
+<!-- BEGIN: Page JS-->
+
+<script src="https://aiotone.live/resources/app-assets/js/scripts/pages/dashboard-analytics.js"
+        type="text/javascript"></script>
+<script src="https://aiotone.live/resources/app-assets/js/scripts/charts/chartjs/line/line.js"
+        type="text/javascript"></script>
+<script src="https://aiotone.live/resources/app-assets/js/scripts/charts/chartjs/line/line-area.js"
+        type="text/javascript"></script>
+
+<!--차트 그려주는 js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<!-- END: Page JS-->

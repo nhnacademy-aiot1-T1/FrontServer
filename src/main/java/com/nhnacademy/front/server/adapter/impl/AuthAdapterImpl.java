@@ -1,31 +1,31 @@
 package com.nhnacademy.front.server.adapter.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.adapter.AuthAdapter;
-import com.nhnacademy.front.server.domain.CommonResponse;
-import com.nhnacademy.front.server.domain.LoginResponseDto;
-import com.nhnacademy.front.server.domain.UserLoginRequestDto;
-import com.nhnacademy.front.server.domain.register.RegisterRequestDto;
-import com.nhnacademy.front.server.exception.JsonParseFailException;
+import com.nhnacademy.front.server.dto.LoginResponseDto;
+import com.nhnacademy.front.server.dto.LogoutRequest;
+import com.nhnacademy.front.server.dto.OauthLoginRequestDto;
+import com.nhnacademy.front.server.dto.TokenRefreshRequest;
+import com.nhnacademy.front.server.dto.register.RegisterRequestDto;
+import com.nhnacademy.front.server.dto.user.UserLoginRequestDto;
+import com.nhnacademy.front.server.enums.OauthType;
 import com.nhnacademy.front.server.exception.LoginFailedException;
 import com.nhnacademy.front.server.exception.RegisterFailException;
-import java.io.IOException;
-import java.util.List;
+import com.nhnacademy.front.server.exception.UnauthorizedException;
 import java.util.Objects;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class AuthAdapterImpl implements AuthAdapter {
 
@@ -33,74 +33,116 @@ public class AuthAdapterImpl implements AuthAdapter {
 
   private final RestTemplate restTemplate;
 
-  public AuthAdapterImpl(RestTemplate restTemplate) {
-    this.restTemplate = restTemplate;
-  }
-
   @Override
-  public LoginResponseDto userLogin(String id, String password, String userAddress) {
+  public CommonResponse<LoginResponseDto> login(UserLoginRequestDto requestDto) {
     HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-    headers.add("userId",userAddress);
+    HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(requestDto, headers);
 
-    UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(id,password);
-
-    HttpEntity<UserLoginRequestDto> requestEntity = new HttpEntity<>(userLoginRequestDto,headers);
-
-    ResponseEntity<CommonResponse<LoginResponseDto>> exchange = restTemplate.exchange(
-        "GATEWAY-SERVICE/api/auth/login",
+    ResponseEntity<CommonResponse<LoginResponseDto>> response = restTemplate.exchange(
+        "http://GATEWAY-SERVICE/api/auth/login",
         HttpMethod.POST,
         requestEntity,
         new ParameterizedTypeReference<>() {
         }
     );
-    return Objects.requireNonNull(exchange.getBody()).dataOrElseThrow(() -> new LoginFailedException("로그인 실패",this.getClass().getSimpleName()));
+
+    if (!Objects.equals(response.getStatusCode(), HttpStatus.OK)) {
+      throw new LoginFailedException("로그인에 실패했습니다.");
+    }
+
+    return response.getBody();
+  }
+
+
+  @Override
+  public CommonResponse<LoginResponseDto> paycoLogin(String authCode) {
+    OauthLoginRequestDto oauthLoginRequestDto = new OauthLoginRequestDto(OauthType.PAYCO, authCode);
+
+    HttpHeaders headers = new HttpHeaders();
+    HttpEntity<OauthLoginRequestDto> requestEntity = new HttpEntity<>(oauthLoginRequestDto,
+        headers);
+
+    ResponseEntity<CommonResponse<LoginResponseDto>> response = restTemplate.exchange(
+        "http://GATEWAY-SERVICE/api/auth/oauth-login",
+        HttpMethod.POST,
+        requestEntity,
+        new ParameterizedTypeReference<>() {
+        }
+    );
+
+    log.info("payco login response : {}", response);
+
+    if (!Objects.equals(response.getStatusCode(), HttpStatus.OK)) {
+      throw new LoginFailedException("로그인에 실패했습니다.");
+    }
+
+    return response.getBody();
   }
 
   @Override
   public void logout(String accessToken) {
     HttpHeaders headers = new HttpHeaders();
-    headers.set("authorization",TOKEN_TYPE+" "+accessToken);
+    String authorization = String.format("%s %s", TOKEN_TYPE, accessToken);
+    headers.add("Authorization", authorization);
 
-    HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-    restTemplate.exchange(
-        "GATEWAY-SERVICE/api/auth/logout",
+    HttpEntity<LogoutRequest> requestEntity = new HttpEntity<>(new LogoutRequest(accessToken),
+        headers);
+    ResponseEntity<CommonResponse<String>> response = restTemplate.exchange(
+        "http://GATEWAY-SERVICE/api/auth/logout",
         HttpMethod.POST,
         requestEntity,
-        Void.class
+        new ParameterizedTypeReference<>() {
+        }
     );
+
+    if (!Objects.equals(response.getStatusCode(), HttpStatus.OK)) {
+      String message = Objects.requireNonNull(response.getBody()).getMessage();
+
+      log.error("response code : {}, cause : {}", response.getStatusCode(), message);
+    }
   }
 
   @Override
   public void registerUser(RegisterRequestDto registerRequestDto) {
     HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+    HttpEntity<RegisterRequestDto> requestEntity = new HttpEntity<>(registerRequestDto, headers);
 
-    HttpEntity<RegisterRequestDto> requestEntity = new HttpEntity<>(registerRequestDto,headers);
-    log.debug("유저 회원가입 로직 api 실행");
-    try {
-      restTemplate.exchange(
-          "http://GATEWAY-SERVICE/api/users",
-          HttpMethod.POST,
-          requestEntity,
-          Void.class
-      );
-    } catch (HttpClientErrorException e) {
-      if (e.getStatusCode() == HttpStatus.CONFLICT) {
-        String responseBody = e.getResponseBodyAsString();
-        try {
-          ObjectMapper objectMapper = new ObjectMapper();
-          JsonNode rootNode = objectMapper.readTree(responseBody);
-          String message = rootNode.path("message").asText(); // "message" 속성 값 추출
-
-          throw new RegisterFailException(message,this.getClass().getSimpleName());
-        } catch (IOException ioException) {
-          // JSON 파싱 실패 처리
-          throw new JsonParseFailException("JSON 파싱 오류", ioException,this.getClass().getSimpleName());
+    ResponseEntity<CommonResponse<LoginResponseDto>> response = restTemplate.exchange(
+        "http://GATEWAY-SERVICE/api/account/users",
+        HttpMethod.POST,
+        requestEntity,
+        new ParameterizedTypeReference<>() {
         }
-      }
+    );
+
+    if (!Objects.equals(response.getStatusCode(), HttpStatus.CREATED)) {
+      String message = Objects.requireNonNull(response.getBody()).getMessage();
+
+      log.error(message);
+      throw new RegisterFailException(message);
     }
+  }
+
+  @Override
+  public CommonResponse<String> requestTokenRefresh(String accessToken) {
+    HttpHeaders headers = new HttpHeaders();
+    HttpEntity<TokenRefreshRequest> requestEntity = new HttpEntity<>(
+        new TokenRefreshRequest(accessToken), headers);
+
+    ResponseEntity<CommonResponse<String>> response = restTemplate.exchange(
+        "http://GATEWAY-SERVICE/api/auth/reissue",
+        HttpMethod.POST,
+        requestEntity,
+        new ParameterizedTypeReference<>() {
+        }
+    );
+
+    if (!Objects.equals(response.getStatusCode(), HttpStatus.OK)) {
+      String message = Objects.requireNonNull(response.getBody()).getMessage();
+
+      throw new UnauthorizedException(message);
+    }
+
+    return response.getBody();
   }
 }

@@ -6,9 +6,9 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 # 2 워크플로우가 시작됭 조건 지정
 on:
   push:
-    branches: [master]
+    branches: [master, develop, release]
   pull_request:
-    branches: [master]
+    branches: [master, develop, release]
 #test
 jobs:
   build:
@@ -29,24 +29,24 @@ jobs:
         
       - name: Run SonarQube
         run: mvn sonar:sonar -Dsonar.projectKey=github-action -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_TOKEN_40 }}
-      
-      - name: upload file
-        uses: appleboy/scp-action@master
+
+
+      #Deploy
+      - name: Docker build & push
+        run: |
+          docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+          docker build -t "${{ secrets.DOCKER_USERNAME }}"/front .
+          docker push "${{ secrets.DOCKER_USERNAME }}"/front
+
+      - name: SSH to Server and Docker pull & up
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_IP }}
           username: ${{ secrets.SSH_ID }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "target/*.jar"
-          target: "~/"
-          rm: false
-      
-      - name: execute shell script
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_IP }}
-          username: ${{ secrets.SSH_ID }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script_stop: true
-          script: "./startup.sh"
+          script: |
+            docker pull "${{ secrets.DOCKER_USERNAME }}"/front
+            docker stop front || true
+            docker rm front || true 
+            docker run -d -p 8888:8888 -p 8080:8080 --network t1bridge --name front "${{ secrets.DOCKER_USERNAME }}"/front
