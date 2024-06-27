@@ -5,15 +5,18 @@ import com.nhnacademy.front.server.exception.NotFoundTokenException;
 import com.nhnacademy.front.server.properties.PaycoProperties;
 import com.nhnacademy.front.server.service.AuthService;
 import com.nhnacademy.front.server.util.WebUtils;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
@@ -36,18 +39,18 @@ public class AuthController {
   public String showLoginForm(
       @CookieValue(value = AUTHORIZATION_KEY, required = false) String token, Model model) {
 
+    log.warn("token : {} / hasText : {}", token, StringUtils.hasText(token));
     if (StringUtils.hasText(token)) {
-      return HOME_PAGE;
+      return WebUtils.REDIRECT_PREFIX + "/" + HOME_PAGE;
     }
 
     final String paycoOauthUrl = "https://id.payco.com/oauth2.0/authorize?response_type=code"
-            + "&client_id=" + paycoProperties.getClientId()
-            + "&serviceProviderCode=FRIENDS"
-            + "&redirect_uri=" + paycoProperties.getRedirectUri()
-            + "&userLocale=ko_KR";
+        + "&client_id=" + paycoProperties.getClientId()
+        + "&serviceProviderCode=FRIENDS"
+        + "&redirect_uri=" + paycoProperties.getRedirectUri()
+        + "&userLocale=ko_KR";
 
     model.addAttribute("payco", paycoOauthUrl);
-
 
     return LOGIN_PAGE;
   }
@@ -55,15 +58,18 @@ public class AuthController {
   @GetMapping("/oauth/payco-login")
   public String doPaycoLogin(@RequestParam(name = "code") String authCode,
       HttpServletResponse res) {
+
+    log.info("code : {}", authCode);
     String accessToken = authService.paycoLogin(authCode).getAccessToken();
+    log.info("access token : {}", accessToken);
 
     if (accessToken != null) {
-      Cookie cookie = new Cookie(AUTHORIZATION_KEY, authCode);
+      Cookie cookie = new Cookie(AUTHORIZATION_KEY, accessToken);
       cookie.setPath("/");
       res.addCookie(cookie);
     }
 
-    return WebUtils.REDIRECT_PREFIX + "/home";
+    return WebUtils.REDIRECT_PREFIX + "/" + HOME_PAGE;
   }
 
   /**
@@ -84,7 +90,7 @@ public class AuthController {
     return WebUtils.REDIRECT_PREFIX + HOME_PAGE;
   }
 
-  @PostMapping("/logout")
+  @GetMapping("/logout")
   public String doLogout(
       @CookieValue(value = AUTHORIZATION_KEY, required = false) Cookie authorizationCookie,
       HttpServletResponse res) {

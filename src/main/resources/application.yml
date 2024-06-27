@@ -2,12 +2,16 @@ spring:
   application:
     name: FRONT-SERVICE
   profiles:
-    active: dev
+    active: test
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 eureka:
   client:
     enabled: true
-
 
 server:
   port: 8080

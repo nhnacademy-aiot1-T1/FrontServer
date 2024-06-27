@@ -6,5 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class LogoutRequest {
-    private final String accessToken;
+
+  private final String accessToken;
 }

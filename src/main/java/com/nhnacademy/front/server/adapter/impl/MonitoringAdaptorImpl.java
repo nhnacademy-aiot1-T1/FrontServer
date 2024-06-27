@@ -4,27 +4,28 @@ import com.nhnacademy.common.dto.CommonResponse;
 import com.nhnacademy.front.server.adapter.MonitoringAdaptor;
 import com.nhnacademy.front.server.config.ApiPathProperties;
 import com.nhnacademy.front.server.dto.controlLog.ControlLogsDto;
+import com.nhnacademy.front.server.dto.motor.MotorsDto;
 import com.nhnacademy.front.server.dto.motorDetail.MotorDetailDto;
 import com.nhnacademy.front.server.dto.motorInfoOverview.MotorInfoOverviewDto;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRateDataRequest;
 import com.nhnacademy.front.server.dto.motorRunningRateByTimePeriod.MotorsRunningRatesByTimePeriod;
-import com.nhnacademy.front.server.dto.motorScore.MotorScoresDto;
-import com.nhnacademy.front.server.dto.motor.MotorsDto;
 import com.nhnacademy.front.server.dto.sector.SectorManagementDto;
 import com.nhnacademy.front.server.dto.sector.SectorRegisterRequest;
 import com.nhnacademy.front.server.dto.sector.SectorRemoveRequest;
 import com.nhnacademy.front.server.dto.sector.SectorRenameRequest;
 import com.nhnacademy.front.server.dto.sector.SectorsDto;
-import java.util.Map;
-import javax.servlet.http.HttpSession;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 
 @Component
@@ -33,7 +34,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
   private final ApiPathProperties pathProperties;
 
-  private final RestTemplate restTemplateMocky;
+  private final RestTemplate restTemplate;
 
   // 종합 정보
   @Override
@@ -43,7 +44,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
-    ResponseEntity<CommonResponse<MotorInfoOverviewDto>> exchange = restTemplateMocky.exchange(
+    ResponseEntity<CommonResponse<MotorInfoOverviewDto>> exchange = restTemplate.exchange(
         pathProperties.getMotorOverview(), HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
@@ -63,7 +64,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
-    ResponseEntity<CommonResponse<SectorsDto>> exchange = restTemplateMocky.exchange(
+    ResponseEntity<CommonResponse<SectorsDto>> exchange = restTemplate.exchange(
         pathProperties.getSectorInfo(), HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
@@ -84,7 +85,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
-    ResponseEntity<CommonResponse<MotorsDto>> exchange = restTemplateMocky.exchange(
+    ResponseEntity<CommonResponse<MotorsDto>> exchange = restTemplate.exchange(
         pathProperties.getMotors(), HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
@@ -103,8 +104,11 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
-    ResponseEntity<CommonResponse<MotorDetailDto>> exchange = restTemplateMocky.exchange(
-        pathProperties.getMotorDetail(), HttpMethod.GET, request,
+    String url = pathProperties.getMotorDetail()
+        .replace("{motorId}", motorId.toString());
+
+    ResponseEntity<CommonResponse<MotorDetailDto>> exchange = restTemplate.exchange(
+        url, HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -122,7 +126,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
     HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
-    ResponseEntity<CommonResponse<ControlLogsDto>> exchange = restTemplateMocky.exchange(
+    ResponseEntity<CommonResponse<ControlLogsDto>> exchange = restTemplate.exchange(
         pathProperties.getControlLogs(), HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
@@ -137,66 +141,20 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
   }
 
   // 총 모터 가동률
-//  @Override
-//  public CommonResponse<MotorsRunningRatesByTimePeriod> getMotorsRunningRatesByTimePeriod(
-//      String timePeriod) {
-//
-//    HttpHeaders httpHeaders = new HttpHeaders();
-//    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-//    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
-//
-//    if (timePeriod.equals("day")) {
-//
-//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-//          RUNNING_RATES_BY_TIME1, HttpMethod.GET, request,
-//          new ParameterizedTypeReference<>() {
-//          });
-//      if (exchange.getStatusCode() != HttpStatus.OK) {
-//        throw new ResponseStatusException(exchange.getStatusCode());
-//      }
-//      return exchange.getBody();
-//
-//    }
-//    if (timePeriod.equals("week")) {
-//
-//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-//          RUNNING_RATES_BY_TIME2, HttpMethod.GET, request,
-//          new ParameterizedTypeReference<>() {
-//          });
-//      if (exchange.getStatusCode() != HttpStatus.OK) {
-//        throw new ResponseStatusException(exchange.getStatusCode());
-//      }
-//      return exchange.getBody();
-//
-//    }
-//    if (timePeriod.equals("month")) {
-//
-//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-//          RUNNING_RATES_BY_TIME3, HttpMethod.GET, request,
-//          new ParameterizedTypeReference<>() {
-//          });
-//      if (exchange.getStatusCode() != HttpStatus.OK) {
-//        throw new ResponseStatusException(exchange.getStatusCode());
-//      }
-//      return exchange.getBody();
-//    }
-//
-//    return null;
-//  }
 
-  // 총 모터 가동률
+  // TODO  쿼리쓰트링으로 쑤쩡
+
   @Override
   public CommonResponse<MotorsRunningRatesByTimePeriod> getMotorsRunningRatesByTimePeriod(
-      MotorsRunningRateDataRequest motorsRunningRateDataRequest) {
+      String duration) {
 
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-    HttpEntity<Object> request = new HttpEntity<>(motorsRunningRateDataRequest, httpHeaders);
+    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
-    ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-        pathProperties.getRunningRateByTime(), HttpMethod.GET, request,
+    ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplate.exchange(
+        pathProperties.getRunningRateByTime() + "?duration=" + duration, HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
         });
     if (exchange.getStatusCode() != HttpStatus.OK) {
@@ -206,72 +164,28 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
   }
 
-//  // 개별 모터 가동률
-//  @Override
-//  public CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
-//      Long motorId, String timePeriod) {
-//    HttpHeaders httpHeaders = new HttpHeaders();
-//    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-//    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
-//
-//    if (timePeriod.equals("day")) {
-//
-//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-//          INDIVIDUAL_RUNNING_RATES_BY_TIME1, HttpMethod.GET, request,
-//          new ParameterizedTypeReference<>() {
-//          });
-//      if (exchange.getStatusCode() != HttpStatus.OK) {
-//        throw new ResponseStatusException(exchange.getStatusCode());
-//      }
-//      return exchange.getBody();
-//
-//    }
-//    if (timePeriod.equals("week")) {
-//
-//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-//          INDIVIDUAL_RUNNING_RATES_BY_TIME2, HttpMethod.GET, request,
-//          new ParameterizedTypeReference<>() {
-//          });
-//      if (exchange.getStatusCode() != HttpStatus.OK) {
-//        throw new ResponseStatusException(exchange.getStatusCode());
-//      }
-//      return exchange.getBody();
-//
-//    }
-//    if (timePeriod.equals("month")) {
-//
-//      ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-//          INDIVIDUAL_RUNNING_RATES_BY_TIME3, HttpMethod.GET, request,
-//          new ParameterizedTypeReference<>() {
-//          });
-//      if (exchange.getStatusCode() != HttpStatus.OK) {
-//        throw new ResponseStatusException(exchange.getStatusCode());
-//      }
-//      return exchange.getBody();
-//    }
-//
-//    return null;
-//  }
-
   // 개별 모터 가동률
+
+  // TODO  쿼리쓰트링으로 쑤쩡
   @Override
   public CommonResponse<MotorsRunningRatesByTimePeriod> getIndividualMotorsRunningRatesByTimePeriod(
-      Long motorId, MotorsRunningRateDataRequest motorsRunningRateDataRequest) {
+      Long motorId, String duration) {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-    HttpEntity<Object> request = new HttpEntity<>(motorsRunningRateDataRequest, httpHeaders);
+    HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
-    ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplateMocky.exchange(
-        pathProperties.getIndividualRunningRateByTime(), HttpMethod.GET, request,
+    String url = pathProperties.getIndividualRunningRateByTime()
+        .replace("{motorId}", motorId.toString());
+
+    ResponseEntity<CommonResponse<MotorsRunningRatesByTimePeriod>> exchange = restTemplate.exchange(
+        url + "?duration=" + duration, HttpMethod.GET, request,
         new ParameterizedTypeReference<>() {
-        }, motorId);
+        });
     if (exchange.getStatusCode() != HttpStatus.OK) {
       throw new ResponseStatusException(exchange.getStatusCode());
     }
     return exchange.getBody();
-
   }
 
   @Override
@@ -283,7 +197,7 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
     HttpEntity<Object> request = new HttpEntity<>(sectorRegisterRequest, httpHeaders);
 
-    ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
+    ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplate.exchange(
         pathProperties.getSectorRegister(), HttpMethod.POST, request,
         new ParameterizedTypeReference<>() {
         });
@@ -298,7 +212,8 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
   }
 
   @Override
-  public CommonResponse<SectorManagementDto> renameSector(SectorRenameRequest sectorRenameRequest) {
+  public CommonResponse<SectorManagementDto> renameSector(Long sectorId,
+      SectorRenameRequest sectorRenameRequest) {
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
@@ -306,8 +221,11 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<SectorRenameRequest> request = new HttpEntity<>(sectorRenameRequest,
         httpHeaders);
 
-    ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
-        pathProperties.getSectorRename(), HttpMethod.POST, request,
+    String url = pathProperties.getSectorRename()
+        .replace("{sectorId}", sectorId.toString());
+
+    ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplate.exchange(
+        url, HttpMethod.PUT, request,
         new ParameterizedTypeReference<>() {
         });
 
@@ -327,8 +245,11 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
     HttpEntity<SectorRemoveRequest> HttpRequest = new HttpEntity<>(
         httpHeaders);
 
-    ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplateMocky.exchange(
-        pathProperties.getSectorRemove() + sectorId, HttpMethod.DELETE, HttpRequest,
+    String url = pathProperties.getSectorRemove()
+        .replace("{sectorId}", sectorId.toString());
+
+    ResponseEntity<CommonResponse<SectorManagementDto>> exchange = restTemplate.exchange(
+        url, HttpMethod.DELETE, HttpRequest,
         new ParameterizedTypeReference<>() {
         });
 
@@ -338,4 +259,5 @@ public class MonitoringAdaptorImpl implements MonitoringAdaptor {
 
     return exchange.getBody();
   }
+
 }

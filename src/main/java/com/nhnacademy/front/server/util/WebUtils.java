@@ -4,8 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.nhnacademy.front.server.enums.DeviceType;
 import com.nhnacademy.front.server.enums.UserAgent;
-//import com.nhnacademy.front.server.exception.InvalidTokenException;
-import com.nhnacademy.front.server.exception.NotFoundTokenException;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.Cookie;
@@ -59,15 +57,13 @@ public class WebUtils {
       return JWT.decode(jwt).getExpiresAt().after(now);
     } catch (JWTDecodeException e) {
       log.error(e.getMessage());
-
-//            throw new InvalidTokenException();
     }
     return false;
   }
 
   public static Optional<Cookie> findAuthorizationCookie(Cookie[] cookies) {
     if (cookies == null) {
-      throw new NotFoundTokenException();
+      return Optional.empty();
     }
 
     return Arrays.stream(cookies)

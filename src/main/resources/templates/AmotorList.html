@@ -3,13 +3,11 @@
 <!-- BEGIN: Head-->
 
 <head>
-  <meta name="_csrf" th:content="${_csrf.token}"/>
-  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
   <div th:include="fixedTemplate/defaultCSS.html"></div>
   <!-- BEGIN: Vendor CSS-->
   <link rel="stylesheet" type="text/css"
-        href="https://aiotone.live/resources/app-assets/vendors/css/vendors.amin.css">
+        href="https://aiotone.live/resources/app-assets/vendors/css/vendors.min.css">
   <link rel="stylesheet" type="text/css"
         href="https://aiotone.live/resources/app-assets/vendors/css/charts/chartist.css">
   <link rel="stylesheet" type="text/css"
@@ -42,20 +40,22 @@
         href="https://aiotone.live/resources/app-assets/vendors/css/timeline/vertical-timeline.css">
   <!-- END: Page CSS-->
 
-  <!-- BEGIN: Custom CSS-->
-  <!--  <link rel="stylesheet" type="text/css" href="https://aiotone.live/resources/assets/css/style.css">-->
-  <!-- END: Custom CSS-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <link href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquareNeo@1.0/nanumsquareneo.css"
         rel="stylesheet">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="/static/vertical-menu-template/assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="https://aiotone.live/resources/assets/css/style.css">
   <style>
     @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
     body, p, h3, h4, h6 {
+      font-family: 'NanumSquare', sans-serif;
+      font-weight: 800;
+    }
+
+    p.blue-grey, p.font-medium-5 {
       font-family: 'NanumSquare', sans-serif;
       font-weight: 800;
     }
@@ -86,43 +86,44 @@
     <div class="content-wrapper-before "></div>
     <div class="content-header row">
       <div class="content-header-left col-md-4 col-12 mb-2">
-        <h3 class="content-header-title">모터 목록</h3>
+        <h3 class="content-header-title font-large-1">모터 목록</h3>
       </div>
 
       <div class="content-detached content-right">
         <div class="content-body">
           <section class="row">
             <div class="col-12">
-              <div class="card mx-auto" style="width: 90pc;">
-                <div class="card-head mx-auto">
+              <div class="card mx-auto ">
+                <div class="card-head">
                   <div class="card-header">
-                    <h4 class="card-title" id=sectorname></h4>
+                    <h4 class="card-title font-large-1" id=sectorname></h4>
+                    <br>
                     <div class="card-content collapse show">
                       <div class="card-body pt-300 pb-300">
                         <div class="row mb-1">
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">총 모터</p>
-                            <th:p id="totalMotors" class="font-medium-5 text-bold-400"></th:p>
+                            <p class="blue-grey lighten-2 mb-0 font-medium-5">총 모터</p>
+                            <th:p id="totalMotors" class="font-large-1 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">가동중인 모터</p>
-                            <th:p id="runningMotors" class="font-medium-5 text-bold-400"></th:p>
+                            <p class="blue-grey lighten-2 mb-0 font-medium-5">가동중인 모터</p>
+                            <th:p id="runningMotors" class="font-large-1 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">정상 모터</p>
-                            <th:p id="normalMotors" class="font-medium-5 text-bold-400"></th:p>
+                            <p class="blue-grey lighten-2 mb-0 font-medium-5">정상 모터</p>
+                            <th:p id="normalMotors" class="font-large-1 text-bold-400"></th:p>
                           </div>
                           <div
                               class="col-6 col-sm-3 col-md-6 col-lg-3 border-right-blue-grey border-right-lighten-5 text-center">
-                            <p class="blue-grey lighten-2 mb-0">비정상 모터</p>
-                            <th:p id="anomalyMotors" class="font-medium-5 text-bold-400"></th:p>
+                            <p class="blue-grey lighten-2 mb-0 font-medium-5">비정상 모터</p>
+                            <th:p id="anomalyMotors" class="font-large-1 text-bold-400"></th:p>
                           </div>
                         </div>
-
-                        <h6 class="text-bold-600"> 정상 모터 비율:
+                        <br>
+                        <h6 class="font-medium-5 text-bold-600"> 정상 모터 비율:
                           <span id="normalMotorPercent"></span>
                         </h6>
                         <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
@@ -131,7 +132,7 @@
                                aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <br>
-                        <h6 class="text-bold-600"> 가동중인 모터 비율:
+                        <h6 class="font-medium-5  text-bold-600"> 가동중인 모터 비율:
                           <span id="isOnMotorPercent"></span>
                         </h6>
                         <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
@@ -149,10 +150,10 @@
                           </div>
                         </div>
                         <!--필터링 토글-->
-                        <div class="right"
-                             style="float:right; position:relative; right: 36px; top: -20px">
+                        <div class="right">
+<!--                             style="float:right; position:relative; right: 36px; top: -20px">-->
                           <div class="dropdown">
-                            <button class="btn btn-bg-gradient-x-blue-purple-1 dropdown-toggle"
+                            <button class="position relative right btn btn-bg-gradient-x-blue-purple-1 dropdown-toggle"
                                     type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -170,8 +171,6 @@
                                 꺼진 모터만</a>
                               <a class="dropdown-item" onclick="selectSector('powerOn')">전원이
                                 켜진 모터만</a>
-                              <a class="dropdown-item" onclick="selectSector('undefined')">구역
-                                미지정 모터만</a>
                             </div>
                           </div>
                         </div>
@@ -183,19 +182,18 @@
 
                   <!-- 모터 리스트 박스 -->
                   <!-- 모터 시작-->
-                  <div class="container">
-                    <div class="row">
+<!--                  <div class="container">-->
+                    <div class="row mx-5 px-4">
                       <div th:each="motor : ${motors}"
-                           class="motorbox col-2"
+                           class="motorbox p-1"
+                           style="width:160px;"
                            th:data-sector-id="${motor.getSectorId()}"
                            th:data-motor-id="${motor.getMotorId()}"
-                           onclick="goToMotorDetail(this)"
-                           style="padding-bottom: 120px">
+                           onclick="goToMotorDetail(this)">
                         <div class="card pull-up" th:if="${motor.getIsOn()== true}">
-                          <div th:if="${motor.getIsNormal() == true}"
-                               class="card bg-success" style="height: 70px;">
-                            <div class="card bg-success" style="height: 20px">
-                              <h4 class="card-title white" style="padding: 10px; height: 1px"
+                          <div th:if="${motor.getIsNormal() == true}">
+                            <div class="card bg-success" style="margin: 0;top:10px">
+                              <h4 class="card-title padding-top white font-medium-2 pt-1 pl-1 d-inline-block text-truncate"
                                   th:text="${motor.getMotorName()}"></h4>
                             </div>
                             <div class="card bg-success">
@@ -208,16 +206,15 @@
                                         alt="Your Image" class="img-fluid">
                                   </div>
                                 </div>
-                                <div class="media-body text-right mt-1">
-                                  <h3 class="font-large-0 white">NORMAL</h3>
+                                <div class="media-body text-bottom mt-1">
+                                  <h3 class="font-medium-1 white">NORMAL</h3>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div th:if="${motor.getIsNormal() == false }"
-                               class="card bg-warning " style="height: 70px">
-                            <div class="card bg-warning" style="height: 20px">
-                              <h4 class="card-title white" style="padding: 10px;height: 1px"
+                          <div th:if="${motor.getIsNormal() == false }">
+                            <div class="card bg-warning"  style="margin:0;top:10px">
+                              <h4 class="card-title white font-medium-2 pt-1 pl-1 d-inline-block text-truncate"
                                   th:text="${motor.getMotorName()}"></h4>
                               <a class="heading-elements-toggle"><i
                                   class="la la-ellipsis-v font-medium-3"></i></a>
@@ -235,8 +232,8 @@
                                         alt="Your Image" class="img-fluid">
                                   </div>
                                 </div>
-                                <div class="media-body text-right mt-1">
-                                  <h3 class="font-large-0 white">WARNING</h3>
+                                <div class="media-body text-center mt-1">
+                                  <h3 class="font-medium-1 white">WARNING</h3>
                                 </div>
                               </div>
                             </div>
@@ -244,10 +241,9 @@
                           <br>
                         </div>
                         <div class="card pull-up" th:if="${motor.getIsOn()==false}">
-                          <div th:if="${motor.getIsNormal() == true}"
-                               class="card bg-blue-grey" style="height: 70px">
-                            <div class="card bg-blue-grey" style="height: 20px">
-                              <h4 class="card-title white" style="padding: 10px;height: 1px"
+                          <div th:if="${motor.getIsNormal() == true}">
+                            <div class="card bg-blue-grey"  style="margin:0;top:10px">
+                              <h4 class="card-title white font-medium-2 pt-1 pl-1 d-inline-block text-truncate"
                                   th:text="${motor.getMotorName()}"></h4>
                             </div>
                             <div class="card bg-blue-grey">
@@ -256,20 +252,19 @@
                                     class="media d-flex align-items-center justify-content-center">
                                   <div>
                                     <img
-                                        src="/vertical-menu-template/app-assets/images/icons/motoricon.png"
+                                        src="https://aiotone.live/resources/app-assets/images/icons/motoricon.png"
                                         alt="Your Image" class="img-fluid">
                                   </div>
                                 </div>
-                                <div class="media-body text-right mt-1">
-                                  <h3 class="font-large-0 white">NORMAL</h3>
+                                <div class="media-body text-center mt-1">
+                                  <h3 class="font-medium-1 white">NORMAL</h3>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div th:if="${motor.getIsNormal() == false }"
-                               class="card  bg-blue-grey" style="height: 70px">
-                            <div class="card  bg-blue-grey " style="height: 20px">
-                              <h4 class="card-title warning" style="padding: 10px;height: 1px"
+                          <div th:if="${motor.getIsNormal() == false }">
+                            <div class="card  bg-blue-grey" style="margin:0;top:10px">
+                              <h4 class="card-title warning font-medium-2 pt-1 pl-1 d-inline-block text-truncate"
                                   th:text="${motor.getMotorName()}"
                               ></h4>
                               <a class="heading-elements-toggle"><i
@@ -288,8 +283,8 @@
                                         alt="Your Image" class="img-fluid">
                                   </div>
                                 </div>
-                                <div class="media-body text-right mt-1">
-                                  <h3 class="font-large-0 warning">
+                                <div class="media-body text-center mt-1">
+                                  <h3 class="font-medium-1 warning">
                                     WARNING</h3>
                                 </div>
                               </div>
@@ -298,7 +293,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+<!--                  </div>-->
                   <!-- 모터 끝-->
                 </div>
               </div>
@@ -314,11 +309,11 @@
       </div>
 
       <!-- 구역선택 사이드 바 -->
-      <div class="sidebar" style="position: fixed;right: 20px">
+      <div class="sidebar" style="position: fixed;right: 10px">
         <div class="sidebar-content card d-none d-lg-block">
           <div class="card-body">
             <div class="row">
-              <h4 class="card-title" style="padding-left: 10px">구역 목록</h4>
+              <h4 class="card-title font-medium-5" style="padding-left: 10px">구역 목록</h4>
             </div>
             <div class="category-title pb-1">
             </div>
@@ -336,16 +331,16 @@
                                 th:text="${sector.getTotalCount()-sector.getNormalCount()}"></span>
                   <a th:text="${sector.getSectorName()}"></a>
                 </li>
-                <li class="list-group-item">
-                  <i class="mr-1 ft-plus">
-                    <a href="#" data-toggle="modal" data-target="#sectorRegistModal">구역추가</a>
-                  </i>
-                </li>
-                <li class="list-group-item">
-                  <i class="mr-1 ft-plus">
-                    <a href="#" data-toggle="modal" data-target="#sectorEditModal">구역편집</a>
-                  </i>
-                </li>
+                <!--                <li class="list-group-item">-->
+                <!--                  <i class="mr-1 ft-plus">-->
+                <!--                    <a href="#" data-toggle="modal" data-target="#sectorRegistModal">구역추가</a>-->
+                <!--                  </i>-->
+                <!--                </li>-->
+                <!--                <li class="list-group-item">-->
+                <!--                  <i class="mr-1 ft-plus">-->
+                <!--                    <a href="#" data-toggle="modal" data-target="#sectorEditModal">구역편집</a>-->
+                <!--                  </i>-->
+                <!--                </li>-->
               </ul>
             </div>
             <!-- /List group example -->
@@ -369,7 +364,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="sectorRegistModalLabel">알림</h5>
+        <!--        <h5 class="modal-title" id="sectorRegistModalLabel">알림</h5>-->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -412,7 +407,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="sectorEditModalLabel">Information</h5>
+        <!--        <h5 class="modal-title" id="sectorEditModalLabel">Information</h5>-->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -506,8 +501,7 @@
           <div class="card-content collapse show">
             <div class="card-body">
               <!-- ... -->
-              <form id="sectorRemoveForm" action="/removeSector" th:method="delete">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+              <form id="sectorRemoveForm" th:action="@{/removeSector}" th:method="delete">
                 <input type="hidden" id="sectorIdForRemove" name="sectorId" value="">
                 <div class="card-text">
                   <p>정말로 삭제하시겠습니까?</p>
@@ -558,14 +552,22 @@
     $('#sectorname').text(sectorName);
 
     // 전체 모터의 normal motor 퍼센트 계산 및 표시
-    var totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+    let totalNormalMotorPercent = 0;
+
+    totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+    totalNormalMotorPercent = isNaN(totalNormalMotorPercent) ? 0 : totalNormalMotorPercent;
+
     $('#normalMotorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
     // 전체 모터의 normal motor 퍼센트를 progress bar에 적용
     $('#progressBar').css('width', totalNormalMotorPercent + '%').attr('aria-valuenow',
         totalNormalMotorPercent);
 
     // 전체 모터의 running motor 퍼센트 계산 및 표시
-    var totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+    let totalRunningMotorPercent = 0;
+
+    totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+    totalRunningMotorPercent = isNaN(totalRunningMotorPercent) ? 0 : totalRunningMotorPercent;
+
     $('#isOnMotorPercent').text(totalRunningMotorPercent.toFixed(2) + '%');
     // 전체 모터의 running motor 퍼센트를 progress bar에 적용
     $('#progressBar1').css('width', totalRunningMotorPercent + '%').attr('aria-valuenow',
@@ -599,6 +601,8 @@
 
       // 전체 모터의 normal motor 퍼센트 계산 및 표시
       var totalNormalMotorPercent = (totalNormalMotors / totalMotors) * 100;
+      totalNormalMotorPercent = isNaN(totalNormalMotorPercent) ? 0 : totalNormalMotorPercent;
+      console.log("select sector total normal motor percent is :{} ", totalNormalMotorPercent)
       $('#normalMotorPercent').text(totalNormalMotorPercent.toFixed(2) + '%');
       // 전체 모터의 normal motor 퍼센트를 progress bar에 적용
       $('#progressBar').css('width', totalNormalMotorPercent + '%').attr('aria-valuenow',
@@ -606,6 +610,9 @@
 
       // 전체 모터의 running motor 퍼센트 계산 및 표시
       var totalRunningMotorPercent = (totalIsOnMotors / totalMotors) * 100;
+      totalRunningMotorPercent = isNaN(totalRunningMotorPercent) ? 0 : totalRunningMotorPercent;
+      console.log("select sector total running motor percent is :{} ", totalRunningMotorPercent)
+
       $('#isOnMotorPercent').text(totalRunningMotorPercent.toFixed(2) + '%');
       // 전체 모터의 running motor 퍼센트를 progress bar에 적용
       $('#progressBar1').css('width', totalRunningMotorPercent + '%').attr('aria-valuenow',
@@ -729,8 +736,13 @@
       if (sectors[i].sectorId == sectorId) {
         // Normal motor 퍼센트 계산
         var totalMotors = sectors[i].totalCount;
+
         var isOnMotorPercent = (sectors[i].isOnCount / totalMotors) * 100;
+        isOnMotorPercent = isNaN(isOnMotorPercent) ? 0 : isOnMotorPercent;
+
         var normalMotorPercent = (sectors[i].normalCount / totalMotors) * 100;
+        normalMotorPercent = isNaN(normalMotorPercent) ? 0 : normalMotorPercent;
+
         sectors[i].isOnMotorPercent = isOnMotorPercent.toFixed(2); // 소수점 둘째 자리까지 표시
         sectors[i].normalMotorPercent = normalMotorPercent.toFixed(2); // 소수점 둘째 자리까지 표시
         return sectors[i];
@@ -794,14 +806,6 @@
 <script src="https://aiotone.live/resources/app-assets/vendors/js/vendors.min.js"
         type="text/javascript"></script>
 <!-- BEGIN Vendor JS-->
-
-<!-- BEGIN: Page Vendor JS-->
-<!--<script src="https://aiotone.live/resources/app-assets/vendors/js/charts/chartist.min.js"-->
-<!--        type="text/javascript"></script>-->
-<!--<script-->
-<!--    src="https://aiotone.live/resources/app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js"-->
-<!--    type="text/javascript"></script>-->
-<!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
 <script src="https://aiotone.live/resources/app-assets/js/core/app-menu.js"
